@@ -18,6 +18,7 @@ client/.env.local
 client/.env.development.local
 client/.env.test.local
 client/.env.production.local
+server/.env
 
 npm-debug.log*
 yarn-debug.log*
