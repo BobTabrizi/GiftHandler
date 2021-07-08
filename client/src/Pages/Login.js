@@ -6,7 +6,7 @@ export const Login = () => {
   return (
     <>
       <div className="LoginContainer">
-        <RegisterForm />
+        <LoginForm />
       </div>
     </>
   );
