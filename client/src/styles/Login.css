@@ -39,12 +39,12 @@ form {
 }
 
 .LoginFormContainer {
-  background-color: rgb(255, 255, 255, 0.9);
+  background-color: rgb(255, 255, 255, 1);
   border-radius: 25px;
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 80vh;
+  width: 65vh;
   height: 50vh;
   align-items: center;
   justify-content: center;
