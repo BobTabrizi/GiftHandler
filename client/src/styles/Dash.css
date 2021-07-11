@@ -1,0 +1,33 @@
+.dashContainer {
+  color: "black";
+  background-color: grey;
+  height: 93vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashGreeting {
+  font-size: 32px;
+  margin-left: 3%;
+  margin-top: 2%;
+}
+
+.registryContainer {
+  text-align: center;
+  background-color: honeydew;
+  height: 55vh;
+  width: 90%;
+  margin: auto;
+  border-radius: 25px;
+}
+
+.groupIdentifier {
+  font-size: 24px;
+  text-align: center;
+  color: aliceblue;
+  background-color: rgb(48, 146, 238);
+  cursor: pointer;
+  width: 30%;
+  margin: auto;
+  border-radius: 25px;
+}

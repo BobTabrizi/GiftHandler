@@ -17,28 +17,21 @@ export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
   //Get token from storage
-  const token = getState().auth.token;
 
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-    },
-  };
+  let token = "";
 
-  //If token, add to header
-
-  if (token) {
-    config.headers["x-auth-token"] = token;
+  if (getState().auth.token) {
+    token = getState().auth.token;
   }
 
   axios
-    .get("/auth/user", config)
-    .then((res) =>
+    .get(`http://localhost:3005/api/auth/users?token=${token}`)
+    .then((res) => {
       dispatch({
         type: USER_LOADED,
         payload: res.data,
-      })
-    )
+      });
+    })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
@@ -52,21 +45,27 @@ export const register =
   ({ name, email, password }) =>
   (dispatch) => {
     axios
-      .post("http://localhost:3005/users/register", {
+      .post("http://localhost:3005/api/auth/users/register", {
         name: name,
         email: email,
         password: password,
       })
-      .then((res) =>
+      .then((res) => {
         dispatch({
           type: REGISTER_SUCCESS,
           payload: res.data,
-        })
-      )
+        });
+        console.log("hello");
+        history.push("/");
+      })
       .catch((err) => {
+        console.log(err);
+        console.log("hi");
+        /*
         dispatch(
           returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
         );
+        */
         dispatch({
           type: REGISTER_FAIL,
         });
@@ -77,7 +76,7 @@ export const login =
   ({ email, password }) =>
   (dispatch) => {
     axios
-      .post("http://localhost:3005/users/login", {
+      .post("http://localhost:3005/api/auth/users/login", {
         email: email,
         password: password,
       })
@@ -89,7 +88,7 @@ export const login =
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         dispatch(
           returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
         );

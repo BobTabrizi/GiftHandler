@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/Login.css";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../actions/authActions";
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -40,7 +40,9 @@ export const LoginForm = () => {
               />
             </div>
 
-            <input type="submit" value="LOGIN" />
+            <div className="submitButton">
+              <input type="submit" value="LOGIN" />
+            </div>
           </div>
         </form>
       </div>

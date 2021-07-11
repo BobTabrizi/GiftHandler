@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 const secret = process.env.SECRET;
 
 function initialize(passport) {
-  const authenticateUser = (email, password, done) => {
+  const authenticateUser = async (email, password, done) => {
     pool.query(
       `SELECT * FROM users WHERE email = $1`,
       [email],
@@ -17,18 +17,23 @@ function initialize(passport) {
         if (err) {
           throw err;
         }
-        // console.log(results.rows);
-
         if (results.rows.length > 0) {
           const user = results.rows[0];
 
-          if (user.password === password) {
-            return done(null, user);
-          } else {
-            return done(null, false, { message: "Password Incorrect" });
-          }
+          bcrypt.compare(password, user.password, (err, isMatch) => {
+            if (err) {
+              console.log(err);
+            }
+            if (isMatch) {
+              return done(null, user);
+            } else {
+              return done(null, false, { message: "Password is incorrect" });
+            }
+          });
         } else {
-          return done(null, false, { message: "This Email is not Registered" });
+          return done(null, false, {
+            message: "No user with that email address",
+          });
         }
       }
     );

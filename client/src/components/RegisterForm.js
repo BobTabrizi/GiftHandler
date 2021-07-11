@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Login.css";
 import { returnErrors } from "../actions/errorActions";
 import { clearErrors } from "../actions/errorActions";
@@ -28,10 +28,10 @@ export const RegisterForm = ({ isAuthenticated, error, clearErrors }) => {
 
   useEffect(() => {
     // Check for register error
-    if (error === "REGISTER_FAIL") {
+    if (error === REGISTER_FAIL) {
       setMsg(error.msg.msg);
     } else {
-      setMsg(null);
+      setMsg(REGISTER_SUCCESS);
     }
   }, [error, isAuthenticated]);
 
@@ -69,7 +69,9 @@ export const RegisterForm = ({ isAuthenticated, error, clearErrors }) => {
               />
             </div>
 
-            <input type="submit" value="Register" />
+            <div className="submitButton">
+              <input type="submit" value="Register" />
+            </div>
           </div>
         </form>
       </div>

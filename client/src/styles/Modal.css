@@ -1,0 +1,58 @@
+.modalBackground {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 93vh;
+  width: 100vw;
+  position: absolute;
+}
+
+.modalContainer {
+  width: 500px;
+  height: 400px;
+  background-color: cornflowerblue;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 10%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.modalButton {
+  cursor: pointer;
+}
+
+.modalCloseButton {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 30px;
+}
+
+.footer {
+  margin-top: 10%;
+}
+
+.modalCreateButton,
+.modalJoinButton {
+  background-color: rgb(185, 198, 255);
+  border-radius: 12px;
+  width: 40%;
+  margin: auto;
+  padding: 1%;
+  cursor: pointer;
+}
+
+.modalInput {
+  color: black;
+  background-color: white;
+  border-radius: 25px;
+  padding: 15px;
+}
+
+.modalInput::placeholder {
+  color: black;
+}

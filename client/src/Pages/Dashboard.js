@@ -1,23 +1,47 @@
-import React, { useRef, useEffect } from "react";
-import "../styles/Login.css";
-import { connect, useSelector, useDispatch } from "react-redux";
-import { logout } from "../actions/authActions";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import "../styles/Dash.css";
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../actions/authActions";
+import { Header } from "../components/Header";
+import { GroupModal } from "../components/GroupModal";
 export const Dashboard = (props) => {
+  const [showGroupJoin, setShowGroupJoin] = useState(false);
+  const [showGroupCreate, setShowGroupCreate] = useState(false);
   const dispatch = useDispatch();
-  const email = useSelector((state) => state.auth.email);
+  const name = useSelector((state) => state.auth.user.name);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, []);
+
   console.log(useSelector((state) => state));
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
   return (
     <>
-      <div style={{ color: "black", backgroundColor: "green" }}>{email}</div>
-
-      <Link to="/login" onClick={handleLogout} style={{ cursor: "pointer" }}>
-        LOG OUT
-      </Link>
+      <Header />
+      <div className="dashContainer">
+        <div className="dashGreeting">Hi {name},</div>
+        <button
+          className="groupIdentifier"
+          onClick={() => setShowGroupCreate(true)}
+        >
+          CREATE A GROUP
+        </button>
+        <button
+          className="groupIdentifier"
+          onClick={() => setShowGroupJoin(true)}
+        >
+          JOIN A GROUP
+        </button>
+        {showGroupCreate && (
+          <GroupModal closeModal={setShowGroupCreate} modalType={"Create"} />
+        )}
+        {showGroupJoin && (
+          <GroupModal closeModal={setShowGroupJoin} modalType={"Join"} />
+        )}
+        <div style={{ textAlign: "center", fontSize: 36 }}>Your Registry</div>
+        <div className="registryContainer"></div>
+      </div>
     </>
   );
 };
