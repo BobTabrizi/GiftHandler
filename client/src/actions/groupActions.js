@@ -1,20 +1,24 @@
 import axios from "axios";
 import {
-  GET_GROUPS,
+  GET_USERS_GROUPS,
+  GET_GROUP,
+  GROUP_LOADING,
   ADD_GROUP,
   DELETE_GROUP,
-  GROUPS_LOADING,
+  USER_GROUPS_LOADING,
   ADD_GROUP_MEMBER,
+  GET_GROUP_MEMBERS,
+  GROUP_MEMBERS_LOADING,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
-export const getGroups = () => (dispatch) => {
+export const getGroups = (id) => (dispatch) => {
   dispatch(setGroupsLoading());
   axios
-    .get("/api/groups")
+    .get(`http://localhost:3005/api/groups/user?userid=${id}`, {})
     .then((res) =>
       dispatch({
-        type: GET_GROUPS,
+        type: GET_USERS_GROUPS,
         payload: res.data,
       })
     )
@@ -23,13 +27,49 @@ export const getGroups = () => (dispatch) => {
     );
 };
 
+export const getGroup = (groupid) => async (dispatch) => {
+  dispatch(setGroupLoading());
+  let response = await axios
+    .get(`http://localhost:3005/api/groups?groupid=${groupid}`, {})
+    .then((res) => {
+      dispatch({
+        type: GET_GROUP,
+        payload: res.data,
+      });
+      return res.data;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+  return response;
+};
+
+export const getGroupMembers = (groupid) => async (dispatch) => {
+  dispatch(setGroupMembersLoading());
+  let response = await axios
+    .get(`http://localhost:3005/api/groups/members?groupid=${groupid}`, {})
+    .then((res) => {
+      dispatch({
+        type: GET_GROUP_MEMBERS,
+        payload: res.data,
+      });
+      return res.data;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+
+  console.log(response);
+  return response;
+};
+
 export const addGroup =
   (groupName, passcode, adminID) => (dispatch, getState) => {
     axios
-      .post("/api/groups", {
-        group: groupName,
+      .post("http://localhost:3005/api/groups/create", {
+        groupname: groupName,
         passcode: passcode,
-        user: adminID,
+        userid: adminID,
       })
       .then((res) =>
         dispatch({
@@ -45,10 +85,10 @@ export const addGroup =
 export const addGroupMember =
   (groupName, passcode, memberID) => (dispatch, getState) => {
     axios
-      .post("/api/groups/users", {
-        group: groupName,
+      .post("http://localhost:3005/api/groups/users", {
+        groupname: groupName,
         passcode: passcode,
-        user: memberID,
+        userid: memberID,
       })
       .then((res) =>
         dispatch({
@@ -77,6 +117,18 @@ export const deleteGroup = (id) => (dispatch, getState) => {
 
 export const setGroupsLoading = () => {
   return {
-    type: GROUPS_LOADING,
+    type: USER_GROUPS_LOADING,
+  };
+};
+
+export const setGroupLoading = () => {
+  return {
+    type: GROUP_LOADING,
+  };
+};
+
+export const setGroupMembersLoading = () => {
+  return {
+    type: GROUP_MEMBERS_LOADING,
   };
 };

@@ -1,8 +1,12 @@
-export const GET_GROUPS = "GET_GROUPS";
+export const GET_USERS_GROUPS = "GET_GROUPS";
+export const GET_GROUP = "GET_GROUP";
 export const ADD_GROUP = "ADD_GROUP";
 export const ADD_GROUP_MEMBER = "ADD_GROUP_MEMBER";
+export const GROUP_LOADING = "GROUP_LOADING";
+export const GET_GROUP_MEMBERS = "GET_GROUP_MEMBERS";
+export const GROUP_MEMBERS_LOADING = "GROUP_MEMBERS_LOADING";
 export const DELETE_GROUP = "DELETE_GROUP";
-export const GROUPS_LOADING = "GROUPS_LOADING";
+export const USER_GROUPS_LOADING = "GROUPS_LOADING";
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";

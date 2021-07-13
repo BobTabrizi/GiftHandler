@@ -9,12 +9,14 @@ export const GroupModal = ({ closeModal, modalType }) => {
   const [passcode, setPasscode] = useState("");
   const dispatch = useDispatch();
 
-  //TODO, make group generation that is more scalable.
+  //TODO, add notification of succesful group generation to user
   const handleSubmit = () => {
     if (modalType === "Create") {
       dispatch(addGroup(groupname, passcode, id));
+      closeModal(false);
     } else {
       dispatch(addGroupMember(groupname, passcode, id));
+      closeModal(false);
     }
   };
 

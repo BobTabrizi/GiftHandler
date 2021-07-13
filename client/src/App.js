@@ -6,6 +6,7 @@ import { Dashboard } from "./Pages/Dashboard";
 import "./App.css";
 import { useSelector } from "react-redux";
 import { history } from "./helpers/history";
+import { GroupPage } from "./Pages/GroupPage";
 import PrivateRoute from "./Routes/PrivateRoute";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/groups/:id" component={GroupPage} />
           <PrivateRoute
             path="/"
             isAuthenticated={isAuthenticated}

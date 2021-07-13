@@ -5,6 +5,7 @@ import { clearErrors } from "../actions/errorActions";
 import { register } from "../actions/authActions";
 import { REGISTER_FAIL, REGISTER_SUCCESS } from "../actions/types";
 import { connect, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 export const RegisterForm = ({ isAuthenticated, error, clearErrors }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ export const RegisterForm = ({ isAuthenticated, error, clearErrors }) => {
 
   return (
     <>
-      <div className="LoginFormContainer">
+      <div className="RegisterFormContainer">
         <h1>Gift Handler</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-inner">
@@ -70,7 +71,17 @@ export const RegisterForm = ({ isAuthenticated, error, clearErrors }) => {
             </div>
 
             <div className="submitButton">
-              <input type="submit" value="Register" />
+              <input
+                type="submit"
+                value="Register"
+                style={{ width: 250, marginTop: "1rem" }}
+              />
+            </div>
+            <div className="registerFooter">
+              <div>Already have an account?</div>
+              <Link to="/login" className="registerButton">
+                Login
+              </Link>
             </div>
           </div>
         </form>

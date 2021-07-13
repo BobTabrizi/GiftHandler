@@ -2,25 +2,32 @@ import React, { useEffect, useState } from "react";
 import "../styles/Dash.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../actions/authActions";
+import { getGroups } from "../actions/groupActions";
 import { Header } from "../components/Header";
 import { GroupModal } from "../components/GroupModal";
+import { GroupList } from "../components/GroupList";
 export const Dashboard = (props) => {
   const [showGroupJoin, setShowGroupJoin] = useState(false);
   const [showGroupCreate, setShowGroupCreate] = useState(false);
   const dispatch = useDispatch();
   const name = useSelector((state) => state.auth.user.name);
+  const id = useSelector((state) => state.auth.user.id);
+  const groups = useSelector((state) => state.group);
 
   useEffect(() => {
-    dispatch(loadUser());
+    async function getData() {
+      let UID = await dispatch(loadUser());
+      dispatch(getGroups(UID));
+    }
+    getData();
   }, []);
-
-  console.log(useSelector((state) => state));
 
   return (
     <>
       <Header />
       <div className="dashContainer">
         <div className="dashGreeting">Hi {name},</div>
+        <GroupList />
         <button
           className="groupIdentifier"
           onClick={() => setShowGroupCreate(true)}
@@ -39,7 +46,9 @@ export const Dashboard = (props) => {
         {showGroupJoin && (
           <GroupModal closeModal={setShowGroupJoin} modalType={"Join"} />
         )}
-        <div style={{ textAlign: "center", fontSize: 36 }}>Your Registry</div>
+        <div style={{ textAlign: "center", fontSize: 36 }}>
+          Your Registry List
+        </div>
         <div className="registryContainer"></div>
       </div>
     </>

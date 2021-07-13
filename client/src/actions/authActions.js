@@ -12,7 +12,7 @@ import {
 } from "../actions/types";
 import { history } from "../helpers/history";
 //Check token and load user
-export const loadUser = () => (dispatch, getState) => {
+export const loadUser = () => async (dispatch, getState) => {
   //User loading
   dispatch({ type: USER_LOADING });
 
@@ -24,13 +24,14 @@ export const loadUser = () => (dispatch, getState) => {
     token = getState().auth.token;
   }
 
-  axios
-    .get(`http://localhost:3005/api/auth/users?token=${token}`)
+  let response = await axios
+    .get(`http://localhost:3005/api/auth/user?token=${token}`)
     .then((res) => {
       dispatch({
         type: USER_LOADED,
         payload: res.data,
       });
+      return res.data.id;
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -38,6 +39,9 @@ export const loadUser = () => (dispatch, getState) => {
         type: AUTH_ERROR,
       });
     });
+
+  //Return ID Directly for Group Querying
+  return response;
 };
 
 //Register user
@@ -45,7 +49,7 @@ export const register =
   ({ name, email, password }) =>
   (dispatch) => {
     axios
-      .post("http://localhost:3005/api/auth/users/register", {
+      .post("http://localhost:3005/api/auth/register", {
         name: name,
         email: email,
         password: password,
@@ -76,7 +80,7 @@ export const login =
   ({ email, password }) =>
   (dispatch) => {
     axios
-      .post("http://localhost:3005/api/auth/users/login", {
+      .post("http://localhost:3005/api/auth/login", {
         email: email,
         password: password,
       })

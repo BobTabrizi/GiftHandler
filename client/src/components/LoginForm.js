@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Login.css";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { login } from "../actions/authActions";
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -41,8 +42,18 @@ export const LoginForm = () => {
             </div>
 
             <div className="submitButton">
-              <input type="submit" value="LOGIN" />
+              <input
+                type="submit"
+                value="LOGIN"
+                style={{ width: 250, marginTop: "1rem" }}
+              />
             </div>
+          </div>
+          <div className="registerFooter">
+            <div>Don't have an account?</div>
+            <Link to="/register" className="registerButton">
+              Register
+            </Link>
           </div>
         </form>
       </div>

@@ -11,7 +11,11 @@ const router = express.Router();
 
 router.use(passport.initialize());
 
-router.post("/users/login", async (req, res) => {
+/**
+ * @route   POST api/auth/login
+ * @description    Login an existing user
+ **/
+router.post("/login", async (req, res) => {
   passport.authenticate("local", { session: false }, (error, user) => {
     if (error || !user) {
       res.status(400).json({ error });
@@ -39,7 +43,11 @@ router.post("/users/login", async (req, res) => {
   })(req, res);
 });
 
-router.post("/users/register", async (req, res) => {
+/**
+ * @route   POST api/auth/register
+ * @description    Register and login a new user
+ **/
+router.post("/register", async (req, res) => {
   let { name, email, password } = req.body;
 
   console.log({
@@ -115,7 +123,11 @@ router.post("/users/register", async (req, res) => {
   }
 });
 
-router.get("/users", async (req, res) => {
+/**
+ * @route   GET api/auth/user
+ * @description    Get a user's data
+ **/
+router.get("/user", async (req, res) => {
   let token = req.query.token;
   if (token) {
     let decoded = jwt.verify(token, process.env.SECRET);

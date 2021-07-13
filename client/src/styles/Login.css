@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
 }
+
 .LoginContainer::before {
   content: "";
   background: black;
@@ -51,10 +52,20 @@ form {
   flex-direction: column;
   margin: auto;
   width: 65vh;
-  height: 47vh;
+  height: 50vh;
   align-items: center;
 }
 
+.RegisterFormContainer {
+  background-color: rgb(255, 255, 255, 1);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 65vh;
+  height: 50vh;
+  align-items: center;
+}
 form .form-inner h2 {
   font-size: 28px;
   font-weight: 500;
@@ -95,4 +106,15 @@ form .form-inner input[type="submit"] {
 
 .submitButton {
   text-align: center;
+}
+
+.registerFooter {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.registerButton {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
