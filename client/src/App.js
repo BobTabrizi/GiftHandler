@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { history } from "./helpers/history";
 import { GroupPage } from "./Pages/GroupPage";
 import PrivateRoute from "./Routes/PrivateRoute";
+import { ManageGroup } from "./Pages/ManageGroup";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -18,6 +19,11 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/groups/:id" component={GroupPage} />
+          <PrivateRoute
+            path="/managegroups"
+            isAuthenticated={isAuthenticated}
+            component={ManageGroup}
+          />
           <PrivateRoute
             path="/"
             isAuthenticated={isAuthenticated}

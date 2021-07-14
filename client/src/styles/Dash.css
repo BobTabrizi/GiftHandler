@@ -1,7 +1,6 @@
 .dashContainer {
   color: "black";
   background-color: grey;
-  height: 93vh;
   display: flex;
   flex-direction: column;
 }
@@ -14,9 +13,9 @@
 
 .registryContainer {
   text-align: center;
-  background-color: honeydew;
-  height: 55vh;
-  width: 90%;
+  border: 1px sandybrown solid;
+  border-width: 2px;
+  display: flex;
   margin: auto;
   border-radius: 25px;
 }
@@ -35,4 +34,25 @@
 .Dropdown {
   width: 10%;
   margin: auto;
+}
+
+.ActiveGroupHeader {
+  font-size: 32px;
+}
+
+.ActiveGroupBtn {
+  background-color: rgb(64, 182, 250);
+  border-radius: 15px;
+  padding: 0.7%;
+  margin-left: 1%;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.AddItemBtn {
+  background-color: steelblue;
+  padding: 1%;
+  border-radius: 15px;
+  font-size: 18px;
+  cursor: pointer;
 }

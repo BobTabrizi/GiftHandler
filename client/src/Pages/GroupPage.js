@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/GroupPage.css";
 import { useDispatch } from "react-redux";
-import { Header } from "../components/Header";
+import NavBar from "../components/NavBar";
 import { getGroup } from "../actions/groupActions";
+
 export const GroupPage = (props) => {
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState("");
@@ -19,11 +20,9 @@ export const GroupPage = (props) => {
 
   return (
     <>
-      <Header />
+      <NavBar title={groupName} />
+
       <div className="container">
-        <div className="Header">
-          <div className="GroupTitle">{groupName}</div>
-        </div>
         <div className="Body">
           Members in this group:
           <div className="memberContainer">

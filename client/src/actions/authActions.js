@@ -34,6 +34,7 @@ export const loadUser = () => async (dispatch, getState) => {
       return res.data.id;
     })
     .catch((err) => {
+      console.log({ err });
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,

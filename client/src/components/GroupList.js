@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Dash.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getGroupMembers } from "../actions/groupActions";
+import { Link } from "react-router-dom";
 export const GroupList = ({}) => {
   const [displayGroups, setDisplayGroups] = useState({
     value: -1,
@@ -36,12 +37,23 @@ export const GroupList = ({}) => {
   return (
     <>
       <div style={{ textAlign: "center" }}>
-        Current Group: {groups[0].groupname}
-      </div>
-      <div style={{ textAlign: "center" }}>Group Members: </div>
-      <div style={{ textAlign: "center" }}>
-        {groupMembers &&
-          groupMembers.map((member, index) => <div>{member.name}</div>)}
+        <div className="ActiveGroupHeader">
+          Current Group:
+          <Link
+            to={`groups/${selectedGroup.value}`}
+            style={{
+              textDecoration: "none",
+              color: "white",
+            }}
+          >
+            <button
+              className="ActiveGroupBtn"
+              onClick={() => console.log("hello")}
+            >
+              {groups[0].groupname}
+            </button>
+          </Link>
+        </div>
       </div>
     </>
   );

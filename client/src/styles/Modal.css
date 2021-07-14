@@ -1,6 +1,13 @@
 .modalBackground {
   background-color: rgba(0, 0, 0, 0.5);
-  height: 93vh;
+  height: 92vh;
+  width: 100vw;
+  position: absolute;
+}
+
+.itemModalBackground {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
   width: 100vw;
   position: absolute;
 }

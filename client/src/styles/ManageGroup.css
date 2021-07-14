@@ -1,0 +1,22 @@
+.container {
+  height: 93vh;
+  background-color: teal;
+}
+
+.groupTypesContainer {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+
+.Body {
+  display: flex;
+}
+
+.ownedGroups {
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+.usersGroups {
+  padding: 1rem 1rem 1rem 1rem;
+}

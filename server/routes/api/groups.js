@@ -3,7 +3,6 @@ const express = require("express");
 const passport = require("passport");
 const pool = require("../../db");
 const initializePassport = require("../../passport");
-
 initializePassport(passport);
 
 const router = express.Router();
@@ -135,7 +134,7 @@ router.get("/members", async (req, res) => {
         if (err) {
           throw err;
         }
-        console.log(results.rows);
+        //console.log(results.rows);
         res.status(200).json(results.rows);
       }
     );
