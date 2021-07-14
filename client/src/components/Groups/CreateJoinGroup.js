@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/GroupPage.css";
+import "../../styles/GroupPage.css";
 import { GroupModal } from "./GroupModal";
 export const CreateJoinGroup = () => {
   const [showGroupJoin, setShowGroupJoin] = useState(false);

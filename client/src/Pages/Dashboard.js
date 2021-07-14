@@ -3,18 +3,20 @@ import "../styles/Dash.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../actions/authActions";
 import { getGroups } from "../actions/groupActions";
-import NavBar from "../components/NavBar";
-import { GroupList } from "../components/GroupList";
-import { RegistryList } from "../components/RegistryItem";
-import { AddItemModal } from "../components/AddItemModal";
+import NavBar from "../components/Navigation/NavBar";
+import { GroupList } from "../components/Groups/GroupList";
+import { RegistryList } from "../components/Items/RegistryList";
+import { AddItemModal } from "../components/Items/AddItemModal";
+import { EditItemModal } from "../components/Items/EditItemModal";
 import { getItems } from "../actions/itemActions";
-export const Dashboard = (props) => {
+export const Dashboard = () => {
   const [showItemModal, setShowItemModal] = useState(false);
   const [items, setItems] = useState(null);
   const dispatch = useDispatch();
   const name = useSelector((state) => state.auth.user.name);
-  const id = useSelector((state) => state.auth.user.id);
-
+  const showEditModal = useSelector(
+    (state) => state.item.selectedItem.displayEditModal
+  );
   useEffect(() => {
     async function getData() {
       let UID = await dispatch(loadUser());
@@ -38,6 +40,7 @@ export const Dashboard = (props) => {
           </button>
         </div>
         {showItemModal && <AddItemModal closeModal={setShowItemModal} />}
+        {showEditModal && <EditItemModal />}
         <div className="registryContainer">
           <RegistryList />
         </div>

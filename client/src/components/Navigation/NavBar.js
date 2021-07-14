@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/NavBar.css";
+import "../../styles/NavBar.css";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
-import * as IoIcons from "react-icons/io";
 import { SidebarData } from "./SidebarData";
 import { IconContext } from "react-icons";
-import PrivateRoute from "../Routes/PrivateRoute";
-import { useSelector, useDispatch } from "react-redux";
-import { login, logout } from "../actions/authActions";
+import PrivateRoute from "../../Routes/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/authActions";
 export default function NavBar({ title }) {
   const [sidebar, setSideBar] = useState(false);
   const dispatch = useDispatch();

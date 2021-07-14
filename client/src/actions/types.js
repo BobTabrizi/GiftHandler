@@ -4,6 +4,9 @@ export const ADD_ITEM = "ADD_ITEM";
 export const ADD_IMAGE = "ADD_IMAGE";
 export const DELETE_IMAGE = "DELETE_IMAGE";
 export const DELETE_ITEM = "DELETE_ITEM";
+export const EDIT_ITEM = "EDIT_ITEM";
+export const SELECT_EDIT_ITEM = "SELECT_EDIT_ITEM";
+export const UNSELECT_EDIT_ITEM = "UNSELECT_EDIT_ITEM";
 export const ITEMS_LOADING = "ITEMS_LOADING";
 
 /*            Groups                      */

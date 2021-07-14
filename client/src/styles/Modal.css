@@ -14,12 +14,12 @@
 
 .modalContainer {
   width: 500px;
-  height: 400px;
+  height: 550px;
   background-color: cornflowerblue;
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top: 10%;
+  top: 5%;
   left: 0;
   right: 0;
   text-align: center;
@@ -27,6 +27,10 @@
   display: flex;
   flex-direction: column;
   padding: 25px;
+}
+
+.modalHeader {
+  font-size: 35px;
 }
 
 .modalButton {
@@ -62,4 +66,11 @@
 
 .modalInput::placeholder {
   color: black;
+}
+
+.ImageUploadBtn {
+  background-color: steelblue;
+  padding: 1%;
+  border-radius: 15px;
+  cursor: pointer;
 }

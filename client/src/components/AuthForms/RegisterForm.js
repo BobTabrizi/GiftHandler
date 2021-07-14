@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Login.css";
-import { returnErrors } from "../actions/errorActions";
-import { clearErrors } from "../actions/errorActions";
-import { register } from "../actions/authActions";
-import { REGISTER_FAIL, REGISTER_SUCCESS } from "../actions/types";
+import "../../styles/Login.css";
+import { returnErrors } from "../../actions/errorActions";
+import { clearErrors } from "../../actions/errorActions";
+import { register } from "../../actions/authActions";
+import { REGISTER_FAIL, REGISTER_SUCCESS } from "../../actions/types";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 export const RegisterForm = ({ isAuthenticated, error, clearErrors }) => {

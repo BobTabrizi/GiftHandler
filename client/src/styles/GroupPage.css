@@ -8,7 +8,7 @@
   text-align: center;
 }
 
-.Body {
+.memberContainer {
   text-align: center;
 }
 
@@ -33,4 +33,23 @@
   flex-direction: row;
   display: flex;
   margin: auto;
+}
+
+.UserListContainer {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.UserContainer {
+  border: 1px solid black;
+  margin: 2%;
+  width: 20%;
+  height: 250px;
+  padding: 1%;
+  border-radius: 15px;
+  background-color: white;
+  box-sizing: border-box;
 }

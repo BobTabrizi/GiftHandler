@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Login.css";
-import { RegisterForm } from "../components/RegisterForm";
+import { RegisterForm } from "../components/AuthForms/RegisterForm";
 export const Register = () => {
   return (
     <>

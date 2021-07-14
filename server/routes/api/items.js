@@ -1,13 +1,6 @@
 const jwt = require("jsonwebtoken");
 const express = require("express");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-
-const fs = require("fs");
-const util = require("util");
-const unlinkFile = util.promisify(fs.unlink);
-
-const { uploadFile, deleteFile, getFileStream } = require("../../s3");
+const { deleteFile } = require("../../s3");
 const passport = require("passport");
 const pool = require("../../db");
 const initializePassport = require("../../passport");
@@ -37,16 +30,6 @@ router.get("/user", async (req, res) => {
   } catch (e) {
     res.status(400).json({ msg: e.message });
   }
-});
-
-/**
- * @route   GET api/items/images/
- * @description   Get an image from S3, given the image key
- **/
-router.get("/images/:key", async (req, res) => {
-  const key = req.params.key;
-  const readStream = getFileStream(key);
-  readStream.pipe(res);
 });
 
 /**
@@ -88,15 +71,29 @@ router.post("/add", async (req, res) => {
 });
 
 /**
- * @route   POST api/items/image
- * @description   Upload image to AWS S3, and return the URL to reference
+ * @route   POST api/items/edit
+ * @description  Edit a registry item
  **/
-router.post("/image", upload.single("image"), async (req, res) => {
-  const file = req.file;
-  let result = await uploadFile(file);
-  result.imagePath = `http://localhost:3005/api/items/images/${result.key}`;
-  await unlinkFile(file.path);
-  res.status(201).json(result);
+router.post("/edit", async (req, res) => {
+  try {
+    let { itemid, price, imageKey, name } = req.body.item;
+
+    //console.log(req.body.item);
+    pool.query(
+      `UPDATE itemdetails SET price = '${price}', image = '${imageKey}', name = '${name}' WHERE itemid = $1
+      RETURNING *`,
+      [itemid],
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+        console.log(results.rows[0]);
+        res.status(201).json(results.rows[0]);
+      }
+    );
+  } catch (e) {
+    res.status(400).json({ msg: e.message, success: false });
+  }
 });
 
 /**

@@ -7,7 +7,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/api/auth");
 const groupRoutes = require("./routes/api/groups");
 const itemRoutes = require("./routes/api/items");
-
+const imageRoutes = require("./routes/api/images");
 //middleware
 app.use(cors());
 app.use(express.json());
@@ -16,5 +16,6 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/items", itemRoutes);
+app.use("/api/images", imageRoutes);
 
 module.exports = app;

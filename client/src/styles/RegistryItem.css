@@ -17,6 +17,9 @@
   box-sizing: border-box;
 }
 
+.ItemContainer:hover {
+}
+
 .ItemName {
   background-color: white;
 }
@@ -36,4 +39,26 @@
   background-color: white;
   height: 127px;
   border: 2px solid black;
+}
+
+.ItemDetailContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.ItemOptions {
+  display: flex;
+  justify-content: space-between;
+}
+
+#edit {
+  background-color: steelblue;
+  width: 30%;
+  cursor: pointer;
+}
+
+#delete {
+  background-color: red;
+  width: 30%;
+  cursor: pointer;
 }

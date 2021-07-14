@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Modal.css";
+import "../../styles/Modal.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addGroup } from "../actions/groupActions";
-import { addGroupMember } from "../actions/groupActions";
+import { addGroup } from "../../actions/groupActions";
+import { addGroupMember } from "../../actions/groupActions";
 export const GroupModal = ({ closeModal, modalType }) => {
   const id = useSelector((state) => state.auth.user.id);
   const [groupname, setGroupName] = useState("");

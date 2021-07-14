@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../styles/Login.css";
+import "../../styles/Login.css";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "../actions/authActions";
+import { login } from "../../actions/authActions";
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

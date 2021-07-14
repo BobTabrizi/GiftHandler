@@ -3,9 +3,9 @@ import "../styles/ManageGroup.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../actions/authActions";
 import { getGroups } from "../actions/groupActions";
-import NavBar from "../components/NavBar";
-import { GroupList } from "../components/GroupList";
-import { CreateJoinGroup } from "../components/CreateJoinGroup";
+import NavBar from "../components/Navigation/NavBar";
+import { GroupList } from "../components/Groups/GroupList";
+import { CreateJoinGroup } from "../components/Groups/CreateJoinGroup";
 export const ManageGroup = (props) => {
   const dispatch = useDispatch();
   const name = useSelector((state) => state.auth.user.name);

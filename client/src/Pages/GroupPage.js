@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/GroupPage.css";
 import { useDispatch } from "react-redux";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/Navigation/NavBar";
 import { getGroup } from "../actions/groupActions";
-
+import { UserList } from "../components/UserList";
 export const GroupPage = (props) => {
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState("");
@@ -23,14 +23,9 @@ export const GroupPage = (props) => {
       <NavBar title={groupName} />
 
       <div className="container">
-        <div className="Body">
+        <div className="memberContainer">
           Members in this group:
-          <div className="memberContainer">
-            {members &&
-              members.map((member, index) => (
-                <div key={index}>{member.name}</div>
-              ))}
-          </div>
+          <UserList />
         </div>
       </div>
     </>

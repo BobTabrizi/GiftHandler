@@ -2,8 +2,10 @@ import axios from "axios";
 import {
   GET_ITEMS,
   ADD_ITEM,
-  ADD_IMAGE,
   DELETE_ITEM,
+  EDIT_ITEM,
+  SELECT_EDIT_ITEM,
+  UNSELECT_EDIT_ITEM,
   ITEMS_LOADING,
 } from "./types";
 import { returnErrors } from "./errorActions";
@@ -45,29 +47,12 @@ export const addItem = (userid, price, imageKey, itemname) => (dispatch) => {
     );
 };
 
-export const addImage = (formData) => async (dispatch) => {
-  let response = await axios
-    .post("http://localhost:3005/api/items/image", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    })
-    .then((res) => {
-      dispatch({
-        type: ADD_IMAGE,
-        payload: res.data,
-      });
-      return res.data;
-    })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
-  // console.log(response);
-  return response;
-};
-
 export const deleteItem = (id, Key) => (dispatch) => {
   console.log(id);
   axios
-    .delete(`/api/items/delete?itemid=${id}&itemKey=${Key}`)
+    .delete(
+      `http://localhost:3005/api/items/delete?itemid=${id}&itemKey=${Key}`
+    )
     .then((res) => {})
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
@@ -78,6 +63,44 @@ export const deleteItem = (id, Key) => (dispatch) => {
   dispatch({
     type: DELETE_ITEM,
     payload: id,
+  });
+};
+
+export const editItem = (item) => (dispatch) => {
+  axios
+    .post(`http://localhost:3005/api/items/edit`, {
+      item: item,
+    })
+    .then((res) => {
+      dispatch({
+        type: EDIT_ITEM,
+        payload: {
+          payload: res.data,
+        },
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const selectEditItem = (item) => (dispatch) => {
+  dispatch({
+    type: SELECT_EDIT_ITEM,
+    payload: {
+      displayEditModal: true,
+      itemDetails: item,
+    },
+  });
+};
+
+export const unSelectEditItem = () => (dispatch) => {
+  dispatch({
+    type: UNSELECT_EDIT_ITEM,
+    payload: {
+      displayEditModal: false,
+      itemDetails: null,
+    },
   });
 };
 

@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
-import "../styles/Modal.css";
+import React, { useState } from "react";
+import "../../styles/Modal.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../actions/itemActions";
-import { addImage } from "../actions/itemActions";
-
+import { addItem } from "../../actions/itemActions";
+import { addImage } from "../../actions/imageActions";
+import CurrencyInput from "../CurrencyInput";
 export const AddItemModal = ({ closeModal }) => {
   const id = useSelector((state) => state.auth.user.id);
   const [price, setPrice] = useState(0);
   const [itemname, setItemName] = useState("");
   const [file, setFile] = useState();
+  const [previewImage, setPreviewImage] = useState(null);
   const dispatch = useDispatch();
 
   const fileSelected = (e) => {
     const file = e.target.files[0];
     setFile(file);
+    setPreviewImage(URL.createObjectURL(e.target.files[0]));
   };
 
   const postImage = async ({ image }) => {
@@ -37,13 +39,16 @@ export const AddItemModal = ({ closeModal }) => {
     <>
       <div className="itemModalBackground">
         <div className="modalContainer">
-          <div className="modalCloseButton">
-            <button onClick={() => closeModal(false)} style={{ fontSize: 22 }}>
-              X
-            </button>
-          </div>
-          <div className="header">
-            <h1>Add an Item</h1>
+          <div className="modalHeader">
+            <div className="modalCloseButton">
+              <button
+                onClick={() => closeModal(false)}
+                style={{ fontSize: 22 }}
+              >
+                X
+              </button>
+            </div>
+            Add an Item
           </div>
           <div className="body">
             <div>
@@ -56,21 +61,30 @@ export const AddItemModal = ({ closeModal }) => {
             </div>
             <div style={{ marginTop: 15 }}>
               Item Price
-              <input
+              <CurrencyInput
                 className="modalInput"
-                placeholder="Enter the price of the item"
                 onChange={(e) => setPrice(e.target.value)}
-              ></input>
+              />
             </div>
-            <div style={{ marginTop: 15 }}>
-              Item Image
+            <div style={{ marginTop: 15, marginBottom: 15 }}>
               <input
                 type="file"
+                id="imgUpload"
+                style={{ display: "none" }}
                 placeholder="Enter the price of the item"
                 onChange={fileSelected}
                 accept="image/*"
               ></input>
+              <label htmlFor="imgUpload" className="ImageUploadBtn">
+                Upload an Image
+              </label>
             </div>
+            <img
+              src={previewImage}
+              height={150}
+              width={150}
+              alt="Registry Item"
+            ></img>
           </div>
           <div className="footer">
             <div className="modalCreateButton">
