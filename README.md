@@ -2,4 +2,4 @@
 
 Gift Registry Web Application in Development.
 
-Technologies: React.JS, Redux, Express, Node.JS, PostgreSQL.
+Technologies: React.JS, Redux, Express, Node.JS, Amazon S3, PostgreSQL.
