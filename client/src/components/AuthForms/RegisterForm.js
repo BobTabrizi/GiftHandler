@@ -6,6 +6,14 @@ import { register } from "../../actions/authActions";
 import { REGISTER_FAIL, REGISTER_SUCCESS } from "../../actions/types";
 import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
+/**
+ *
+ * @PageLocation Register
+ * @Component RegisterForm
+ * @Description Register form that prompts user to register or login
+ *
+ */
 export const RegisterForm = ({ isAuthenticated, error, clearErrors }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

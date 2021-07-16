@@ -3,13 +3,24 @@ import "../../styles/Modal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../actions/itemActions";
 import { addImage } from "../../actions/imageActions";
+import { unSelectAddItem } from "../../actions/itemActions";
 import CurrencyInput from "../CurrencyInput";
-export const AddItemModal = ({ closeModal }) => {
+
+/**
+ * @PageLocation Dashboard
+ * @Component AddItemModal
+ * @Description Modal that allows a user to add a new item
+ *
+ */
+export const AddItemModal = () => {
   const id = useSelector((state) => state.auth.user.id);
+  const GroupID = useSelector((state) => state.group.currentGroup.Group.id);
   const [price, setPrice] = useState(0);
   const [itemname, setItemName] = useState("");
-  const [file, setFile] = useState();
-  const [previewImage, setPreviewImage] = useState(null);
+  const [file, setFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(
+    "http://localhost:3005/api/images/DefaultItem"
+  );
   const dispatch = useDispatch();
 
   const fileSelected = (e) => {
@@ -25,14 +36,21 @@ export const AddItemModal = ({ closeModal }) => {
     return result;
   };
 
-  const handleSubmit = async () => {
-    //First Store image in S3 and get the key
-    const imageInfo = await postImage({ image: file });
+  const handleModalClose = () => {
+    dispatch(unSelectAddItem());
+  };
 
-    const imageKey = imageInfo.Key;
-    //Then store the item attributes and S3 key in DB
-    dispatch(addItem(id, price, imageKey, itemname));
-    closeModal(false);
+  const handleSubmit = async () => {
+    let imageKey = "DefaultItem";
+
+    //If file uploaded, add to S3
+    if (file) {
+      const imageInfo = await postImage({ image: file });
+      imageKey = imageInfo.Key;
+    }
+    //Then store the item attributes and Image key in DB
+    dispatch(addItem(id, price, imageKey, itemname, GroupID));
+    handleModalClose();
   };
 
   return (
@@ -42,7 +60,7 @@ export const AddItemModal = ({ closeModal }) => {
           <div className="modalHeader">
             <div className="modalCloseButton">
               <button
-                onClick={() => closeModal(false)}
+                onClick={() => handleModalClose()}
                 style={{ fontSize: 22 }}
               >
                 X
@@ -81,8 +99,8 @@ export const AddItemModal = ({ closeModal }) => {
             </div>
             <img
               src={previewImage}
-              height={150}
-              width={150}
+              height={200}
+              width={300}
               alt="Registry Item"
             ></img>
           </div>

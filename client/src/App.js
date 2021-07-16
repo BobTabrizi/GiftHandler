@@ -9,7 +9,8 @@ import { history } from "./helpers/history";
 import { GroupPage } from "./Pages/GroupPage";
 import PrivateRoute from "./Routes/PrivateRoute";
 import { ManageGroup } from "./Pages/ManageGroup";
-import { UserPage } from "./Pages/UserPage";
+import { UserGroupPage } from "./Pages/UserGroupPage";
+import { ProfilePage } from "./Pages/ProfilePage";
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
@@ -18,12 +19,22 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route
+            path="/groups/:gid/users/:id"
+            exact
+            component={UserGroupPage}
+          />
           <Route path="/groups/:id" component={GroupPage} />
-          <Route path="/users/:id" component={UserPage} />
+
           <PrivateRoute
             path="/managegroups"
             isAuthenticated={isAuthenticated}
             component={ManageGroup}
+          />
+          <PrivateRoute
+            path="/profile"
+            isAuthenticated={isAuthenticated}
+            component={ProfilePage}
           />
           <PrivateRoute
             path="/"

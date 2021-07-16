@@ -1,22 +1,69 @@
 .container {
-  height: 93vh;
   background-color: teal;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 .groupTypesContainer {
   display: flex;
-  flex-direction: row;
-  margin: auto;
+  margin: 0 1rem 0 1rem;
 }
 
-.Body {
-  display: flex;
+.GroupListContainer {
+  flex-direction: column;
+  height: 55vh;
+  overflow-y: scroll;
+}
+
+.GroupContainer {
+  border: 1px solid black;
+  margin: 2%;
+  width: 90%;
+  height: 50px;
+  padding: 1%;
+  border-radius: 15px;
+  background-color: white;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: pointer;
+}
+
+.GroupContainer:hover {
+  background-color: rgb(192, 189, 189);
 }
 
 .ownedGroups {
-  padding: 1rem 1rem 1rem 1rem;
+  background-color: rgb(255, 221, 221);
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border-radius: 25px;
+  margin-top: 5%;
+  text-align: center;
+  flex: 1;
 }
 
-.usersGroups {
-  padding: 1rem 1rem 1rem 1rem;
+.otherGroups {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  background-color: rgb(0, 119, 128);
+  margin-top: 5%;
+  display: flex;
+  border-radius: 25px;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+}
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 10px;
 }

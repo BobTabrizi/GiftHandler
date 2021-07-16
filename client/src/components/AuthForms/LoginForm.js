@@ -3,6 +3,14 @@ import "../../styles/Login.css";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { login } from "../../actions/authActions";
+
+/**
+ *
+ * @PageLocation Login
+ * @Component LoginForm
+ * @Description Login form that prompts user to login or register
+ *
+ */
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

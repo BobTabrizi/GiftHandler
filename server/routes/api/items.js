@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const express = require("express");
 const { deleteFile } = require("../../s3");
 const passport = require("passport");
@@ -10,15 +9,15 @@ router.use(passport.initialize());
 
 /**
  * @route   GET api/items/user
- * @description  Get a user's registry items
+ * @description  Get a user's registry items in a specified group
  **/
 router.get("/user", async (req, res) => {
   try {
-    let { userid } = req.query;
+    let { userid, groupid } = req.query;
 
     pool.query(
-      `SELECT itemid,price,image,name FROM itemdetails WHERE itemid IN (SELECT itemid FROM items WHERE uid = $1)`,
-      [userid],
+      `SELECT itemid,price,image,name FROM itemdetails WHERE itemid IN (SELECT itemid FROM items WHERE userid = $1 AND groupid = $2)`,
+      [userid, groupid],
       (err, results) => {
         if (err) {
           throw err;
@@ -37,12 +36,12 @@ router.get("/user", async (req, res) => {
  * @description   Add a registry item
  **/
 router.post("/add", async (req, res) => {
-  let { userid, price, imageKey, name } = req.body;
+  let { userid, price, imageKey, name, groupID } = req.body;
   //First add to items table and get the generated item id
   try {
     pool.query(
-      `INSERT INTO ITEMS (uid) VALUES($1) RETURNING itemid`,
-      [userid],
+      `INSERT INTO ITEMS (userid,groupid) VALUES($1,$2) RETURNING itemid`,
+      [userid, groupID],
       (err, results) => {
         if (err) {
           throw err;
@@ -116,8 +115,10 @@ router.delete("/delete", async (req, res) => {
         console.log(results);
       }
     );
-    //Then delete the saved image in S3
-    await deleteFile(itemKey);
+    //Then delete the saved image in S3 if it is not the default
+    if (itemKey !== "DefaultItem") {
+      await deleteFile(itemKey);
+    }
   } catch (e) {
     res.status(400).json({ msg: e.message, success: false });
   }

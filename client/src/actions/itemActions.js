@@ -6,14 +6,19 @@ import {
   EDIT_ITEM,
   SELECT_EDIT_ITEM,
   UNSELECT_EDIT_ITEM,
+  SELECT_ADD_ITEM,
+  UNSELECT_ADD_ITEM,
   ITEMS_LOADING,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
-export const getItems = (id) => async (dispatch) => {
+export const getItems = (UserID, GroupID) => async (dispatch) => {
   dispatch(setItemsLoading());
   let response = await axios
-    .get(`http://localhost:3005/api/items/user?userid=${id}`, {})
+    .get(
+      `http://localhost:3005/api/items/user?userid=${UserID}&groupid=${GroupID}`,
+      {}
+    )
     .then((res) => {
       dispatch({
         type: GET_ITEMS,
@@ -27,28 +32,29 @@ export const getItems = (id) => async (dispatch) => {
   return response;
 };
 
-export const addItem = (userid, price, imageKey, itemname) => (dispatch) => {
-  axios
-    .post(`http://localhost:3005/api/items/add`, {
-      userid: userid,
-      price: price,
-      imageKey: imageKey,
-      name: itemname,
-    })
-    .then((res) => {
-      dispatch({
-        type: ADD_ITEM,
-        payload: res.data,
-      });
-      return res.data;
-    })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
+export const addItem =
+  (userid, price, imageKey, itemname, GroupID) => (dispatch) => {
+    axios
+      .post(`http://localhost:3005/api/items/add`, {
+        userid: userid,
+        price: price,
+        imageKey: imageKey,
+        name: itemname,
+        groupID: GroupID,
+      })
+      .then((res) => {
+        dispatch({
+          type: ADD_ITEM,
+          payload: res.data,
+        });
+        return res.data;
+      })
+      .catch((err) =>
+        dispatch(returnErrors(err.response.data, err.response.status))
+      );
+  };
 
 export const deleteItem = (id, Key) => (dispatch) => {
-  console.log(id);
   axios
     .delete(
       `http://localhost:3005/api/items/delete?itemid=${id}&itemKey=${Key}`
@@ -59,7 +65,6 @@ export const deleteItem = (id, Key) => (dispatch) => {
     );
 
   //Place here at the moment, for some reason axios then block is being skipped
-  //TODO, figure out why & put some error handling as well
   dispatch({
     type: DELETE_ITEM,
     payload: id,
@@ -100,6 +105,24 @@ export const unSelectEditItem = () => (dispatch) => {
     payload: {
       displayEditModal: false,
       itemDetails: null,
+    },
+  });
+};
+
+export const selectAddItem = () => (dispatch) => {
+  dispatch({
+    type: SELECT_ADD_ITEM,
+    payload: {
+      displayAddModal: true,
+    },
+  });
+};
+
+export const unSelectAddItem = () => (dispatch) => {
+  dispatch({
+    type: UNSELECT_ADD_ITEM,
+    payload: {
+      displayAddModal: false,
     },
   });
 };

@@ -8,8 +8,9 @@
   text-align: center;
 }
 
-.memberContainer {
+.MemberContainer {
   text-align: center;
+  width: 95vw;
 }
 
 .GroupManageContainer {
@@ -52,4 +53,11 @@
   border-radius: 15px;
   background-color: white;
   box-sizing: border-box;
+}
+
+.UserImage {
+  height: 200px;
+  object-fit: contain;
+}
+.UserName {
 }

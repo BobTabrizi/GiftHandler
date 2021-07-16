@@ -8,6 +8,15 @@ import { IconContext } from "react-icons";
 import PrivateRoute from "../../Routes/PrivateRoute";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions/authActions";
+
+/**
+ *
+ * @PageLocation All Pages aside from login/register
+ * @Component NavBar
+ * @Description Navigation Bar at the top of each page with sidebar.
+ *              Title indicates the current page.
+ *
+ */
 export default function NavBar({ title }) {
   const [sidebar, setSideBar] = useState(false);
   const dispatch = useDispatch();
@@ -29,9 +38,7 @@ export default function NavBar({ title }) {
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items">
             <li className="navbar-toggle" onClick={showSideBar}>
-              <Link to="/" className="toggle-btn">
-                <AiIcons.AiOutlineClose />
-              </Link>
+              <AiIcons.AiOutlineClose />
             </li>
             {SidebarData.map((item, index) => {
               return (

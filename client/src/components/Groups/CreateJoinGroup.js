@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import "../../styles/GroupPage.css";
-import { GroupModal } from "./GroupModal";
+import { GroupModal } from "../Groups/GroupModal";
+/**
+ * @PageLocation ManageGroup
+ * @Component CreateJoinGroup
+ * @Description Wrapper Component for Group Creation/Deletion
+ *
+ */
 export const CreateJoinGroup = () => {
   const [showGroupJoin, setShowGroupJoin] = useState(false);
   const [showGroupCreate, setShowGroupCreate] = useState(false);

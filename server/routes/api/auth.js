@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
  **/
 router.post("/register", async (req, res) => {
   let { name, email, password } = req.body;
-
+  let profileImage = "DefaultProfileImage";
   console.log({
     name,
     email,
@@ -80,9 +80,9 @@ router.post("/register", async (req, res) => {
           res.status(400).json({ message: "Email already Registered" });
         } else {
           pool.query(
-            `INSERT INTO users (name,email,password) VALUES ($1,$2,$3)
-          RETURNING id, name, email`,
-            [name, email, hashedPassword],
+            `INSERT INTO users (name,email,password,profileimage) VALUES ($1,$2,$3,$4)
+          RETURNING id, name, email, profileimage`,
+            [name, email, hashedPassword, profileImage],
             (err, results) => {
               if (err) {
                 //TD Also pass DB error back if necessary (unique email constraint)
@@ -93,6 +93,7 @@ router.post("/register", async (req, res) => {
                 id: results.rows[0].id,
                 name: results.rows[0].name,
                 email: results.rows[0].email,
+                image: results.rows[0].profileimage,
               };
 
               const payload = {
@@ -111,6 +112,7 @@ router.post("/register", async (req, res) => {
                   id: results.rows[0].id,
                   name: results.rows[0].name,
                   email: results.rows[0].email,
+                  image: results.rows[0].profileimage,
                 },
               });
             }
@@ -143,6 +145,29 @@ router.get("/user", async (req, res) => {
       }
     });
   }
+});
+
+/**
+ * @route   POST api/auth/update
+ * @description    Update a User's Profile
+ **/
+router.post("/update", async (req, res) => {
+  let { UID, name, profileImage } = req.body;
+  pool.query(
+    `UPDATE users SET name = '${name}', profileimage = '${profileImage}' WHERE id = $1
+    RETURNING *`,
+    [UID],
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+      if (!results.rows[0]) {
+        res.status(404).json({ message: "User ID Not Found" });
+      } else {
+        res.json(results.rows[0]);
+      }
+    }
+  );
 });
 
 module.exports = router;

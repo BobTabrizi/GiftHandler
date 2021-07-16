@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../styles/ManageGroup.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loadUser } from "../actions/authActions";
 import { getGroups } from "../actions/groupActions";
 import NavBar from "../components/Navigation/NavBar";
 import { GroupList } from "../components/Groups/GroupList";
 import { CreateJoinGroup } from "../components/Groups/CreateJoinGroup";
-export const ManageGroup = (props) => {
-  const dispatch = useDispatch();
-  const name = useSelector((state) => state.auth.user.name);
-  const id = useSelector((state) => state.auth.user.id);
-  const groups = useSelector((state) => state.group);
 
+/**
+ *
+ * @Page Group Manager Page
+ * @Description View all groups that a user is currently in.
+ *              Delete/Add owned groups by the user or join other groups.
+ * @route /managegroups
+ *
+ */
+export const ManageGroup = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     async function getData() {
       let UID = await dispatch(loadUser());
@@ -22,13 +27,17 @@ export const ManageGroup = (props) => {
 
   return (
     <>
-      <NavBar title="Manage Groups" />
       <div className="container">
+        <NavBar title="Manage Groups" />
         <CreateJoinGroup />
-        <div className="Body">
-          <div className="groupTypesContainer">
-            <div className="ownedGroups">Owned Groups</div>
-            <div className="usersGroups">Your Groups</div>
+        <div className="groupTypesContainer">
+          <div className="ownedGroups">
+            <h1>Owned Groups</h1>
+            <GroupList />
+          </div>
+          <div className="otherGroups">
+            <h1>Other Groups</h1>
+            <GroupList />
           </div>
         </div>
       </div>

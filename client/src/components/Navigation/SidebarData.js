@@ -1,6 +1,14 @@
 import React from "react";
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
+
+/**
+ *
+ * @PageLocation All Pages aside from login/register
+ * @Component SideBarData
+ * @Description Content for Nav sidebar, links to pages and potentially icons
+ *
+ */
 export const SidebarData = [
   {
     title: "Home",
@@ -16,7 +24,7 @@ export const SidebarData = [
   },
   {
     title: "Profile",
-    path: "/",
+    path: "/profile",
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },

@@ -1,6 +1,7 @@
 import {
   USER_LOADED,
   USER_LOADING,
+  UPDATE_USER,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -33,7 +34,13 @@ export default function authReducer(state = initialState, action) {
         isLoading: false,
         user: action.payload,
       };
-
+    case UPDATE_USER:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        user: action.payload,
+      };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);

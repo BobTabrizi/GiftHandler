@@ -3,7 +3,15 @@ import "../styles/GroupPage.css";
 import { useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { getGroup } from "../actions/groupActions";
-import { UserList } from "../components/UserList";
+import { UserList } from "../components/Groups/UserList";
+
+/**
+ *
+ * @Page Group Page
+ * @Description Information about the group and all its members
+ * @route /groups/:id
+ *
+ */
 export const GroupPage = (props) => {
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState("");
@@ -20,10 +28,9 @@ export const GroupPage = (props) => {
 
   return (
     <>
-      <NavBar title={groupName} />
-
       <div className="container">
-        <div className="memberContainer">
+        <NavBar title={groupName} />
+        <div className="MemberContainer">
           Members in this group:
           <UserList />
         </div>

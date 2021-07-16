@@ -8,11 +8,19 @@ import {
   ADD_GROUP_MEMBER,
   GET_GROUP_MEMBERS,
   GROUP_MEMBERS_LOADING,
+  SET_ACTIVE_GROUP,
 } from "../actions/types";
 
 const initialState = {
-  groups: [{ id: -1, groupname: "GROUP_NAME" }],
-  currentGroup: [],
+  groups: null,
+  currentGroup: {
+    Group: {
+      id: null,
+      name: null,
+      groupname: null,
+      role: null,
+    },
+  },
   pageGroup: [],
   loading: false,
 };
@@ -34,8 +42,13 @@ export default function groupReducer(state = initialState, action) {
     case GET_GROUP_MEMBERS:
       return {
         ...state,
-        groupMembers: action.payload,
+        members: action.payload,
         loading: false,
+      };
+    case SET_ACTIVE_GROUP:
+      return {
+        ...state,
+        currentGroup: action.payload,
       };
     case DELETE_GROUP:
       return {
@@ -45,12 +58,12 @@ export default function groupReducer(state = initialState, action) {
     case ADD_GROUP:
       return {
         ...state,
-        groups: [action.payload, ...state.items],
+        groups: [action.payload, ...state.groups],
       };
     case ADD_GROUP_MEMBER:
       return {
         ...state,
-        currentGroup: [action.payload, ...state.items],
+        groups: [action.payload, ...state.groups],
       };
 
     case GROUP_LOADING:

@@ -35,6 +35,12 @@
   height: 200px;
 }
 
+.PlaceHolderAddImage {
+  object-fit: contain;
+  height: 200px;
+  cursor: pointer;
+}
+
 .ItemDescription {
   background-color: white;
   height: 127px;
@@ -44,6 +50,19 @@
 .ItemDetailContainer {
   display: flex;
   flex-direction: column;
+}
+
+.PlaceHolderItemContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2%;
+  border: 1px solid black;
+  width: 20%;
+  height: 380px;
+  padding: 1%;
+  border-radius: 15px;
+  background-color: white;
+  box-sizing: border-box;
 }
 
 .ItemOptions {

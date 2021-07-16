@@ -5,6 +5,14 @@ import { editItem } from "../../actions/itemActions";
 import { addImage, deleteImage } from "../../actions/imageActions";
 import CurrencyInput from "../CurrencyInput";
 import { unSelectEditItem } from "../../actions/itemActions";
+
+/**
+ *
+ * @PageLocation Dashboard
+ * @Component EditItemModal
+ * @Description Modal that allows a user to edit attributes of an item
+ *
+ */
 export const EditItemModal = () => {
   const id = useSelector((state) => state.auth.user.id);
   const item = useSelector((state) => state.item.selectedItem.itemDetails);
@@ -23,8 +31,10 @@ export const EditItemModal = () => {
   };
 
   const postImage = async ({ image }) => {
-    //First delete the old image
-    dispatch(deleteImage(item.image));
+    //First delete the old image if its not the default
+    if (item.image !== "DefaultItem") {
+      dispatch(deleteImage(item.image));
+    }
 
     //Then add the new image
     let formData = new FormData();

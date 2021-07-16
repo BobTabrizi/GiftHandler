@@ -5,6 +5,15 @@ import { deleteItem } from "../../actions/itemActions";
 import { IoTrash } from "react-icons/io5";
 import { IoPencilSharp } from "react-icons/io5";
 import { selectEditItem } from "../../actions/itemActions";
+
+/**
+ *
+ * @PageLocation Dashboard
+ * @Component UserItemDetails
+ * @Description Displays Registry Items for the current user on the dashboard.
+ *              Functionality to edit and delete registry items.
+ *
+ */
 export const ItemDetails = (item) => {
   const [hover, SetHover] = useState("none");
   const dispatch = useDispatch();

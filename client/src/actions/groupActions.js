@@ -4,6 +4,7 @@ import {
   GET_GROUP,
   GROUP_LOADING,
   ADD_GROUP,
+  SET_ACTIVE_GROUP,
   DELETE_GROUP,
   USER_GROUPS_LOADING,
   ADD_GROUP_MEMBER,
@@ -30,7 +31,7 @@ export const getGroups = (id) => (dispatch) => {
 export const getGroup = (groupid) => async (dispatch) => {
   dispatch(setGroupLoading());
   let response = await axios
-    .get(`http://localhost:3005/api/groups?groupid=${groupid}`, {})
+    .get(`http://localhost:3005/api/groups?groupid=${groupid}`)
     .then((res) => {
       dispatch({
         type: GET_GROUP,
@@ -71,15 +72,16 @@ export const addGroup =
         passcode: passcode,
         userid: adminID,
       })
-      .then((res) =>
+      .then((res) => {
         dispatch({
           type: ADD_GROUP,
           payload: res.data,
-        })
-      )
-      .catch((err) =>
-        dispatch(returnErrors(err.response.data, err.response.status))
-      );
+        });
+      })
+      .catch((err) => {
+        console.log({ err }.err.message);
+        //  dispatch(returnErrors({err},err.message, err.response.status));
+      });
   };
 
 export const addGroupMember =
@@ -100,6 +102,15 @@ export const addGroupMember =
         dispatch(returnErrors(err.response.data, err.response.status))
       );
   };
+
+export const setActiveGroup = (Group) => (dispatch) => {
+  dispatch({
+    type: SET_ACTIVE_GROUP,
+    payload: {
+      Group: Group,
+    },
+  });
+};
 
 export const deleteGroup = (id) => (dispatch, getState) => {
   axios

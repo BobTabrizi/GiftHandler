@@ -1,0 +1,30 @@
+.UserPageContainer {
+  background-color: grey;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.registryContainer {
+  text-align: center;
+  border: 1px sandybrown solid;
+  background-color: grey;
+  border-width: 2px;
+  margin: auto;
+  border-radius: 25px;
+  width: 95vw;
+}
+
+.UserInfo {
+  text-align: center;
+  padding: 3%;
+}
+
+.UserName {
+  font-size: 25px;
+}
+.UserImage {
+  height: 150px;
+  width: 200px;
+  margin: auto;
+}

@@ -92,10 +92,6 @@
   display: flex;
 }
 
-span {
-  margin-left: 16px;
-}
-
 .toggle-btn {
   font-size: 2rem;
   right: 0px;

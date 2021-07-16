@@ -1,13 +1,12 @@
 .modalBackground {
   background-color: rgba(0, 0, 0, 0.5);
-  height: 92vh;
   width: 100vw;
   position: absolute;
 }
 
 .itemModalBackground {
   background-color: rgba(0, 0, 0, 0.5);
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   position: absolute;
 }
@@ -19,7 +18,7 @@
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top: 5%;
+  top: 10%;
   left: 0;
   right: 0;
   text-align: center;

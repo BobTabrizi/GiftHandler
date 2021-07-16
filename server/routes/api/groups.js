@@ -27,14 +27,14 @@ router.post("/create", async (req, res) => {
         //Then insert the admin with the group id in the group table
         let groupid = results.rows[0].id;
         pool.query(
-          `INSERT INTO GROUPS (id,groupname,userid,role) VALUES($1,$2,$3,$4) RETURNING userid`,
+          `INSERT INTO GROUPS (id,groupname,userid,role) VALUES($1,$2,$3,$4) RETURNING id,groupname`,
           [groupid, groupname, userid, "Admin"],
           (err, results) => {
             if (err) {
               throw err;
             }
-            if (results.rows[0].userid === userid) {
-              res.status(201).json({ msg: "Group Created" });
+            if (results.rows[0].groupname === groupname) {
+              res.status(201).json(results.rows[0]);
             } else {
               res.status(400).json({ msg: "Error Creating Group" });
             }
@@ -81,8 +81,15 @@ router.post("/users", async (req, res) => {
                 if (passcode === results.rows[0].passcode) {
                   let groupid = results.rows[0].id;
                   pool.query(
-                    `INSERT INTO GROUPS(id,groupname,userid,role) VALUES($1,$2,$3,$4)`,
-                    [groupid, groupname, userid, "Member"]
+                    `INSERT INTO GROUPS(id,groupname,userid,role) VALUES($1,$2,$3,$4) RETURNING *`,
+                    [groupid, groupname, userid, "Member"],
+                    (err, results) => {
+                      if (err) {
+                        throw err;
+                      }
+                      console.log(results.rows);
+                      res.status(201).json(results.rows[0]);
+                    }
                   );
                 }
               }
@@ -105,7 +112,7 @@ router.get("/user", async (req, res) => {
     let { userid } = req.query;
     // console.log(userid);
     pool.query(
-      `SELECT id,groupname FROM GROUPS WHERE userid = $1`,
+      `SELECT id,groupname,role FROM GROUPS WHERE userid = $1`,
       [userid],
       (err, results) => {
         if (err) {
@@ -128,13 +135,12 @@ router.get("/members", async (req, res) => {
   try {
     let { groupid } = req.query;
     pool.query(
-      `SELECT name FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
+      `SELECT name,profileimage FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
       [groupid],
       (err, results) => {
         if (err) {
           throw err;
         }
-        //console.log(results.rows);
         res.status(200).json(results.rows);
       }
     );
@@ -181,8 +187,9 @@ router.get("/", async (req, res) => {
         //Otherwise, find the id and names of all the members in the group
         else {
           resultObject.name = results.rows[0].groupname;
+          resultObject.id = groupid;
           pool.query(
-            `SELECT name,id FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
+            `SELECT name,id,profileimage FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
             [groupid],
             (err, results) => {
               if (err) {

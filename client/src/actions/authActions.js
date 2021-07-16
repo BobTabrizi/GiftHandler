@@ -3,6 +3,7 @@ import { returnErrors } from "./errorActions";
 import {
   USER_LOADED,
   USER_LOADING,
+  UPDATE_USER,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -60,12 +61,10 @@ export const register =
           type: REGISTER_SUCCESS,
           payload: res.data,
         });
-        console.log("hello");
         history.push("/");
       })
       .catch((err) => {
         console.log(err);
-        console.log("hi");
         /*
         dispatch(
           returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
@@ -93,7 +92,7 @@ export const login =
         history.push("/");
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
         dispatch(
           returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
         );
@@ -102,6 +101,24 @@ export const login =
         });
       });
   };
+
+export const updateUser = (user) => (dispatch) => {
+  axios
+    .post("http://localhost:3005/api/auth/update", {
+      UID: user.id,
+      name: user.name,
+      profileImage: user.profileImage,
+    })
+    .then((res) => {
+      dispatch({
+        type: UPDATE_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 export const logout = () => {
   return {
