@@ -5,6 +5,10 @@ import {
   GROUP_LOADING,
   ADD_GROUP,
   SET_ACTIVE_GROUP,
+  REMOVE_GROUP_MEMBER,
+  LEAVE_GROUP,
+  SELECT_EDIT_GROUP,
+  UNSELECT_EDIT_GROUP,
   DELETE_GROUP,
   USER_GROUPS_LOADING,
   ADD_GROUP_MEMBER,
@@ -60,7 +64,7 @@ export const getGroupMembers = (groupid) => async (dispatch) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 
-  console.log(response);
+  //console.log(response);
   return response;
 };
 
@@ -103,6 +107,23 @@ export const addGroupMember =
       );
   };
 
+export const removeGroupMember = (GroupID, UserID) => (dispatch) => {
+  axios
+    .post("http://localhost:3005/api/groups/removeUser", {
+      groupID: GroupID,
+      userID: UserID,
+    })
+    .then(
+      dispatch({
+        type: REMOVE_GROUP_MEMBER,
+        payload: UserID,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
 export const setActiveGroup = (Group) => (dispatch) => {
   dispatch({
     type: SET_ACTIVE_GROUP,
@@ -112,13 +133,30 @@ export const setActiveGroup = (Group) => (dispatch) => {
   });
 };
 
-export const deleteGroup = (id) => (dispatch, getState) => {
+export const deleteGroup = (id) => (dispatch) => {
   axios
-    .delete(`/api/groups/${id}`)
-    .then((res) =>
+    .delete(`/api/groups/delete?groupid=${id}`)
+    .then(
       dispatch({
         type: DELETE_GROUP,
         payload: id,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const leaveGroup = (groupID, userID) => (dispatch) => {
+  axios
+    .post("/api/groups/removeUser", {
+      groupID: groupID,
+      userID: userID,
+    })
+    .then(
+      dispatch({
+        type: LEAVE_GROUP,
+        payload: groupID,
       })
     )
     .catch((err) =>
@@ -142,4 +180,24 @@ export const setGroupMembersLoading = () => {
   return {
     type: GROUP_MEMBERS_LOADING,
   };
+};
+
+export const selectEditGroup = (group) => (dispatch) => {
+  dispatch({
+    type: SELECT_EDIT_GROUP,
+    payload: {
+      displayEditGroupModal: true,
+      groupDetails: group,
+    },
+  });
+};
+
+export const unSelectEditGroup = () => (dispatch) => {
+  dispatch({
+    type: UNSELECT_EDIT_GROUP,
+    payload: {
+      displayEditGroupModal: false,
+      groupDetails: null,
+    },
+  });
 };

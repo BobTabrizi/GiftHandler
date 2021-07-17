@@ -10,10 +10,10 @@ import "../../styles/RegistryItem.css";
  *
  */
 export const UserItemDetails = (item) => {
+  console.log(item);
   return (
     <>
       <div className="ItemDetailContainer">
-        <div className="ItemName">{item.name}</div>
         <div className="ItemImage">
           <img
             src={`http://localhost:3005/api/images/${item.image}`}
@@ -21,10 +21,11 @@ export const UserItemDetails = (item) => {
             alt="Registry Item"
           ></img>
         </div>
-
-        <div className="ItemDescription">
-          Sample Text fsdfsdfs fsdfsdfsf fsdfsdfsdfsdf fsdfsdfsdfsdf
-        </div>
+        <div className="ItemName">{item.name}</div>
+        <hr style={{ width: "100%" }} />
+        <div>Price: {item.price}</div>
+        <div>Quantity: {item.quantity}</div>
+        {item.link && <a href={item.link}>Purchase Link</a>}
       </div>
     </>
   );

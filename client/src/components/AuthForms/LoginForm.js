@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/Login.css";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { login } from "../../actions/authActions";
+import { clearErrors } from "../../actions/errorActions";
 
 /**
  *
@@ -14,20 +15,26 @@ import { login } from "../../actions/authActions";
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
 
+  let errors = useSelector((state) => state.error.message);
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const user = { email, password };
     dispatch(login(user));
   };
+
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, []);
 
   return (
     <>
       <div className="LoginFormContainer">
         <h1>Gift Handler</h1>
+
+        {errors && <div>{errors}</div>}
+
         <form onSubmit={handleSubmit}>
           <div className="form-inner">
             <div className="form-group">

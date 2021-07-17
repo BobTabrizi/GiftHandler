@@ -38,15 +38,18 @@ export default function NavBar({ title }) {
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items">
             <li className="navbar-toggle" onClick={showSideBar}>
-              <AiIcons.AiOutlineClose />
+              <AiIcons.AiOutlineClose style={{ cursor: "pointer" }} />
             </li>
             {SidebarData.map((item, index) => {
               return (
-                <li key={index} className={item.cName} onClick={showSideBar}>
-                  <div className="sidebarItem">
-                    <Link to={item.path}>{item.title}</Link>
-                  </div>
-                </li>
+                <Link
+                  to={item.path}
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <li key={index} className={item.cName} onClick={showSideBar}>
+                    <div className="sidebarItem">{item.title}</div>
+                  </li>
+                </Link>
               );
             })}
             <hr />

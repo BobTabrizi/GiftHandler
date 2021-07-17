@@ -27,13 +27,11 @@ function initialize(passport) {
             if (isMatch) {
               return done(null, user);
             } else {
-              return done(null, false, { message: "Password is incorrect" });
+              return done({ message: "Password is incorrect" }, false);
             }
           });
         } else {
-          return done(null, false, {
-            message: "No user with that email address",
-          });
+          return done({ message: "Email address not registered" }, false);
         }
       }
     );

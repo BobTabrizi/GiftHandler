@@ -6,8 +6,8 @@ import { getGroups } from "../actions/groupActions";
 import NavBar from "../components/Navigation/NavBar";
 import { GroupComponent } from "../components/Groups/GroupComponent";
 import { RegistryList } from "../components/Items/RegistryList";
-import { AddItemModal } from "../components/Items/AddItemModal";
-import { EditItemModal } from "../components/Items/EditItemModal";
+import { AddItemModal } from "../components/Modals/AddItemModal";
+import { EditItemModal } from "../components/Modals/EditItemModal";
 
 /**
  *
@@ -44,10 +44,13 @@ export const Dashboard = () => {
         <div className="dashGreeting">Hi {name},</div>
         <GroupComponent />
         <div style={{ textAlign: "center", fontSize: 36 }}>
-          Your Registry List
+          {GroupID ? `Your Registry List` : `Select a Group`}
         </div>
 
-        <div className="registryContainer">
+        <div
+          className="registryContainer"
+          style={{ display: GroupID ? "block" : "none" }}
+        >
           {GroupID && <RegistryList PageType={"Dashboard"} />}
         </div>
       </div>

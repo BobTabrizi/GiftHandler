@@ -11,12 +11,13 @@ import { addGroupMember } from "../../actions/groupActions";
  *              Upon name and passcode entry, group is created or joined.
  *
  */
-export const GroupModal = ({ closeModal, modalType }) => {
+export const CreateJoinModal = ({ closeModal, modalType }) => {
   const id = useSelector((state) => state.auth.user.id);
   const [groupname, setGroupName] = useState("");
   const [passcode, setPasscode] = useState("");
   const dispatch = useDispatch();
 
+  /*   Handle Join or Creation of Group */
   const handleSubmit = () => {
     if (modalType === "Create") {
       dispatch(addGroup(groupname, passcode, id));
@@ -27,7 +28,10 @@ export const GroupModal = ({ closeModal, modalType }) => {
     }
   };
 
+  /*  Conditionally render modal  */
   let bodyPrompts;
+
+  /* If creating, display inputs for creation */
   if (modalType === "Create") {
     bodyPrompts = (
       <>
@@ -46,6 +50,7 @@ export const GroupModal = ({ closeModal, modalType }) => {
       </>
     );
   } else {
+  /* If joining, display inputs for joining */
     bodyPrompts = (
       <>
         <p>Enter a group name</p>

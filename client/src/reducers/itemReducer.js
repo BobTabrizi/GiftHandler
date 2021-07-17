@@ -63,20 +63,12 @@ export default function itemReducer(state = initialState, action) {
         memberItems: arr,
       };
     case SELECT_EDIT_ITEM:
-      return {
-        ...state,
-        selectedItem: action.payload,
-      };
     case UNSELECT_EDIT_ITEM:
       return {
         ...state,
         selectedItem: action.payload,
       };
     case SELECT_ADD_ITEM:
-      return {
-        ...state,
-        itemAddition: action.payload,
-      };
     case UNSELECT_ADD_ITEM:
       return {
         ...state,

@@ -2,8 +2,12 @@ import {
   GET_USERS_GROUPS,
   ADD_GROUP,
   GET_GROUP,
+  SELECT_EDIT_GROUP,
+  UNSELECT_EDIT_GROUP,
   DELETE_GROUP,
+  LEAVE_GROUP,
   USER_GROUPS_LOADING,
+  REMOVE_GROUP_MEMBER,
   GROUP_LOADING,
   ADD_GROUP_MEMBER,
   GET_GROUP_MEMBERS,
@@ -20,6 +24,11 @@ const initialState = {
       groupname: null,
       role: null,
     },
+  },
+  selectedGroup: {
+    displayEditGroupModal: false,
+    groupDetails: null,
+    groupMembers: null,
   },
   pageGroup: [],
   loading: false,
@@ -42,13 +51,39 @@ export default function groupReducer(state = initialState, action) {
     case GET_GROUP_MEMBERS:
       return {
         ...state,
-        members: action.payload,
+        selectedGroup: {
+          displayEditGroupModal: state.selectedGroup.displayEditGroupModal,
+          groupDetails: { ...state.selectedGroup.groupDetails },
+          groupMembers: action.payload,
+        },
         loading: false,
       };
     case SET_ACTIVE_GROUP:
       return {
         ...state,
         currentGroup: action.payload,
+      };
+    case UNSELECT_EDIT_GROUP:
+    case SELECT_EDIT_GROUP:
+      return {
+        ...state,
+        selectedGroup: action.payload,
+      };
+    case REMOVE_GROUP_MEMBER:
+      return {
+        ...state,
+        selectedGroup: {
+          displayEditGroupModal: state.selectedGroup.displayEditGroupModal,
+          groupDetails: { ...state.selectedGroup.groupDetails },
+          groupMembers: state.selectedGroup.groupMembers.filter(
+            (user) => user.id !== action.payload
+          ),
+        },
+      };
+    case LEAVE_GROUP:
+      return {
+        ...state,
+        groups: state.groups.filter((group) => group.id !== action.payload),
       };
     case DELETE_GROUP:
       return {

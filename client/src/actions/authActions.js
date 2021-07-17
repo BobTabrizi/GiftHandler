@@ -35,7 +35,6 @@ export const loadUser = () => async (dispatch, getState) => {
       return res.data.id;
     })
     .catch((err) => {
-      console.log({ err });
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,
@@ -64,12 +63,9 @@ export const register =
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
-        /*
         dispatch(
           returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
         );
-        */
         dispatch({
           type: REGISTER_FAIL,
         });
@@ -92,9 +88,12 @@ export const login =
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
         dispatch(
-          returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
+          returnErrors(
+            err.response.data.error.message,
+            err.response.status,
+            "LOGIN_FAIL"
+          )
         );
         dispatch({
           type: LOGIN_FAIL,

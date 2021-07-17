@@ -16,7 +16,11 @@ export const GET_USERS_GROUPS = "GET_GROUPS";
 export const GET_GROUP = "GET_GROUP";
 export const ADD_GROUP = "ADD_GROUP";
 export const ADD_GROUP_MEMBER = "ADD_GROUP_MEMBER";
+export const REMOVE_GROUP_MEMBER = "REMOVE_GROUP_MEMBER";
+export const LEAVE_GROUP = "LEAVE_GROUP";
 export const SET_ACTIVE_GROUP = "SET_ACTIVE_GROUP";
+export const SELECT_EDIT_GROUP = "SELECT_EDIT_GROUP";
+export const UNSELECT_EDIT_GROUP = "UNSELECT_EDIT_GROUP";
 export const DELETE_GROUP = "DELETE_GROUP";
 export const USER_GROUPS_LOADING = "GROUPS_LOADING";
 export const GET_GROUP_MEMBERS = "GET_GROUP_MEMBERS";
@@ -41,3 +45,6 @@ export const GET_EXT_USER = "GET_EXT_USER";
 export const EXT_USER_LOADING = "EXT_USER_LOADING";
 export const EXT_USER_LOADED = "EXT_USER_LOADED";
 export const UPDATE_EXT_USER = "UPDATE_EXT_USER";
+
+/*                Modals                    */
+export const SET_ACTIVE_MODAL = "SET_ACTIVE_MODAL";

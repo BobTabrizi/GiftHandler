@@ -48,14 +48,14 @@ export const ProfilePage = () => {
       <div className="ProfileContainer">
         <NavBar title="Profile Page" />
         <div className="ProfileInfo">
-          {user.name}
-          <br />
-          {user.email}
+          <h1>{user.name}</h1>
+          <h2>{user.email}</h2>
           <br />
           <img
             src={`http://localhost:3005/api/images/${user.profileimage}`}
             width={150}
             height={150}
+            style={{ borderRadius: 15 }}
           ></img>
           <div style={{ marginTop: 15, marginBottom: 15 }}>
             <input
@@ -65,7 +65,7 @@ export const ProfilePage = () => {
               onChange={fileSelected}
               accept="image/*"
             ></input>
-            <label htmlFor="imgUpload" className="ImageUploadBtn">
+            <label htmlFor="imgUpload" className="ProfileImgBtn">
               Upload a new image
             </label>
           </div>

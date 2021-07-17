@@ -32,27 +32,22 @@ export const getItems = (UserID, GroupID) => async (dispatch) => {
   return response;
 };
 
-export const addItem =
-  (userid, price, imageKey, itemname, GroupID) => (dispatch) => {
-    axios
-      .post(`http://localhost:3005/api/items/add`, {
-        userid: userid,
-        price: price,
-        imageKey: imageKey,
-        name: itemname,
-        groupID: GroupID,
-      })
-      .then((res) => {
-        dispatch({
-          type: ADD_ITEM,
-          payload: res.data,
-        });
-        return res.data;
-      })
-      .catch((err) =>
-        dispatch(returnErrors(err.response.data, err.response.status))
-      );
-  };
+export const addItem = (Item) => (dispatch) => {
+  axios
+    .post(`http://localhost:3005/api/items/add`, {
+      Item,
+    })
+    .then((res) => {
+      dispatch({
+        type: ADD_ITEM,
+        payload: res.data,
+      });
+      return res.data;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
 
 export const deleteItem = (id, Key) => (dispatch) => {
   axios

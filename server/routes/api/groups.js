@@ -27,7 +27,7 @@ router.post("/create", async (req, res) => {
         //Then insert the admin with the group id in the group table
         let groupid = results.rows[0].id;
         pool.query(
-          `INSERT INTO GROUPS (id,groupname,userid,role) VALUES($1,$2,$3,$4) RETURNING id,groupname`,
+          `INSERT INTO GROUPS (id,groupname,userid,role) VALUES($1,$2,$3,$4) RETURNING id,groupname,role`,
           [groupid, groupname, userid, "Admin"],
           (err, results) => {
             if (err) {
@@ -56,8 +56,8 @@ router.post("/users", async (req, res) => {
   try {
     //Check if the user is already in the group.
     pool.query(
-      `SELECT userid from GROUPS WHERE userid = $1`,
-      [userid],
+      `SELECT userid from GROUPS WHERE groupname = $1 AND userid = $2`,
+      [groupname, userid],
       (err, results) => {
         if (err) {
           throw err;
@@ -87,7 +87,7 @@ router.post("/users", async (req, res) => {
                       if (err) {
                         throw err;
                       }
-                      console.log(results.rows);
+                      //console.log(results.rows);
                       res.status(201).json(results.rows[0]);
                     }
                   );
@@ -104,22 +104,74 @@ router.post("/users", async (req, res) => {
 });
 
 /**
+ * @route   POST api/groups/removeUser
+ * @description  Removes a user from a specified group
+ **/
+router.post("/removeUser", async (req, res) => {
+  let { groupID, userID } = req.body;
+
+  try {
+    //First delete the user from the group.
+    pool.query(
+      `DELETE from GROUPS WHERE id=$1 AND userid = $2`,
+      [groupID, userID],
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+        //Then delete the user's items for that group.
+        //This cascade deletes the user details table entries as well.
+        pool.query(
+          `DELETE from ITEMS WHERE groupid=$1 AND userid = $2`,
+          [groupID, userID],
+          (err, results) => {
+            if (err) {
+              throw err;
+            }
+          }
+        );
+      }
+    );
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
+});
+
+/**
  * @route   GET api/groups/user
  * @description  Get all of the groups a user is in
  **/
 router.get("/user", async (req, res) => {
   try {
     let { userid } = req.query;
-    // console.log(userid);
+
+    //First get the groups the user does not own
     pool.query(
-      `SELECT id,groupname,role FROM GROUPS WHERE userid = $1`,
+      `SELECT id,groupname,role FROM GROUPS WHERE userid = $1 AND role = 'Member'`,
       [userid],
       (err, results) => {
         if (err) {
           throw err;
         }
-        // console.log(results.rows);
-        res.status(200).json(results.rows);
+
+        let memberGroups = results.rows;
+
+        //Then get the user's owned groups with passcodes
+        pool.query(
+          `SELECT groups.id,groups.groupname,groups.role, groupauth.passcode 
+          FROM GROUPS INNER JOIN GROUPAUTH 
+          ON groupauth.id = groups.id WHERE role = 'Admin'AND groups.userid = $1;`,
+          [userid],
+          (err, results) => {
+            if (err) {
+              throw err;
+            }
+
+            //Add all the groups together
+            let groups = results.rows.concat(memberGroups);
+            res.status(200).json(groups);
+          }
+        );
       }
     );
   } catch (e) {
@@ -135,7 +187,7 @@ router.get("/members", async (req, res) => {
   try {
     let { groupid } = req.query;
     pool.query(
-      `SELECT name,profileimage FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
+      `SELECT users.name,users.id,groups.role FROM USERS INNER JOIN GROUPS ON groups.userid = users.id WHERE groups.id = $1;`,
       [groupid],
       (err, results) => {
         if (err) {
@@ -150,12 +202,24 @@ router.get("/members", async (req, res) => {
 });
 
 /**
- * @route   GET api/groups/delete/:id
+ * @route   GET api/groups/delete/
  * @description  Delete a group by group id
  **/
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete", async (req, res) => {
+  let { groupid } = req.query;
   try {
-    //TODO
+    //Deletes both group auth and group table entries using cascade deletion
+    pool.query(
+      `DELETE from GROUPAUTH WHERE id = $1`,
+      [groupid],
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+
+        console.log(results.rows);
+      }
+    );
   } catch (e) {
     res.status(400).json({ msg: e.message, success: false });
   }
@@ -205,6 +269,31 @@ router.get("/", async (req, res) => {
     );
   } catch (e) {
     res.status(400).json({ msg: e.message });
+  }
+});
+
+/**
+ * @route   POST api/groups/edit
+ * @description  Edit a group
+ **/
+router.post("/edit", async (req, res) => {
+  let editParams = req.body;
+
+  if (editParams.PassObject) {
+    try {
+      pool.query(
+        `UPDATE groupauth SET passcode = $1 WHERE id = $2 `,
+        [editParams.PassObject.newPass, editParams.PassObject.GroupID],
+        (err, results) => {
+          if (err) {
+            throw err;
+          }
+          res.status(201).json("Passcode Successfully Changed");
+        }
+      );
+    } catch (e) {
+      res.status(400).json({ msg: e.message });
+    }
   }
 });
 

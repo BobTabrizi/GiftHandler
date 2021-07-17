@@ -67,7 +67,7 @@
   display: flex;
   margin: auto;
 }
-.nav-text :hover {
+.nav-text:hover {
   background-color: #1a83ff;
   border-radius: 15px;
 }
@@ -89,7 +89,10 @@
 
 .navbar-toggle {
   background-color: "#060b26";
-  display: flex;
+  font-size: 30px;
+  margin-right: 1.5rem;
+  text-align: end;
+  list-style: none;
 }
 
 .toggle-btn {

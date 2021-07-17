@@ -16,7 +16,7 @@ router.get("/user", async (req, res) => {
     let { userid, groupid } = req.query;
 
     pool.query(
-      `SELECT itemid,price,image,name FROM itemdetails WHERE itemid IN (SELECT itemid FROM items WHERE userid = $1 AND groupid = $2)`,
+      `SELECT * FROM itemdetails WHERE itemid IN (SELECT itemid FROM items WHERE userid = $1 AND groupid = $2)`,
       [userid, groupid],
       (err, results) => {
         if (err) {
@@ -36,36 +36,46 @@ router.get("/user", async (req, res) => {
  * @description   Add a registry item
  **/
 router.post("/add", async (req, res) => {
-  let { userid, price, imageKey, name, groupID } = req.body;
+  let { Item } = req.body;
+
   //First add to items table and get the generated item id
+
   try {
     pool.query(
       `INSERT INTO ITEMS (userid,groupid) VALUES($1,$2) RETURNING itemid`,
-      [userid, groupID],
+      [Item.userID, Item.GroupID],
       (err, results) => {
         if (err) {
           throw err;
         }
         //Then add item details to item detail table with the generated item id
-        let itemid = results.rows[0].itemid;
+        let itemID = results.rows[0].itemid;
         pool.query(
-          `INSERT INTO ITEMDETAILS (itemid,price,image,name) VALUES($1,$2,$3,$4) RETURNING itemid, price, image, name`,
-          [itemid, price, imageKey, name],
+          `INSERT INTO ITEMDETAILS (itemid,price,quantity,link,purchased,image,name) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+          [
+            itemID,
+            Item.price,
+            Item.quantity,
+            Item.link,
+            Item.purchased,
+            Item.imageKey,
+            Item.itemName,
+          ],
           (err, results) => {
             if (err) {
               throw err;
             }
-            if (results.rows[0].itemid === itemid) {
+            if (results.rows[0].itemid === itemID) {
               res.status(201).json(results.rows[0]);
             } else {
-              res.status(400).json({ msg: "Error Adding Item" });
+              res.status(400).json({ message: "Error Adding Item" });
             }
           }
         );
       }
     );
   } catch (e) {
-    res.status(400).json({ msg: e.message });
+    res.status(400).json({ message: e.message });
   }
 });
 

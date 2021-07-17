@@ -1,13 +1,13 @@
 .modalBackground {
   background-color: rgba(0, 0, 0, 0.5);
-  width: 100vw;
+  width: 100%;
   position: absolute;
 }
 
 .itemModalBackground {
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
-  width: 100vw;
+  width: 100%;
   position: absolute;
 }
 
@@ -30,6 +30,9 @@
 
 .modalHeader {
   font-size: 35px;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
 }
 
 .modalButton {
@@ -59,8 +62,25 @@
 .modalInput {
   color: black;
   background-color: white;
-  border-radius: 25px;
-  padding: 15px;
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+}
+.modalInputContainer {
+  margin-top: 1%;
+  flex: 1;
+  display: flex;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalInputLabel {
+  display: flex;
+  flex: 1;
+  text-align: center;
 }
 
 .modalInput::placeholder {
@@ -73,3 +93,82 @@
   border-radius: 15px;
   cursor: pointer;
 }
+
+/*****--------------------START Group Modals--------------------------*****/
+.GroupModalBackground {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.EditGroupCloseBtn {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 30px;
+}
+
+/***----------- START Member Modal---------- ***/
+
+.EditMemberHeader {
+  font-size: 35px;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+}
+.ModalMemberContainer {
+  height: 40vh;
+  overflow-y: scroll;
+}
+.ModalHeaderItem,
+.ModalMemberItem {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+}
+
+.ModalHeaderItem {
+  margin-right: 4%;
+}
+
+.MemberModalActionButtons {
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.NameHeader,
+.RoleHeader,
+.MemberRole,
+.MemberName {
+  flex: 3;
+  border-right: 1px solid black;
+}
+.IconHeader {
+  flex: 1;
+}
+
+/***------------ END Member Modal---------- ***/
+
+/***----------- START Passcode Modal---------- ***/
+
+.EditPasscodeHeader {
+  font-size: 35px;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+}
+
+.SubmitPasscode,
+.PasscodeConfirmation {
+  background-color: rgb(185, 198, 255);
+  border-radius: 12px;
+  width: 40%;
+  margin: auto;
+  padding: 1%;
+  cursor: pointer;
+}
+
+/***------------ END Passcode Modal---------- ***/

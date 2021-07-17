@@ -15,6 +15,7 @@ export const PlaceHolderAddItem = () => {
   const dispatch = useDispatch();
 
   const handleAddItem = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(selectAddItem());
   };
   return (

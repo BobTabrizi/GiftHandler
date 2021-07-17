@@ -24,12 +24,14 @@ export const EditItemModal = () => {
   );
   const dispatch = useDispatch();
 
+  /*  Upon File Input, set file state and display a preview image  */
   const fileSelected = (e) => {
     const file = e.target.files[0];
     setFile(file);
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   };
 
+  /*      Delete old image and save new image to S3       */
   const postImage = async ({ image }) => {
     //First delete the old image if its not the default
     if (item.image !== "DefaultItem") {
@@ -43,12 +45,14 @@ export const EditItemModal = () => {
     return result;
   };
 
+  /*    Exit modal entirely     */
   const handleModalClose = () => {
     dispatch(unSelectEditItem());
   };
+
+  /*   Handle Edit of the item */
   const handleSubmit = async () => {
     let imageKey = item.image;
-
     //If the image was changed, delete and update images in S3
     if (file) {
       const imageInfo = await postImage({ image: file });

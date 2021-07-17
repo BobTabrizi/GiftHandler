@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/GroupPage.css";
-import { GroupModal } from "../Groups/GroupModal";
+import { CreateJoinModal } from "../Modals/CreateJoinModal";
 /**
  * @PageLocation ManageGroup
  * @Component CreateJoinGroup
@@ -32,10 +32,13 @@ export const CreateJoinGroup = () => {
           </div>
         </div>
         {showGroupCreate && (
-          <GroupModal closeModal={setShowGroupCreate} modalType={"Create"} />
+          <CreateJoinModal
+            closeModal={setShowGroupCreate}
+            modalType={"Create"}
+          />
         )}
         {showGroupJoin && (
-          <GroupModal closeModal={setShowGroupJoin} modalType={"Join"} />
+          <CreateJoinModal closeModal={setShowGroupJoin} modalType={"Join"} />
         )}
       </div>
     </>

@@ -11,9 +11,9 @@
   flex-direction: column;
   align-items: center;
 }
-.ImageUploadBtn {
-  background-color: steelblue;
-  padding: 1%;
-  border-radius: 15px;
+.ProfileImgBtn {
   cursor: pointer;
+  background-color: skyblue;
+  border-radius: 15px;
+  padding: 0.5rem;
 }
