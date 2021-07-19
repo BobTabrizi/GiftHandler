@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import "../../styles/Modal.css";
+import React, { useState, useEffect } from "react";
+import "../../styles/ItemStyles/ItemModals.css";
 import { useDispatch, useSelector } from "react-redux";
 import { editItem } from "../../actions/itemActions";
+import { deleteItem } from "../../actions/itemActions";
 import { addImage, deleteImage } from "../../actions/imageActions";
-import CurrencyInput from "../CurrencyInput";
+import CurrencyInput from "../Items/CurrencyInput";
 import { unSelectEditItem } from "../../actions/itemActions";
 
 /**
@@ -16,8 +17,13 @@ import { unSelectEditItem } from "../../actions/itemActions";
 export const EditItemModal = () => {
   const id = useSelector((state) => state.auth.user.id);
   const item = useSelector((state) => state.item.selectedItem.itemDetails);
+  const DispModal = useSelector(
+    (state) => state.item.selectedItem.displayEditModal
+  );
   const [itemprice, setItemPrice] = useState(item.price);
   const [itemname, setItemName] = useState(item.name);
+  const [itemQuantity, setItemQuantity] = useState(item.quantity);
+  const [itemLink, setItemLink] = useState(item.link);
   const [file, setFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(
     `http://localhost:3005/api/images/${item.image}`
@@ -30,6 +36,18 @@ export const EditItemModal = () => {
     setFile(file);
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
   };
+
+  /*  Add Event listener to close modal on background click      */
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (e.target && e.target.className === "ItemModalBackground") {
+        dispatch(unSelectEditItem());
+      }
+    };
+    if (DispModal) {
+      window.addEventListener("click", handleClick);
+    }
+  }, [DispModal]);
 
   /*      Delete old image and save new image to S3       */
   const postImage = async ({ image }) => {
@@ -50,6 +68,12 @@ export const EditItemModal = () => {
     dispatch(unSelectEditItem());
   };
 
+  /*  Handle Deletion of selected item */
+  const handleDeleteItem = () => {
+    dispatch(deleteItem(item.itemid, item.image));
+    dispatch(unSelectEditItem());
+  };
+
   /*   Handle Edit of the item */
   const handleSubmit = async () => {
     let imageKey = item.image;
@@ -62,6 +86,8 @@ export const EditItemModal = () => {
     let itemObject = {
       itemid: item.itemid,
       price: itemprice,
+      quantity: itemQuantity,
+      link: itemLink,
       imageKey: imageKey,
       name: itemname,
     };
@@ -72,65 +98,72 @@ export const EditItemModal = () => {
 
   return (
     <>
-      <div className="itemModalBackground">
-        <div className="modalContainer">
-          <div className="modalHeader">
-            <div className="modalCloseButton">
-              <button
-                onClick={() => handleModalClose()}
-                style={{ fontSize: 22 }}
-              >
-                X
-              </button>
+      <div className="ItemModalBackground">
+        <div className="ItemModalContainer">
+          <input
+            type="file"
+            id="imageUpload"
+            style={{ display: "none" }}
+            onChange={fileSelected}
+            accept="image/*"
+          ></input>
+          <label htmlFor="imageUpload" className="NewImageBtn">
+            <div className="ImageContainer">
+              <div className="content">
+                <div className="content-overlay"></div>
+                <img
+                  className="content-image"
+                  src={previewImage}
+                  style={{ width: "100%", height: "100%", display: "block" }}
+                  alt="Registry Item"
+                ></img>
+                <div className="content-details fadeIn-top">
+                  <h3>Choose a new photo</h3>
+                </div>
+              </div>
             </div>
-            Edit Item
+          </label>
+          <div className="ItemName">
+            <input
+              className="ItemModalInputName"
+              placeholder={`${item.name}`}
+              onChange={(e) => setItemName(e.target.value)}
+            ></input>
           </div>
-          <div className="body">
-            <div>
-              Item Name
-              <input
-                className="modalInput"
-                placeholder={`${item.name}`}
-                onChange={(e) => setItemName(e.target.value)}
-              ></input>
-            </div>
-            <div style={{ marginTop: 15 }}>
-              Item Price
-              <CurrencyInput
-                className="modalInput"
-                placeholder={`${item.price}`}
-                onChange={(e) => setItemPrice(e.target.value)}
-              />
-            </div>
-            <div style={{ marginTop: 15, marginBottom: 15 }}>
-              <input
-                type="file"
-                id="imgUpload"
-                style={{ display: "none" }}
-                onChange={fileSelected}
-                accept="image/*"
-              ></input>
-              <label htmlFor="imgUpload" className="ImageUploadBtn">
-                Upload a new image
-              </label>
-            </div>
-            <img
-              src={previewImage}
-              height={150}
-              width={150}
-              alt="Preview"
-            ></img>
+          <hr style={{ width: "100%" }} />
+          <div className="ItemPrice">
+            <div className="ItemModalBodyLabel">Price:</div>
+            <CurrencyInput
+              className="ItemModalInputPrice"
+              placeholder={`${item.price}`}
+              onChange={(e) => setItemPrice(e.target.value)}
+            />
           </div>
-          <div className="footer">
-            <div className="modalCreateButton">
-              <button
-                style={{ fontSize: 22, cursor: "pointer" }}
-                onClick={() => handleSubmit()}
-              >
-                Save Changes
-              </button>
-            </div>
+          <div className="ItemQuant">
+            <div className="ItemModalBodyLabel">Quantity:</div>
+            <input
+              className="ItemModalInputPrice"
+              placeholder={`${item.quantity}`}
+              onChange={(e) => setItemQuantity(e.target.value)}
+            ></input>
           </div>
+          <div className="ItemLink">
+            <div className="ItemModalBodyLabel">Link:</div>
+            <input
+              className="ItemModalInputPrice"
+              placeholder={`${item.link}`}
+              onChange={(e) => setItemLink(e.target.value)}
+            ></input>
+          </div>
+          <button className="ItemModalSubmitBtn" onClick={() => handleSubmit()}>
+            SAVE CHANGES
+          </button>
+          <button
+            className="ItemModalDeleteBtn"
+            onClick={() => handleDeleteItem()}
+          >
+            DELETE ITEM
+          </button>
         </div>
       </div>
     </>

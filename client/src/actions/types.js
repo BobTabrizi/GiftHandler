@@ -7,8 +7,6 @@ export const DELETE_ITEM = "DELETE_ITEM";
 export const EDIT_ITEM = "EDIT_ITEM";
 export const SELECT_EDIT_ITEM = "SELECT_EDIT_ITEM";
 export const UNSELECT_EDIT_ITEM = "UNSELECT_EDIT_ITEM";
-export const SELECT_ADD_ITEM = "SELECT_ADD_ITEM";
-export const UNSELECT_ADD_ITEM = "UNSELECT_ADD_ITEM";
 export const ITEMS_LOADING = "ITEMS_LOADING";
 
 /*            Groups                      */
@@ -48,3 +46,6 @@ export const UPDATE_EXT_USER = "UPDATE_EXT_USER";
 
 /*                Modals                    */
 export const SET_ACTIVE_MODAL = "SET_ACTIVE_MODAL";
+export const SET_MODAL_PAGE = "SET_MODAL_PAGE";
+export const UPDATE_MODAL_DATA = "UPDATE_MODAL_DATA";
+export const DEACTIVATE_MODAL = "DEACTIVATE_MODAL";

@@ -68,25 +68,22 @@ export const getGroupMembers = (groupid) => async (dispatch) => {
   return response;
 };
 
-export const addGroup =
-  (groupName, passcode, adminID) => (dispatch, getState) => {
-    axios
-      .post("http://localhost:3005/api/groups/create", {
-        groupname: groupName,
-        passcode: passcode,
-        userid: adminID,
-      })
-      .then((res) => {
-        dispatch({
-          type: ADD_GROUP,
-          payload: res.data,
-        });
-      })
-      .catch((err) => {
-        console.log({ err }.err.message);
-        //  dispatch(returnErrors({err},err.message, err.response.status));
+export const addGroup = (GroupDetails) => (dispatch) => {
+  axios
+    .post("http://localhost:3005/api/groups/create", {
+      GroupDetails,
+    })
+    .then((res) => {
+      dispatch({
+        type: ADD_GROUP,
+        payload: res.data,
       });
-  };
+    })
+    .catch((err) => {
+      console.log({ err }.err.message);
+      //  dispatch(returnErrors({err},err.message, err.response.status));
+    });
+};
 
 export const addGroupMember =
   (groupName, passcode, memberID) => (dispatch, getState) => {

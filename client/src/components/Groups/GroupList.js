@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../../styles/ManageGroup.css";
+import "../../styles/PageStyles/ManageGroup.css";
 import { Link } from "react-router-dom";
 import { IoTrash } from "react-icons/io5";
 import { IoPencilSharp } from "react-icons/io5";
@@ -16,10 +16,18 @@ import { GrLogout } from "react-icons/gr";
  *              filtering group data for owned/unowned groups
  *
  */
+
+const ModeList = {
+  0: "Secret Santa",
+  1: "Wedding",
+  2: "Other",
+};
+
 export const GroupList = ({ FilterType }) => {
   const groups = useSelector((state) => state.group.groups);
   const userID = useSelector((state) => state.auth.user.id);
   const dispatch = useDispatch();
+
   const handleEditGroup = (group) => {
     dispatch(selectEditGroup(group));
   };
@@ -27,8 +35,16 @@ export const GroupList = ({ FilterType }) => {
   const handleLeaveGroup = (groupID) => {
     dispatch(leaveGroup(groupID, userID));
   };
+
   return (
     <>
+      <div className="GroupListHeader">
+        <div className="GroupNameHeader">Group Name</div>
+        <div className="VerticalLine"></div>
+        <div className="GroupTypeHeader">Group Type</div>
+        <div className="VerticalLine"></div>
+        <div className="GroupActionHeader">Edit</div>
+      </div>
       <div className="GroupListContainer">
         {groups &&
           groups
@@ -46,7 +62,10 @@ export const GroupList = ({ FilterType }) => {
                   </Link>
                 </div>
                 <div className="VerticalLine"></div>
-
+                <div className="GroupMode">
+                  <div className="GroupModeLabel">{ModeList[group.mode]}</div>
+                </div>
+                <div className="VerticalLine"></div>
                 {FilterType === "Member" && (
                   <div className="GroupActions">
                     <div className="LeaveGroupBtn">

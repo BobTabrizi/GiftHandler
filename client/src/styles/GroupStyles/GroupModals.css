@@ -1,0 +1,110 @@
+.GrpModalBackground {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.GrpModalContainer {
+  width: 500px;
+  height: 550px;
+  background-color: cornflowerblue;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 5%;
+  left: 0;
+  right: 0;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.modalCloseButton {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 30px;
+}
+
+.modalCreateButton,
+.modalJoinButton {
+  background-color: rgb(185, 198, 255);
+  border-radius: 12px;
+  width: 40%;
+  margin: auto;
+  padding: 1%;
+  cursor: pointer;
+}
+
+.modalInput {
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+}
+
+/***-------------START ModeSelect Modal ------------*/
+.ModeSelectBody {
+  display: flex;
+  flex-direction: column;
+  padding: 6%;
+  width: 60%;
+  margin: auto;
+  height: 100%;
+}
+
+.ModeBtn {
+  flex: 1;
+  font-size: 28px;
+}
+.radBtn {
+  -webkit-appearance: radio;
+}
+
+.ModeInfo {
+  margin: 10%;
+  font-size: 18px;
+}
+
+.ModeSelectFooter {
+  text-align: center;
+}
+
+.ModeSelectBtn {
+  background-color: #5cb85c;
+  width: 50%;
+  border-radius: 15px;
+  margin: auto;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/***-------------END ModeSelect Modal ------------*/
+
+/***-------------START GroupRegister Modal ------------*/
+
+.GroupRegisterHeader {
+  text-align: center;
+}
+
+.GroupRegisterBody {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  text-align: center;
+}
+
+/***-------------END GroupRegister Modal ------------*/
+
+/*****----------------------START EDIT GROUP MODAL -----------------*****/
+
+.ConfirmDeleteContainer,
+.MainMemberModal,
+.PasscodeContainer,
+.MenuContainer {
+  text-align: center;
+}
+
+/*****----------------------END EDIT GROUP MODAL -----------------*****/

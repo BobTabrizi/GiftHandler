@@ -30,6 +30,9 @@ const initialState = {
     groupDetails: null,
     groupMembers: null,
   },
+  addGroup: {
+    displayAddGroupmodal: false,
+  },
   pageGroup: [],
   loading: false,
 };
@@ -63,8 +66,8 @@ export default function groupReducer(state = initialState, action) {
         ...state,
         currentGroup: action.payload,
       };
-    case UNSELECT_EDIT_GROUP:
     case SELECT_EDIT_GROUP:
+    case UNSELECT_EDIT_GROUP:
       return {
         ...state,
         selectedGroup: action.payload,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import "../../styles/RegistryItem.css";
+import "../../styles/ItemStyles/RegistryItem.css";
 import { deleteItem } from "../../actions/itemActions";
 import { IoTrash } from "react-icons/io5";
 import { IoPencilSharp } from "react-icons/io5";
@@ -34,11 +34,7 @@ export const ItemDetails = (item) => {
   };
   return (
     <>
-      <div
-        className="ItemDetailContainer"
-        onMouseEnter={(e) => showItemOptions(e)}
-        onMouseLeave={(e) => hideItemOptions(e)}
-      >
+      <div className="ItemDetailContainer" onClick={() => handleEditItem()}>
         <div className="ItemOptions" style={{ display: hover }}>
           <IoPencilSharp
             style={{ marginRight: "5%", cursor: "pointer" }}
@@ -59,9 +55,9 @@ export const ItemDetails = (item) => {
         </div>
         <div className="ItemName">{item.name}</div>
         <hr style={{ width: "100%" }} />
-        <div>Price: {item.price}</div>
-        <div>Quantity: {item.quantity}</div>
-        {item.link && <a href={item.link}>Purchase Link</a>}
+        <div className="ItemPrice">Price: {item.price}</div>
+        <div className="ItemQuant">Quantity: {item.quantity}</div>
+        {item.link && <p>Purchase Link</p>}
       </div>
     </>
   );

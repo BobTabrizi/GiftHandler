@@ -14,12 +14,12 @@ router.use(passport.initialize());
  * @description    Create a group
  **/
 router.post("/create", async (req, res) => {
-  let { groupname, passcode, userid } = req.body;
+  let { groupName, passcode, userid, groupMode } = req.body.GroupDetails;
   //First create group detail table
   try {
     pool.query(
-      `INSERT INTO GROUPAUTH(groupname,passcode,ownerid) VALUES($1,$2,$3) RETURNING id`,
-      [groupname, passcode, userid],
+      `INSERT INTO GROUPAUTH(groupname,passcode,ownerid, mode) VALUES($1,$2,$3,$4) RETURNING id`,
+      [groupName, passcode, userid, groupMode],
       (err, results) => {
         if (err) {
           throw err;
@@ -27,13 +27,16 @@ router.post("/create", async (req, res) => {
         //Then insert the admin with the group id in the group table
         let groupid = results.rows[0].id;
         pool.query(
-          `INSERT INTO GROUPS (id,groupname,userid,role) VALUES($1,$2,$3,$4) RETURNING id,groupname,role`,
-          [groupid, groupname, userid, "Admin"],
+          `INSERT INTO GROUPS (id,userid,role) VALUES($1,$2,$3) RETURNING id, role`,
+          [groupid, userid, "Admin"],
           (err, results) => {
             if (err) {
               throw err;
             }
-            if (results.rows[0].groupname === groupname) {
+            if (results.rows[0].role === "Admin") {
+              results.rows[0].groupname = groupName;
+              results.rows[0].passcode = passcode;
+              results.rows[0].mode = groupMode;
               res.status(201).json(results.rows[0]);
             } else {
               res.status(400).json({ msg: "Error Creating Group" });
@@ -56,7 +59,9 @@ router.post("/users", async (req, res) => {
   try {
     //Check if the user is already in the group.
     pool.query(
-      `SELECT userid from GROUPS WHERE groupname = $1 AND userid = $2`,
+      `SELECT groups.userid FROM GROUPS JOIN GROUPAUTH ON 
+      groups.id = groupauth.id WHERE groupauth.groupname = $1 AND
+      groups.userid = $2`,
       [groupname, userid],
       (err, results) => {
         if (err) {
@@ -66,14 +71,14 @@ router.post("/users", async (req, res) => {
           res.status(400).json({ message: "User Already in Group" });
         } else {
           pool.query(
-            `SELECT passcode, id FROM GROUPAUTH WHERE groupname = $1`,
+            `SELECT passcode, id,mode FROM GROUPAUTH WHERE groupname = $1`,
             [groupname],
             (err, results) => {
               if (err) {
                 throw err;
               }
 
-              // console.log(results.rows[0]);
+              let groupmode = results.rows[0].mode;
               if (!results.rows.length) {
                 res.status(400).json({ message: "Group Does Not Exist" });
               } else {
@@ -81,13 +86,15 @@ router.post("/users", async (req, res) => {
                 if (passcode === results.rows[0].passcode) {
                   let groupid = results.rows[0].id;
                   pool.query(
-                    `INSERT INTO GROUPS(id,groupname,userid,role) VALUES($1,$2,$3,$4) RETURNING *`,
-                    [groupid, groupname, userid, "Member"],
+                    `INSERT INTO GROUPS(id, userid,role) VALUES($1,$2,$3) RETURNING *`,
+                    [groupid, userid, "Member"],
                     (err, results) => {
                       if (err) {
                         throw err;
                       }
                       //console.log(results.rows);
+                      results.rows[0].groupname = groupname;
+                      results.rows[0].mode = groupmode;
                       res.status(201).json(results.rows[0]);
                     }
                   );
@@ -147,7 +154,9 @@ router.get("/user", async (req, res) => {
 
     //First get the groups the user does not own
     pool.query(
-      `SELECT id,groupname,role FROM GROUPS WHERE userid = $1 AND role = 'Member'`,
+      `SELECT groups.id,groups.role,groupauth.groupname,groupauth.mode FROM GROUPS INNER JOIN GROUPAUTH
+      ON groupauth.id = groups.id
+      WHERE groups.userid = $1 AND groups.role = 'Member'`,
       [userid],
       (err, results) => {
         if (err) {
@@ -158,7 +167,7 @@ router.get("/user", async (req, res) => {
 
         //Then get the user's owned groups with passcodes
         pool.query(
-          `SELECT groups.id,groups.groupname,groups.role, groupauth.passcode 
+          `SELECT groups.id,groupauth.groupname,groups.role, groupauth.passcode,groupauth.mode 
           FROM GROUPS INNER JOIN GROUPAUTH 
           ON groupauth.id = groups.id WHERE role = 'Admin'AND groups.userid = $1;`,
           [userid],

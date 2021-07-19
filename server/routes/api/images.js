@@ -12,6 +12,7 @@ const router = express.Router();
  * @description   Get an image from S3, given the image key
  **/
 router.get("/:key", async (req, res) => {
+  console.log(req.params);
   const key = req.params.key;
   const readStream = getFileStream(key);
   readStream.pipe(res);
@@ -41,5 +42,4 @@ router.delete("/delete", async (req, res) => {
     res.status(400).json({ msg: e.message, success: false });
   }
 });
-
 module.exports = router;

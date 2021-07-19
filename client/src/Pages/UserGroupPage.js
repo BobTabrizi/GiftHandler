@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/UserPage.css";
+import "../styles/PageStyles/UserPage.css";
 import { useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { RegistryList } from "../components/Items/RegistryList";

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../styles/Dash.css";
+import "../styles/PageStyles/Dashboard.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../actions/authActions";
 import { getGroups } from "../actions/groupActions";
@@ -8,7 +8,6 @@ import { GroupComponent } from "../components/Groups/GroupComponent";
 import { RegistryList } from "../components/Items/RegistryList";
 import { AddItemModal } from "../components/Modals/AddItemModal";
 import { EditItemModal } from "../components/Modals/EditItemModal";
-
 /**
  *
  * @Page Dashboard
@@ -19,14 +18,11 @@ import { EditItemModal } from "../components/Modals/EditItemModal";
  */
 export const Dashboard = () => {
   const dispatch = useDispatch();
-  const name = useSelector((state) => state.auth.user.name);
   const GroupID = useSelector((state) => state.group.currentGroup.Group.id);
   const showEditModal = useSelector(
     (state) => state.item.selectedItem.displayEditModal
   );
-  const showAddModal = useSelector(
-    (state) => state.item.itemAddition.displayAddModal
-  );
+  const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);
   useEffect(() => {
     async function getData() {
       let UID = await dispatch(loadUser());
@@ -38,17 +34,16 @@ export const Dashboard = () => {
   return (
     <>
       <div className="dashContainer">
-        {showAddModal && <AddItemModal />}
+        {ActiveModal === "AddItem" && <AddItemModal />}
         {showEditModal && <EditItemModal />}
         <NavBar title="HomePage" />
-        <div className="dashGreeting">Hi {name},</div>
         <GroupComponent />
         <div style={{ textAlign: "center", fontSize: 36 }}>
-          {GroupID ? `Your Registry List` : `Select a Group`}
+          {GroupID ? `Your Wishlist` : `Select a Group`}
         </div>
 
         <div
-          className="registryContainer"
+          className="registryDashContainer"
           style={{ display: GroupID ? "block" : "none" }}
         >
           {GroupID && <RegistryList PageType={"Dashboard"} />}

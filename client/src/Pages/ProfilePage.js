@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/ProfilePage.css";
+import "../styles/PageStyles/ProfilePage.css";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { loadUser, updateUser } from "../actions/authActions";

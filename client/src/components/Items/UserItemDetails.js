@@ -1,7 +1,5 @@
 import React from "react";
-
-import "../../styles/RegistryItem.css";
-
+import "../../styles/ItemStyles/RegistryItem.css";
 /**
  * @PageLocation UserGroupPage
  * @Component UserItemDetails

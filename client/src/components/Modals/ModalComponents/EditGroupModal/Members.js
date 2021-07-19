@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../../../../styles/Modal.css";
+import "../../../../styles/GroupStyles/GroupModals.css";
 import { getGroupMembers } from "../../../../actions/groupActions";
-import { setActiveModal } from "../../../../actions/modalActions";
+import { setModalPage } from "../../../../actions/modalActions";
 import { removeGroupMember } from "../../../../actions/groupActions";
 import { IoBan } from "react-icons/io5";
 import { IoStar } from "react-icons/io5";
 import { IoArrowBack } from "react-icons/io5";
 /**
  *
- * @PageLocation GroupPage
+ * @PageLocation ManageGroups
  * @Component Members
- * @Description Modal Component for the Edit Group Modal
+ * @Description Displays a list of members in a selected group, and allows group admins to kick members.
  *
  *
  */
@@ -44,9 +44,9 @@ export const Members = () => {
     dispatch(removeGroupMember(GroupID, selectedUserID));
   };
 
-  /*             Move back to modal menu         */
+  /*     Move back to modal menu     */
   const changeModal = () => {
-    dispatch(setActiveModal("Main"));
+    dispatch(setModalPage("GroupMenu"));
   };
 
   useEffect(() => {

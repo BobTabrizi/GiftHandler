@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/Dash.css";
+import "../../styles/PageStyles/Dashboard.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "react-dropdown-select";
@@ -26,11 +26,13 @@ export const GroupComponent = ({}) => {
   );
   const dispatch = useDispatch();
   const handleChange = (values) => {
-    dispatch(setActiveGroup(values[0]));
-    let GroupID = values[0].id;
-    dispatch(getItems(UID, GroupID));
+    if (values.length > 0) {
+      dispatch(setActiveGroup(values[0]));
+      let GroupID = values[0].id;
+      dispatch(getItems(UID, GroupID));
 
-    setActiveGroupName(values[0].name);
+      setActiveGroupName(values[0].name);
+    }
   };
 
   useEffect(() => {
@@ -54,6 +56,7 @@ export const GroupComponent = ({}) => {
             visibility: showAddModal || showEditModal ? "hidden" : "visible",
           }}
         >
+          Select a Group
           {groups && groups.length !== 0 && (
             <div style={{ position: "absolute", left: "50%", display: "flex" }}>
               <div style={{ position: "relative", left: "-50%" }}>
@@ -64,11 +67,13 @@ export const GroupComponent = ({}) => {
                   valueField="id"
                   placeholder={`${activeGroupName} `}
                   style={{
-                    width: 300,
+                    width: 500,
                     margin: "auto",
+                    textAlign: "center",
                   }}
                   dropdownHeight="200px"
                   dropdownGap={-5}
+                  searchable={false}
                 />
               </div>
             </div>

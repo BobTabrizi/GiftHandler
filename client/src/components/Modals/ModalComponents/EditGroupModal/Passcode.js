@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
-import { setActiveModal } from "../../../../actions/modalActions";
-import "../../../../styles/Modal.css";
+import { deactivateModal } from "../../../../actions/modalActions";
+import { setModalPage } from "../../../../actions/modalActions";
+import "../../../../styles/GroupStyles/GroupModals.css";
 import { IoArrowBack } from "react-icons/io5";
 /**
  *
- * @PageLocation GroupPage
+ * @PageLocation ManageGroups
  * @Component Passcode
- * @Description Modal Component for the Edit Group Modal
+ * @Description Reset group passcode modal.
  *
  *
  */
@@ -24,12 +25,12 @@ export const Passcode = () => {
   /*     Close out the modal entirely   */
   const closeModal = () => {
     dispatch(unSelectEditGroup());
-    dispatch(setActiveModal("Main"));
+    dispatch(deactivateModal());
   };
 
   /*    Move back to modal menu         */
   const changeModal = () => {
-    dispatch(setActiveModal("Main"));
+    dispatch(setModalPage("GroupMenu"));
   };
 
   /*   Process passcode change request  */
@@ -52,7 +53,10 @@ export const Passcode = () => {
 
   return (
     <>
-      <div style={{ display: displaySuccess ? "none" : "block" }}>
+      <div
+        className="PasscodeContainer"
+        style={{ display: displaySuccess ? "none" : "block" }}
+      >
         <div className="EditPasscodeHeader">
           <div>
             <IoArrowBack

@@ -1,7 +1,16 @@
-import { SET_ACTIVE_MODAL } from "../actions/types";
+import {
+  SET_ACTIVE_MODAL,
+  SET_MODAL_PAGE,
+  UPDATE_MODAL_DATA,
+  DEACTIVATE_MODAL,
+} from "../actions/types";
 
 const initialState = {
-  activeModal: "Main",
+  activeModal: {
+    modalType: null,
+    activePage: null,
+  },
+  modalData: null,
 };
 
 export default function modalReducer(state = initialState, action) {
@@ -10,6 +19,25 @@ export default function modalReducer(state = initialState, action) {
       return {
         ...state,
         activeModal: action.payload,
+      };
+    case SET_MODAL_PAGE:
+      return {
+        ...state,
+        activeModal: {
+          activePage: action.payload,
+          modalType: state.activeModal.modalType,
+        },
+      };
+    case DEACTIVATE_MODAL:
+      return {
+        ...state,
+        activeModal: "Main",
+        modalData: null,
+      };
+    case UPDATE_MODAL_DATA:
+      return {
+        ...state,
+        modalData: action.payload,
       };
     default:
       return state;

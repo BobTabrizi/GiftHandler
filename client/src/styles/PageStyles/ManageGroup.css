@@ -12,8 +12,37 @@
 
 .GroupListContainer {
   flex-direction: column;
-  height: 55vh;
+  height: 50vh;
   overflow-y: scroll;
+}
+.GroupListHeader {
+  display: flex;
+  flex-direction: row;
+  margin-left: 2%;
+  margin-right: 5%;
+  background: white;
+  height: 35px;
+}
+
+.GroupNameHeader {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+}
+.GroupTypeHeader {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.GroupActionHeader {
+  flex: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .GroupContainer {
@@ -33,9 +62,15 @@
   margin-left: 1rem;
 }
 
-.GroupActions {
-  padding: 2%;
+.GroupMode {
+  flex: 2;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.GroupActions {
+  display: flex;
+  flex: 0.5;
   flex-direction: row;
   justify-content: space-around;
   font-size: 23px;

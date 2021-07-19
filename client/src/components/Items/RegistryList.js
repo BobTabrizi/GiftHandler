@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../../styles/RegistryItem.css";
+import "../../styles/ItemStyles/RegistryItem.css";
 import { ItemDetails } from "./ItemDetails";
 import { UserItemDetails } from "./UserItemDetails";
-import { PlaceHolderAddItem } from "./PlaceHolderAddItem";
+import { AddItemCard } from "./AddItemCard";
 
 /**
  *
@@ -24,7 +24,7 @@ export const RegistryList = (props) => {
     return (
       <>
         <div className="ItemListContainer">
-          <PlaceHolderAddItem />
+          <AddItemCard />
           {items &&
             items.map((item, index) => (
               <div className="ItemContainer" key={index}>

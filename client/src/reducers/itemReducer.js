@@ -6,8 +6,6 @@ import {
   EDIT_ITEM,
   SELECT_EDIT_ITEM,
   UNSELECT_EDIT_ITEM,
-  SELECT_ADD_ITEM,
-  UNSELECT_ADD_ITEM,
   ITEMS_LOADING,
 } from "../actions/types";
 
@@ -67,12 +65,6 @@ export default function itemReducer(state = initialState, action) {
       return {
         ...state,
         selectedItem: action.payload,
-      };
-    case SELECT_ADD_ITEM:
-    case UNSELECT_ADD_ITEM:
-      return {
-        ...state,
-        itemAddition: action.payload,
       };
     case ITEMS_LOADING:
       return {

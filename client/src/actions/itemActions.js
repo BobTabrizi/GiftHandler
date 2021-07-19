@@ -6,8 +6,6 @@ import {
   EDIT_ITEM,
   SELECT_EDIT_ITEM,
   UNSELECT_EDIT_ITEM,
-  SELECT_ADD_ITEM,
-  UNSELECT_ADD_ITEM,
   ITEMS_LOADING,
 } from "./types";
 import { returnErrors } from "./errorActions";
@@ -103,25 +101,6 @@ export const unSelectEditItem = () => (dispatch) => {
     },
   });
 };
-
-export const selectAddItem = () => (dispatch) => {
-  dispatch({
-    type: SELECT_ADD_ITEM,
-    payload: {
-      displayAddModal: true,
-    },
-  });
-};
-
-export const unSelectAddItem = () => (dispatch) => {
-  dispatch({
-    type: UNSELECT_ADD_ITEM,
-    payload: {
-      displayAddModal: false,
-    },
-  });
-};
-
 export const setItemsLoading = () => {
   return {
     type: ITEMS_LOADING,

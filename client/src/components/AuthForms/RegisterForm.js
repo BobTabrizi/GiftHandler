@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/Login.css";
+import "../../styles/PageStyles/Login.css";
 import { returnErrors } from "../../actions/errorActions";
 import { clearErrors } from "../../actions/errorActions";
 import { register } from "../../actions/authActions";

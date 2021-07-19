@@ -85,11 +85,11 @@ router.post("/add", async (req, res) => {
  **/
 router.post("/edit", async (req, res) => {
   try {
-    let { itemid, price, imageKey, name } = req.body.item;
+    let { itemid, price, quantity, link, imageKey, name } = req.body.item;
 
     //console.log(req.body.item);
     pool.query(
-      `UPDATE itemdetails SET price = '${price}', image = '${imageKey}', name = '${name}' WHERE itemid = $1
+      `UPDATE itemdetails SET price = '${price}', quantity = '${quantity}', link = '${link}', image = '${imageKey}', name = '${name}' WHERE itemid = $1
       RETURNING *`,
       [itemid],
       (err, results) => {

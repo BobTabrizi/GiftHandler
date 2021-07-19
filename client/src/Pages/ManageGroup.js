@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../styles/ManageGroup.css";
+import "../styles/PageStyles/ManageGroup.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../actions/authActions";
 import { getGroups } from "../actions/groupActions";
@@ -7,6 +7,7 @@ import NavBar from "../components/Navigation/NavBar";
 import { GroupList } from "../components/Groups/GroupList";
 import { CreateJoinGroup } from "../components/Groups/CreateJoinGroup";
 import { EditGroupModal } from "../components/Modals/EditGroupModal";
+import { GroupModal } from "../components/Modals/GroupModal";
 /**
  *
  * @Page Group Manager Page
@@ -20,6 +21,7 @@ export const ManageGroup = () => {
   const ShowEditGroupModal = useSelector(
     (state) => state.group.selectedGroup.displayEditGroupModal
   );
+  const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);
   useEffect(() => {
     async function getData() {
       let UID = await dispatch(loadUser());
@@ -32,6 +34,7 @@ export const ManageGroup = () => {
     <>
       <div className="container">
         {ShowEditGroupModal && <EditGroupModal />}
+        {ActiveModal === "Group" && <GroupModal />}
         <NavBar title="Manage Groups" />
         <CreateJoinGroup />
 

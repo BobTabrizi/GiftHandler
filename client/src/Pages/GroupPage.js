@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/GroupPage.css";
+import "../styles/PageStyles/GroupPage.css";
 import { useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { getGroup } from "../actions/groupActions";
@@ -15,13 +15,10 @@ import { UserList } from "../components/Groups/UserList";
 export const GroupPage = (props) => {
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState("");
-  const [members, setGroupMembers] = useState(null);
-
   useEffect(() => {
     async function getData() {
       let PageInfo = await dispatch(getGroup(props.match.params.id));
       setGroupName(PageInfo.name);
-      setGroupMembers(PageInfo.members);
     }
     getData();
   }, []);

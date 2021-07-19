@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import "../../styles/GroupPage.css";
-import { CreateJoinModal } from "../Modals/CreateJoinModal";
+import "../../styles/PageStyles/ManageGroup.css";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveModal } from "../../actions/modalActions";
+import { setModalPage } from "../../actions/modalActions";
 /**
  * @PageLocation ManageGroup
  * @Component CreateJoinGroup
@@ -8,8 +10,18 @@ import { CreateJoinModal } from "../Modals/CreateJoinModal";
  *
  */
 export const CreateJoinGroup = () => {
-  const [showGroupJoin, setShowGroupJoin] = useState(false);
-  const [showGroupCreate, setShowGroupCreate] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleModal = (ModalType) => {
+    if (ModalType === "Add") {
+      dispatch(setActiveModal("Group"));
+      dispatch(setModalPage("ModeSelect"));
+    } else {
+      dispatch(setActiveModal("Group"));
+      dispatch(setModalPage("JoinRegister"));
+    }
+  };
+
   return (
     <>
       <div className="GroupManageContainer">
@@ -17,7 +29,7 @@ export const CreateJoinGroup = () => {
           <div>
             <button
               className="groupIdentifier"
-              onClick={() => setShowGroupCreate(true)}
+              onClick={() => handleModal("Add")}
             >
               CREATE A GROUP
             </button>
@@ -25,21 +37,12 @@ export const CreateJoinGroup = () => {
           <div>
             <button
               className="groupIdentifier"
-              onClick={() => setShowGroupJoin(true)}
+              onClick={() => handleModal("Join")}
             >
               JOIN A GROUP
             </button>
           </div>
         </div>
-        {showGroupCreate && (
-          <CreateJoinModal
-            closeModal={setShowGroupCreate}
-            modalType={"Create"}
-          />
-        )}
-        {showGroupJoin && (
-          <CreateJoinModal closeModal={setShowGroupJoin} modalType={"Join"} />
-        )}
       </div>
     </>
   );

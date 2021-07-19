@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../../../../styles/Modal.css";
-import { setActiveModal } from "../../../../actions/modalActions";
+import "../../../../styles/GroupStyles/GroupModals.css";
 import { deleteGroup } from "../../../../actions/groupActions";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
+import { setModalPage } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation GroupPage
+ * @PageLocation ManageGroups
  * @Component ConfirmDelete
- * @Description Modal Component for the Edit Group Modal
+ * @Description Confirmation Modal for group deletion.
  *
  *
  */
@@ -18,9 +18,12 @@ export const ConfirmDelete = () => {
   );
   const dispatch = useDispatch();
 
+  /*If user declines deletion move back to modal menu */
   const handleDecline = () => {
-    dispatch(setActiveModal("Main"));
+    dispatch(setModalPage("GroupMenu"));
   };
+
+  /*If user accepts, delete the group */
   const handleDelete = () => {
     dispatch(deleteGroup(GroupID));
     dispatch(unSelectEditGroup());
@@ -28,40 +31,42 @@ export const ConfirmDelete = () => {
 
   return (
     <>
-      <div className="EditModalHeader">
-        <div>Delete Group</div>
-      </div>
-      <div className="body">Are you sure you want to delete this group?</div>
-      <div className="footer">
-        <button
-          onClick={() => {
-            handleDecline();
-          }}
-          style={{
-            backgroundColor: "red",
-            borderRadius: 15,
-            padding: "1%",
-            color: "white",
-            fontSize: 30,
-            cursor: "pointer",
-          }}
-        >
-          NO
-        </button>
-        <button
-          onClick={() => handleDelete()}
-          style={{
-            backgroundColor: "green",
-            borderRadius: 15,
-            padding: "1%",
-            color: "white",
-            fontSize: 30,
-            cursor: "pointer",
-            marginLeft: "10%",
-          }}
-        >
-          YES
-        </button>
+      <div className="ConfirmDeleteContainer">
+        <div className="EditModalHeader">
+          <div>Delete Group</div>
+        </div>
+        <div className="body">Are you sure you want to delete this group?</div>
+        <div className="footer">
+          <button
+            onClick={() => {
+              handleDecline();
+            }}
+            style={{
+              backgroundColor: "red",
+              borderRadius: 15,
+              padding: "1%",
+              color: "white",
+              fontSize: 30,
+              cursor: "pointer",
+            }}
+          >
+            NO
+          </button>
+          <button
+            onClick={() => handleDelete()}
+            style={{
+              backgroundColor: "green",
+              borderRadius: 15,
+              padding: "1%",
+              color: "white",
+              fontSize: 30,
+              cursor: "pointer",
+              marginLeft: "10%",
+            }}
+          >
+            YES
+          </button>
+        </div>
       </div>
     </>
   );
