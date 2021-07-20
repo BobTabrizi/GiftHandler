@@ -25,9 +25,7 @@ export const EditItemModal = () => {
   const [itemQuantity, setItemQuantity] = useState(item.quantity);
   const [itemLink, setItemLink] = useState(item.link);
   const [file, setFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState(
-    `http://localhost:3005/api/images/${item.image}`
-  );
+  const [previewImage, setPreviewImage] = useState(`/api/images/${item.image}`);
   const dispatch = useDispatch();
 
   /*  Upon File Input, set file state and display a preview image  */

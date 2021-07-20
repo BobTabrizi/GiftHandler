@@ -28,7 +28,7 @@ export const UserList = () => {
               >
                 <div className="UserImage">
                   <img
-                    src={`http://localhost:3005/api/images/${member.profileimage}`}
+                    src={`/api/images/${member.profileimage}`}
                     style={{ width: "100%", height: "100%", borderRadius: 25 }}
                   ></img>
                 </div>

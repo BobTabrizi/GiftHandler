@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import "../../styles/ItemStyles/RegistryItem.css";
 import { deleteItem } from "../../actions/itemActions";
-import { IoTrash } from "react-icons/io5";
-import { IoPencilSharp } from "react-icons/io5";
 import { selectEditItem } from "../../actions/itemActions";
 
 /**
@@ -15,12 +13,7 @@ import { selectEditItem } from "../../actions/itemActions";
  *
  */
 export const ItemDetails = (item) => {
-  const [hover, SetHover] = useState("none");
   const dispatch = useDispatch();
-  const handleDeleteItem = () => {
-    dispatch(deleteItem(item.itemid, item.image));
-  };
-
   const handleEditItem = () => {
     dispatch(selectEditItem(item));
   };
@@ -30,7 +23,7 @@ export const ItemDetails = (item) => {
       <div className="ItemDetailContainer" onClick={() => handleEditItem()}>
         <div className="ItemImage">
           <img
-            src={`http://localhost:3005/api/images/${item.image}`}
+            src={`/api/images/${item.image}`}
             style={{ width: "100%", height: "100%", display: "block" }}
             alt="Registry Item"
           ></img>

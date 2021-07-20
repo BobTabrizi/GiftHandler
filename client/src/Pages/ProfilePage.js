@@ -54,7 +54,7 @@ export const ProfilePage = () => {
             <h2>{user.email}</h2>
             <br />
             <img
-              src={`http://localhost:3005/api/images/${user.profileimage}`}
+              src={`/api/images/${user.profileimage}`}
               width={150}
               height={150}
               style={{ borderRadius: 15 }}

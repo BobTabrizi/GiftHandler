@@ -44,7 +44,7 @@ export const UserItemDetails = (item) => {
         <div className="ItemDetailContainer">
           <div className="ItemImage">
             <img
-              src={`http://localhost:3005/api/images/${item.image}`}
+              src={`/api/images/${item.image}`}
               style={{ width: "100%", height: "100%", display: "block" }}
               alt="Registry Item"
             ></img>

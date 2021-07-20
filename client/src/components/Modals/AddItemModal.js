@@ -21,9 +21,7 @@ export const AddItemModal = () => {
   const [itemQuantity, setItemQuantity] = useState(1);
   const [itemLink, setItemLink] = useState(null);
   const [file, setFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState(
-    `http://localhost:3005/api/images/DefaultItem`
-  );
+  const [previewImage, setPreviewImage] = useState(`/api/images/DefaultItem`);
   const dispatch = useDispatch();
 
   const handleLink = (e) => {

@@ -24,7 +24,7 @@ router.get("/:key", async (req, res) => {
 router.post("/create", upload.single("image"), async (req, res) => {
   const file = req.file;
   let result = await uploadFile(file);
-  result.imagePath = `http://localhost:3005/api/images/${result.key}`;
+  result.imagePath = `/api/images/${result.key}`;
   await unlinkFile(file.path);
   res.status(201).json(result);
 });

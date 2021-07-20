@@ -37,11 +37,7 @@ export const UserGroupPage = (props) => {
         <div className="UserInfo">
           <div className="UserName">{userName}</div>
           <div className="UserImage">
-            <img
-              height="100%"
-              width="100%"
-              src={`http://localhost:3005/api/images/${image}`}
-            ></img>
+            <img height="100%" width="100%" src={`/api/images/${image}`}></img>
           </div>
         </div>
         <div className="registryContainer">
