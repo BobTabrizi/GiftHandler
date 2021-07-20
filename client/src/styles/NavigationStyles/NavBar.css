@@ -33,13 +33,13 @@
   position: fixed;
   top: 0;
   right: -100%;
-  transition: 850ms;
+  transition: 1000ms;
   z-index: 1;
 }
 
 .nav-menu.active {
   right: 0;
-  transition: 350ms;
+  transition: 500ms;
 }
 
 .nav-text {

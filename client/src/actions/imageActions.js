@@ -4,7 +4,7 @@ import { returnErrors } from "./errorActions";
 
 export const addImage = (formData) => async (dispatch) => {
   let response = await axios
-    .post("http://localhost:3005/api/images/create", formData, {
+    .post("/api/images/create", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
     .then((res) => {
@@ -23,7 +23,7 @@ export const addImage = (formData) => async (dispatch) => {
 
 export const deleteImage = (imageKey) => async (dispatch) => {
   let response = await axios
-    .delete(`http://localhost:3005/api/images/delete?imageKey=${imageKey}`)
+    .delete(`/api/images/delete?imageKey=${imageKey}`)
     .then((res) => {
       dispatch({
         type: DELETE_IMAGE,

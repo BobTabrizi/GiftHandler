@@ -21,7 +21,7 @@ import { returnErrors } from "./errorActions";
 export const getGroups = (id) => (dispatch) => {
   dispatch(setGroupsLoading());
   axios
-    .get(`http://localhost:3005/api/groups/user?userid=${id}`, {})
+    .get(`/api/groups/user?userid=${id}`, {})
     .then((res) =>
       dispatch({
         type: GET_USERS_GROUPS,
@@ -36,7 +36,7 @@ export const getGroups = (id) => (dispatch) => {
 export const getGroup = (groupid) => async (dispatch) => {
   dispatch(setGroupLoading());
   let response = await axios
-    .get(`http://localhost:3005/api/groups?groupid=${groupid}`)
+    .get(`/api/groups?groupid=${groupid}`)
     .then((res) => {
       dispatch({
         type: GET_GROUP,
@@ -53,7 +53,7 @@ export const getGroup = (groupid) => async (dispatch) => {
 export const getGroupMembers = (groupid) => async (dispatch) => {
   dispatch(setGroupMembersLoading());
   let response = await axios
-    .get(`http://localhost:3005/api/groups/members?groupid=${groupid}`, {})
+    .get(`/api/groups/members?groupid=${groupid}`, {})
     .then((res) => {
       dispatch({
         type: GET_GROUP_MEMBERS,
@@ -71,7 +71,7 @@ export const getGroupMembers = (groupid) => async (dispatch) => {
 
 export const addGroup = (GroupDetails) => async (dispatch) => {
   let Response = await axios
-    .post("http://localhost:3005/api/groups/create", {
+    .post("/api/groups/create", {
       GroupDetails,
     })
     .then((res) => {
@@ -92,7 +92,7 @@ export const addGroup = (GroupDetails) => async (dispatch) => {
 export const addGroupMember =
   (groupName, passcode, memberID) => async (dispatch) => {
     let Response = await axios
-      .post("http://localhost:3005/api/groups/users", {
+      .post("/api/groups/users", {
         groupname: groupName,
         passcode: passcode,
         userid: memberID,
@@ -114,7 +114,7 @@ export const addGroupMember =
 
 export const removeGroupMember = (GroupID, UserID) => (dispatch) => {
   axios
-    .post("http://localhost:3005/api/groups/removeUser", {
+    .post("/api/groups/removeUser", {
       groupID: GroupID,
       userID: UserID,
     })

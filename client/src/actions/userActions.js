@@ -4,7 +4,7 @@ import { returnErrors } from "./errorActions";
 export const getUser = (userid) => async (dispatch) => {
   dispatch(setExtUserLoading());
   let response = await axios
-    .get(`http://localhost:3005/api/users/?userid=${userid}`)
+    .get(`/api/users/?userid=${userid}`)
     .then((res) => {
       dispatch({
         type: GET_EXT_USER,
@@ -20,7 +20,7 @@ export const getUser = (userid) => async (dispatch) => {
 
 export const updateUser = (userid) => async (dispatch) => {
   let response = await axios
-    .post(`http://localhost:3005/api/users/update?userid=${userid}`)
+    .post(`/api/users/update?userid=${userid}`)
     .then((res) => {
       dispatch({
         type: UPDATE_EXT_USER,

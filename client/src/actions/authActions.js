@@ -25,7 +25,7 @@ export const loadUser = () => async (dispatch, getState) => {
   }
 
   let response = await axios
-    .get(`http://localhost:3005/api/auth/user?token=${token}`)
+    .get(`/api/auth/user?token=${token}`)
     .then((res) => {
       dispatch({
         type: USER_LOADED,
@@ -50,7 +50,7 @@ export const register =
   ({ name, email, password }) =>
   (dispatch) => {
     axios
-      .post("http://localhost:3005/api/auth/register", {
+      .post("/api/auth/register", {
         name: name,
         email: email,
         password: password,
@@ -76,7 +76,7 @@ export const login =
   ({ email, password }) =>
   (dispatch) => {
     axios
-      .post("http://localhost:3005/api/auth/login", {
+      .post("/api/auth/login", {
         email: email,
         password: password,
       })
@@ -103,7 +103,7 @@ export const login =
 
 export const updateUser = (user) => (dispatch) => {
   axios
-    .post("http://localhost:3005/api/auth/update", {
+    .post("/api/auth/update", {
       UID: user.id,
       name: user.name,
       profileImage: user.profileImage,

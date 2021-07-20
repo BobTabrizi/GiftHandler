@@ -19,6 +19,7 @@ import { EditItemModal } from "../components/Modals/EditItemModal";
 export const Dashboard = () => {
   const dispatch = useDispatch();
   const GroupID = useSelector((state) => state.group.currentGroup.Group.id);
+  const NumItems = useSelector((state) => state.item.memberItems);
   const showEditModal = useSelector(
     (state) => state.item.selectedItem.displayEditModal
   );
@@ -36,7 +37,10 @@ export const Dashboard = () => {
       <div
         className="dashContainer"
         style={{
-          position: !GroupID ? "absolute" : "static",
+          position:
+            !GroupID || (NumItems && NumItems.length < 4)
+              ? "absolute"
+              : "static",
         }}
       >
         {ActiveModal === "AddItem" && <AddItemModal />}

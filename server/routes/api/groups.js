@@ -172,7 +172,7 @@ router.get("/user", async (req, res) => {
     .query(
       `SELECT groups.id,groups.role,groupauth.groupname,groupauth.mode FROM GROUPS INNER JOIN GROUPAUTH
       ON groupauth.id = groups.id
-      WHERE groups.userid = $1 AND groups.role = 'Member'`,
+      WHERE groups.userid = $1 AND groups.role = 'Member' ORDER BY groups.id DESC`,
       [userid]
     )
     .then((results) => {
@@ -188,7 +188,7 @@ router.get("/user", async (req, res) => {
     .query(
       `SELECT groups.id,groupauth.groupname,groups.role, groupauth.passcode,groupauth.mode 
           FROM GROUPS INNER JOIN GROUPAUTH 
-          ON groupauth.id = groups.id WHERE role = 'Admin'AND groups.userid = $1;`,
+          ON groupauth.id = groups.id WHERE role = 'Admin'AND groups.userid = $1 ORDER BY groups.id DESC`,
       [userid]
     )
     .then((results) => {

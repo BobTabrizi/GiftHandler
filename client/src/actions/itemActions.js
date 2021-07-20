@@ -14,10 +14,7 @@ import { returnErrors } from "./errorActions";
 export const getItems = (UserID, GroupID) => async (dispatch) => {
   dispatch(setItemsLoading());
   let response = await axios
-    .get(
-      `http://localhost:3005/api/items/user?userid=${UserID}&groupid=${GroupID}`,
-      {}
-    )
+    .get(`/api/items/user?userid=${UserID}&groupid=${GroupID}`, {})
     .then((res) => {
       dispatch({
         type: GET_ITEMS,
@@ -50,9 +47,7 @@ export const addItem = (Item) => (dispatch) => {
 
 export const deleteItem = (id, Key) => (dispatch) => {
   axios
-    .delete(
-      `http://localhost:3005/api/items/delete?itemid=${id}&itemKey=${Key}`
-    )
+    .delete(`/api/items/delete?itemid=${id}&itemKey=${Key}`)
     .then((res) => {})
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
@@ -67,7 +62,7 @@ export const deleteItem = (id, Key) => (dispatch) => {
 
 export const editItem = (item) => (dispatch) => {
   axios
-    .post(`http://localhost:3005/api/items/edit`, {
+    .post(`/api/items/edit`, {
       item: item,
     })
     .then((res) => {
@@ -85,7 +80,7 @@ export const editItem = (item) => (dispatch) => {
 
 export const purchaseItem = (item) => (dispatch) => {
   axios
-    .post(`http://localhost:3005/api/items/purchase`, {
+    .post(`/api/items/purchase`, {
       item: item,
     })
     .then((res) => {
