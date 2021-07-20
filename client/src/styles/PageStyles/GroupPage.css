@@ -13,27 +13,46 @@
   width: 95vw;
 }
 
+.GroupPageHeader {
+  font-size: 36px;
+}
+
 .GroupManageContainer {
   display: flex;
   flex-direction: row;
   margin: auto;
+  text-align: center;
 }
 
-.groupIdentifier {
+.ActionButton {
   font-size: 24px;
   text-align: center;
   color: aliceblue;
-  background-color: rgb(48, 146, 238);
+  border: 2px solid rgb(0, 30, 128);
   cursor: pointer;
-  width: 100%;
+  margin: auto;
   border-radius: 25px;
   margin-top: 2rem;
   padding: 0.5rem;
 }
-.ActionButtons {
-  flex-direction: row;
-  display: flex;
-  margin: auto;
+
+#Abtn {
+  color: black;
+  background-color: rgb(63, 160, 123);
+}
+
+#Jbtn {
+  color: black;
+  background-color: rgb(202, 189, 189);
+}
+.ActionButton:hover {
+  background-color: honeydew;
+  color: black;
+}
+
+.CreateBtn,
+.JoinBtn {
+  flex: 1;
 }
 
 .UserListContainer {

@@ -4,6 +4,7 @@ import "../../../../styles/GroupStyles/GroupModals.css";
 import { deleteGroup } from "../../../../actions/groupActions";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
 import { setModalPage } from "../../../../actions/modalActions";
+import { deactivateModal } from "../../../../actions/modalActions";
 /**
  *
  * @PageLocation ManageGroups
@@ -23,18 +24,22 @@ export const ConfirmDelete = () => {
     dispatch(setModalPage("GroupMenu"));
   };
 
+  /*     Close out the modal entirely   */
+  const closeModal = () => {
+    dispatch(unSelectEditGroup());
+    dispatch(deactivateModal());
+  };
+
   /*If user accepts, delete the group */
   const handleDelete = () => {
     dispatch(deleteGroup(GroupID));
     dispatch(unSelectEditGroup());
+    dispatch(deactivateModal());
   };
 
   return (
     <>
       <div className="ConfirmDeleteContainer">
-        <div className="EditModalHeader">
-          <div>Delete Group</div>
-        </div>
         <div className="body">Are you sure you want to delete this group?</div>
         <div className="footer">
           <button

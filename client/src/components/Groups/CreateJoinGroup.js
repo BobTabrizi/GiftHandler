@@ -25,23 +25,23 @@ export const CreateJoinGroup = () => {
   return (
     <>
       <div className="GroupManageContainer">
-        <div className="ActionButtons">
-          <div>
-            <button
-              className="groupIdentifier"
-              onClick={() => handleModal("Add")}
-            >
-              CREATE A GROUP
-            </button>
-          </div>
-          <div>
-            <button
-              className="groupIdentifier"
-              onClick={() => handleModal("Join")}
-            >
-              JOIN A GROUP
-            </button>
-          </div>
+        <div className="CreateBtn">
+          <button
+            className="ActionButton"
+            id="Abtn"
+            onClick={() => handleModal("Add")}
+          >
+            CREATE A GROUP
+          </button>
+        </div>
+        <div className="JoinBtn">
+          <button
+            className="ActionButton"
+            id="Jbtn"
+            onClick={() => handleModal("Join")}
+          >
+            JOIN A GROUP
+          </button>
         </div>
       </div>
     </>

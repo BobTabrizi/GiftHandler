@@ -4,6 +4,8 @@ import "../../../../styles/GroupStyles/GroupModals.css";
 import { getGroupMembers } from "../../../../actions/groupActions";
 import { setModalPage } from "../../../../actions/modalActions";
 import { removeGroupMember } from "../../../../actions/groupActions";
+import { unSelectEditGroup } from "../../../../actions/groupActions";
+import { deactivateModal } from "../../../../actions/modalActions";
 import { IoBan } from "react-icons/io5";
 import { IoStar } from "react-icons/io5";
 import { IoArrowBack } from "react-icons/io5";
@@ -31,7 +33,6 @@ export const Members = () => {
     setConfirmModal(true);
     setSelectedUserID(UserID);
   };
-
   /* If user declines the confirmation, reset */
   const reset = () => {
     setConfirmModal(false);
@@ -42,6 +43,12 @@ export const Members = () => {
   const handleKick = () => {
     setConfirmModal(false);
     dispatch(removeGroupMember(GroupID, selectedUserID));
+  };
+
+  /*     Close out the modal entirely   */
+  const closeModal = () => {
+    dispatch(unSelectEditGroup());
+    dispatch(deactivateModal());
   };
 
   /*     Move back to modal menu     */
@@ -61,30 +68,20 @@ export const Members = () => {
         className="MainMemberModal"
         style={{ display: confirmModal ? "none" : "block" }}
       >
-        <div className="EditMemberHeader">
-          <div>
-            <IoArrowBack
-              onClick={() => changeModal()}
-              style={{ cursor: "pointer" }}
-            />
-          </div>
-          <div>Manage Members</div>
-          <div></div>
-        </div>
         <div className="body">
           <h1>Members</h1>
-          <div className="ModalHeaderItem">
+          <div className="MemberModalHeaderItem">
             <div className="NameHeader">Name</div>
             <div className="RoleHeader">Role</div>
             <div className="IconHeader">Action</div>
           </div>
-          <div className="ModalMemberContainer">
+          <div className="MemberModalContainer">
             {GroupMembers &&
               GroupMembers.map((Member, index) => (
-                <div key={index} className="ModalMemberItem">
+                <div key={index} className="MemberItem">
                   <div className="MemberName">{Member.name}</div>
                   <div className="MemberRole">{Member.role}</div>
-                  <div className="MemberModalActionButtons">
+                  <div className="MemberActionBtns">
                     {Member.role !== "Admin" && (
                       <IoBan
                         style={{ color: "red", cursor: "pointer" }}

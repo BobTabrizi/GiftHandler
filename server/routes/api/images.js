@@ -12,7 +12,6 @@ const router = express.Router();
  * @description   Get an image from S3, given the image key
  **/
 router.get("/:key", async (req, res) => {
-  console.log(req.params);
   const key = req.params.key;
   const readStream = getFileStream(key);
   readStream.pipe(res);

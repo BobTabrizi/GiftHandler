@@ -46,7 +46,6 @@ export const GroupComponent = ({}) => {
     }
     updateGroup();
   }, []);
-
   return (
     <>
       <div style={{ textAlign: "center" }}>
@@ -63,6 +62,7 @@ export const GroupComponent = ({}) => {
                 <Select
                   options={groups}
                   onChange={(values) => handleChange(values)}
+                  values={[groups[0]]}
                   labelField="groupname"
                   valueField="id"
                   placeholder={`${activeGroupName} `}

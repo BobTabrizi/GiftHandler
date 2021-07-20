@@ -8,6 +8,7 @@ export const EDIT_ITEM = "EDIT_ITEM";
 export const SELECT_EDIT_ITEM = "SELECT_EDIT_ITEM";
 export const UNSELECT_EDIT_ITEM = "UNSELECT_EDIT_ITEM";
 export const ITEMS_LOADING = "ITEMS_LOADING";
+export const PURCHASE_ITEM = "PURCHASE_ITEM";
 
 /*            Groups                      */
 export const GET_USERS_GROUPS = "GET_GROUPS";
@@ -24,6 +25,7 @@ export const USER_GROUPS_LOADING = "GROUPS_LOADING";
 export const GET_GROUP_MEMBERS = "GET_GROUP_MEMBERS";
 export const GROUP_LOADING = "GROUP_LOADING";
 export const GROUP_MEMBERS_LOADING = "GROUP_MEMBERS_LOADING";
+export const ADD_MEMBER_FAILURE = "ADD_MEMBER_FAILURE";
 
 /*         Auth/Login/Errors              */
 export const USER_LOADING = "USER_LOADING";

@@ -7,6 +7,7 @@ import {
   SELECT_EDIT_ITEM,
   UNSELECT_EDIT_ITEM,
   ITEMS_LOADING,
+  PURCHASE_ITEM,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -72,6 +73,24 @@ export const editItem = (item) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: EDIT_ITEM,
+        payload: {
+          payload: res.data,
+        },
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const purchaseItem = (item) => (dispatch) => {
+  axios
+    .post(`http://localhost:3005/api/items/purchase`, {
+      item: item,
+    })
+    .then((res) => {
+      dispatch({
+        type: PURCHASE_ITEM,
         payload: {
           payload: res.data,
         },

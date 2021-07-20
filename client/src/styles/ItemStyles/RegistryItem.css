@@ -7,11 +7,10 @@
 }
 
 .ItemContainer {
-  border: 2px solid black;
+  border: 1px solid black;
   margin: 2%;
   width: 20%;
   height: 380px;
-  padding: 1%;
   border-radius: 15px;
   background-color: rgb(255, 255, 255, 0.5);
   box-sizing: border-box;
@@ -24,7 +23,7 @@
   cursor: pointer;
 }
 
-.ItemName {
+.ListItemName {
   font-size: 24px;
 }
 .ItemDivider {
@@ -39,8 +38,8 @@
   height: 200px;
   border: 1px solid gray;
 }
-.ItemPrice,
-.ItemQuant {
+.ListItemPrice,
+.ListItemQuant {
   font-size: 21px;
 }
 
@@ -59,6 +58,7 @@
 .ItemDetailContainer {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .AddItemCard {
@@ -85,6 +85,42 @@
 .ItemOptions {
   display: flex;
   justify-content: space-between;
+}
+
+.ItemContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.PurchasedItem {
+  height: 100%;
+  width: 100%;
+  right: 0;
+  top: 0;
+  opacity: 0.8;
+  background-color: black;
+  position: absolute;
+  display: flex;
+}
+
+.PurchasedItemText {
+  display: flex;
+  margin: auto;
+  color: white;
+  font-size: 25px;
+}
+
+.PurchaseLink {
+  margin-top: 2%;
+}
+
+.PurchaseBtn {
+  background-color: rgb(255, 255, 255, 0.9);
+  width: 50%;
+  margin: auto;
+  border-radius: 10px;
+  padding: 1%;
+  margin-top: 1rem;
 }
 
 #edit {

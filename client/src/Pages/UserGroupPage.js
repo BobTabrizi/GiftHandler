@@ -5,7 +5,7 @@ import NavBar from "../components/Navigation/NavBar";
 import { RegistryList } from "../components/Items/RegistryList";
 import { getItems } from "../actions/itemActions";
 import { getUser } from "../actions/userActions";
-
+import { getGroup } from "../actions/groupActions";
 /**
  *
  * @Page User Group Page
@@ -24,6 +24,7 @@ export const UserGroupPage = (props) => {
       let userInfo = await dispatch(getUser(UID));
       setUserName(userInfo[0].name);
       setImage(userInfo[0].profileimage);
+      await dispatch(getGroup(GID));
       await dispatch(getItems(UID, GID));
     }
     getData();

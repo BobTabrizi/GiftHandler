@@ -23,11 +23,8 @@ export const Menu = () => {
   return (
     <>
       <div className="MenuContainer">
-        <div className="EditModalHeader">
-          <div>Edit Group</div>
-        </div>
-        <div className="body">
-          <h3>Group Passcode: {GroupPasscode}</h3>
+        <h3>Group Passcode: {GroupPasscode}</h3>
+        <div className="MenuBody">
           <h2
             style={{ cursor: "pointer" }}
             onClick={() => handleModalChange("Passcode")}
@@ -47,15 +44,11 @@ export const Menu = () => {
             Delete Group
           </h2>
         </div>
-        <div className="footer">
-          <div className="modalCreateButton">
-            <button
-              style={{ fontSize: 22, cursor: "pointer" }}
-              onClick={() => console.log("HI")}
-            >
-              Exit
-            </button>
-          </div>
+
+        <div className="MenuFooter">
+          <button className="ExitMenuBtn" onClick={() => console.log("HI")}>
+            Exit
+          </button>
         </div>
       </div>
     </>

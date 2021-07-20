@@ -13,22 +13,13 @@ router.use(passport.initialize());
  * @description  Get information about a user
  **/
 router.get("/", async (req, res) => {
-  try {
-    let { userid } = req.query;
-    pool.query(
-      `SELECT name, profileimage FROM USERS WHERE id = $1`,
-      [userid],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-
-        res.status(200).json(results.rows);
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
-  }
+  let { userid } = req.query;
+  pool
+    .query(`SELECT name, profileimage FROM USERS WHERE id = $1`, [userid])
+    .then((result) => {
+      res.status(200).json(result.rows);
+    })
+    .catch((error) => res.status(400).json(error));
 });
 
 /**

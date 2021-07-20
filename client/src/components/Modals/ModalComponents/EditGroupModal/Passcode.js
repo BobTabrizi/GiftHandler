@@ -57,30 +57,21 @@ export const Passcode = () => {
         className="PasscodeContainer"
         style={{ display: displaySuccess ? "none" : "block" }}
       >
-        <div className="EditPasscodeHeader">
-          <div>
-            <IoArrowBack
-              onClick={() => changeModal()}
-              style={{ cursor: "pointer" }}
-            />
-          </div>
-          <div>Change Passcode</div>
-          <div></div>
-        </div>
-        <div style={{ marginTop: "15%" }}>
+        <div className="PasscodeBody">
+          <h2>Enter a New Passcode</h2>
           <input
-            className="modalInput"
-            placeholder="Enter a New Passcode"
+            className="PasscodeInput"
+            placeholder="Passcode"
             onChange={(e) => setPasscode(e.target.value)}
           ></input>
         </div>
         <div style={{ marginTop: "10%" }}>
           <div className="SubmitPasscode">
             <button
-              style={{ fontSize: 22, cursor: "pointer" }}
+              className="PasscodeSubmitBtn"
               onClick={() => handleSubmit()}
             >
-              Submit
+              Change Passcode
             </button>
           </div>
         </div>

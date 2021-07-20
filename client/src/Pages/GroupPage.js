@@ -28,7 +28,7 @@ export const GroupPage = (props) => {
       <div className="container">
         <NavBar title={groupName} />
         <div className="MemberContainer">
-          Members in this group:
+          <h1>Members in this group</h1>
           <UserList />
         </div>
       </div>

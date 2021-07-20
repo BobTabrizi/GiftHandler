@@ -7,7 +7,7 @@ import NavBar from "../components/Navigation/NavBar";
 import { GroupList } from "../components/Groups/GroupList";
 import { CreateJoinGroup } from "../components/Groups/CreateJoinGroup";
 import { EditGroupModal } from "../components/Modals/EditGroupModal";
-import { GroupModal } from "../components/Modals/GroupModal";
+import { AddJoinGroupModal } from "../components/Modals/AddJoinGroupModal";
 /**
  *
  * @Page Group Manager Page
@@ -34,7 +34,7 @@ export const ManageGroup = () => {
     <>
       <div className="container">
         {ShowEditGroupModal && <EditGroupModal />}
-        {ActiveModal === "Group" && <GroupModal />}
+        {ActiveModal === "Group" && <AddJoinGroupModal />}
         <NavBar title="Manage Groups" />
         <CreateJoinGroup />
 

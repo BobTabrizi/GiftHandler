@@ -40,9 +40,9 @@ export const RegistryList = (props) => {
         <div className="ItemListContainer">
           {items &&
             items.map((item, index) => (
-              <div className="ItemContainer" key={index}>
+              <>
                 <UserItemDetails {...item} />
-              </div>
+              </>
             ))}
         </div>
       </>

@@ -14,6 +14,7 @@ import {
   ADD_GROUP_MEMBER,
   GET_GROUP_MEMBERS,
   GROUP_MEMBERS_LOADING,
+  ADD_MEMBER_FAILURE,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -68,8 +69,8 @@ export const getGroupMembers = (groupid) => async (dispatch) => {
   return response;
 };
 
-export const addGroup = (GroupDetails) => (dispatch) => {
-  axios
+export const addGroup = (GroupDetails) => async (dispatch) => {
+  let Response = await axios
     .post("http://localhost:3005/api/groups/create", {
       GroupDetails,
     })
@@ -78,30 +79,37 @@ export const addGroup = (GroupDetails) => (dispatch) => {
         type: ADD_GROUP,
         payload: res.data,
       });
+      return "Success";
     })
     .catch((err) => {
-      console.log({ err }.err.message);
-      //  dispatch(returnErrors({err},err.message, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status));
+      return err.response.data;
     });
+
+  return Response;
 };
 
 export const addGroupMember =
-  (groupName, passcode, memberID) => (dispatch, getState) => {
-    axios
+  (groupName, passcode, memberID) => async (dispatch) => {
+    let Response = await axios
       .post("http://localhost:3005/api/groups/users", {
         groupname: groupName,
         passcode: passcode,
         userid: memberID,
       })
-      .then((res) =>
+      .then((res) => {
         dispatch({
           type: ADD_GROUP_MEMBER,
           payload: res.data,
-        })
-      )
-      .catch((err) =>
-        dispatch(returnErrors(err.response.data, err.response.status))
-      );
+        });
+        return "Success";
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        return err.response.data;
+      });
+
+    return Response;
   };
 
 export const removeGroupMember = (GroupID, UserID) => (dispatch) => {

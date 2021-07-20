@@ -5,20 +5,31 @@
   position: absolute;
 }
 
-.GrpModalContainer {
+.GrpModalContainer,
+.AddGrpModalContainer {
   width: 500px;
   height: 550px;
-  background-color: cornflowerblue;
+  background-color: rgb(255, 255, 255);
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top: 5%;
+  top: 10%;
   left: 0;
   right: 0;
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  padding: 25px;
+}
+
+.AddGrpModalContainer {
+  height: 600px;
+}
+
+.GrpModalHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 25px;
+  background-color: lightslategrey;
+  padding: 0.5rem;
 }
 
 .modalCloseButton {
@@ -39,7 +50,7 @@
 
 .modalInput {
   color: black;
-  background-color: white;
+  background-color: rgba(175, 171, 171, 0.747);
   border-radius: 10px;
   padding: 10px;
   flex: 1;
@@ -95,6 +106,17 @@
   padding: 5%;
   text-align: center;
 }
+.GroupRegisterFooter {
+  text-align: center;
+}
+
+.GroupRegisterBtn {
+  font-size: 22px;
+  cursor: pointer;
+  background-color: palegreen;
+  padding: 2%;
+  border-radius: 15px;
+}
 
 /***-------------END GroupRegister Modal ------------*/
 
@@ -107,4 +129,137 @@
   text-align: center;
 }
 
+.EditMenuHeader {
+  background-color: lightslategrey;
+  font-size: 25px;
+  padding: 0.5rem;
+}
+
+.EditMenuTitle {
+  text-align: center;
+}
+
+.MenuCloseBtn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  font-size: 22px;
+  padding: 1%;
+}
+
+.MenuBody {
+  padding: 5%;
+  margin-top: 10%;
+}
+
+.MenuFooter {
+  margin-top: 15%;
+}
+
+.ExitMenuBtn {
+  font-size: 22px;
+  cursor: pointer;
+  background-color: mistyrose;
+  padding: 2%;
+  padding-left: 10%;
+  padding-right: 10%;
+  border-radius: 10px;
+}
+.MemberModalContainer {
+  height: 40vh;
+  overflow-y: scroll;
+}
+
+.MemberModalHeaderItem,
+.MemberItem {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+}
+
+.MemberModalHeaderItem {
+  margin-right: 4%;
+}
+
+.MemberActionBtns {
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.NameHeader,
+.RoleHeader,
+.MemberRole,
+.MemberName {
+  flex: 3;
+  border-right: 1px solid black;
+}
+.IconHeader {
+  flex: 1;
+}
+
+.PasscodeBody {
+  flex-direction: column;
+  display: flex;
+  padding: 15%;
+}
+
+.PasscodeInput {
+  width: 50%;
+  color: black;
+  background-color: rgba(175, 171, 171, 0.747);
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+  margin: auto;
+}
+
+.PasscodeSubmitBtn {
+  font-size: 22px;
+  cursor: pointer;
+  background-color: rgb(58, 241, 67);
+  padding: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-radius: 10px;
+}
+
+.AddSuccessBtn {
+  cursor: pointer;
+  background-color: teal;
+  padding: 2%;
+  border-radius: 15px;
+  width: 30%;
+  margin: auto;
+  margin-top: 15%;
+}
+
 /*****----------------------END EDIT GROUP MODAL -----------------*****/
+
+/*****----------------------START JOIN GROUP MODAL -----------------*****/
+
+.JoinHeader {
+  font-size: 28px;
+}
+
+.JoinContainer {
+  text-align: center;
+}
+.JoinBody {
+  margin: auto;
+  padding: 15%;
+}
+.JoinButton {
+  background-color: lightskyblue;
+  padding: 2%;
+  padding-left: 10%;
+  padding-right: 10%;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+/*****----------------------END JOIN GROUP MODAL -----------------*****/

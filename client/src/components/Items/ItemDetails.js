@@ -24,28 +24,10 @@ export const ItemDetails = (item) => {
   const handleEditItem = () => {
     dispatch(selectEditItem(item));
   };
-  const showItemOptions = (e) => {
-    e.preventDefault();
-    SetHover("block");
-  };
-  const hideItemOptions = (e) => {
-    e.preventDefault();
-    SetHover("none");
-  };
+
   return (
     <>
       <div className="ItemDetailContainer" onClick={() => handleEditItem()}>
-        <div className="ItemOptions" style={{ display: hover }}>
-          <IoPencilSharp
-            style={{ marginRight: "5%", cursor: "pointer" }}
-            onClick={() => handleEditItem()}
-          />
-
-          <IoTrash
-            style={{ marginLeft: "5%", cursor: "pointer" }}
-            onClick={() => handleDeleteItem()}
-          />
-        </div>
         <div className="ItemImage">
           <img
             src={`http://localhost:3005/api/images/${item.image}`}
@@ -53,10 +35,10 @@ export const ItemDetails = (item) => {
             alt="Registry Item"
           ></img>
         </div>
-        <div className="ItemName">{item.name}</div>
+        <div className="ListItemName">{item.name}</div>
         <hr style={{ width: "100%" }} />
-        <div className="ItemPrice">Price: {item.price}</div>
-        <div className="ItemQuant">Quantity: {item.quantity}</div>
+        <div className="ListItemPrice">Price: {item.price}</div>
+        <div className="ListItemQuant">Quantity: {item.quantity}</div>
         {item.link && <p>Purchase Link</p>}
       </div>
     </>

@@ -1,6 +1,8 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
+import { Link } from "react-router-dom";
+import { deactivateModal } from "../../../../actions/modalActions";
 /**
  *
  * @PageLocation ManageGroups
@@ -10,9 +12,7 @@ import "../../../../styles/GroupStyles/GroupModals.css";
  *
  */
 export const AddSuccess = () => {
-  const id = useSelector((state) => state.auth.user.id);
   const dispatch = useDispatch();
-
   return (
     <>
       <div className="GroupRegisterHeader">
@@ -20,7 +20,15 @@ export const AddSuccess = () => {
       </div>
       <div className="GroupRegisterBody">
         Your group has been created.
-        <button>Start adding items</button>
+        <Link
+          to={`/`}
+          onClick={() => dispatch(deactivateModal())}
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <button className="AddSuccessBtn">Start adding items</button>
+        </Link>
       </div>
     </>
   );

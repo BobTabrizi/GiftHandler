@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { addGroup } from "../../../../actions/groupActions";
-import { deactivateModal } from "../../../../actions/modalActions";
+import {
+  setModalPage,
+  deactivateModal,
+} from "../../../../actions/modalActions";
 /**
  *
  * @PageLocation ManageGroups
@@ -18,24 +21,31 @@ export const GroupRegister = () => {
   );
   const [groupname, setGroupName] = useState("");
   const [passcode, setPasscode] = useState("");
+  const [errors, setErrors] = useState("");
   const dispatch = useDispatch();
   /*   Handle Creation of Group */
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let GroupDetails = {
       groupName: groupname,
       passcode: passcode,
       userid: id,
       groupMode: GroupMode,
     };
-    dispatch(addGroup(GroupDetails));
-    dispatch(deactivateModal());
+    let resp = await dispatch(addGroup(GroupDetails));
+    console.log(resp);
+    if (resp === "Success") {
+      dispatch(setModalPage("AddSuccess"));
+    } else {
+      setErrors(resp);
+    }
   };
   return (
     <>
       <div className="GroupRegisterHeader">
-        <h1>Create a Group</h1>
+        <h1>Name and Passcode</h1>
       </div>
       <div className="GroupRegisterBody">
+        {errors && <div>{errors}</div>}
         <p>Enter a name for your group</p>
         <input
           className="modalInput"
@@ -49,16 +59,11 @@ export const GroupRegister = () => {
           onChange={(e) => setPasscode(e.target.value)}
         ></input>
       </div>
-      <div className="footer">
-        <div className="modalCreateButton">
-          <button
-            style={{ fontSize: 22, cursor: "pointer" }}
-            onClick={() => handleSubmit()}
-          >
-            {" "}
-            Create Group
-          </button>
-        </div>
+      <div className="GroupRegisterFooter">
+        <button className="GroupRegisterBtn" onClick={() => handleSubmit()}>
+          {" "}
+          Create Group
+        </button>
       </div>
     </>
   );

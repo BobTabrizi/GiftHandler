@@ -36,6 +36,7 @@ export default function itemReducer(state = initialState, action) {
         memberItems: [...state.memberItems, action.payload],
         loading: false,
       };
+
     case ADD_IMAGE:
       return {
         ...state,

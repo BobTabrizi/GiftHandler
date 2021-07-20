@@ -20,7 +20,6 @@ export const loadUser = () => async (dispatch, getState) => {
   //Get token from storage
 
   let token = "";
-
   if (getState().auth.token) {
     token = getState().auth.token;
   }
@@ -42,6 +41,7 @@ export const loadUser = () => async (dispatch, getState) => {
     });
 
   //Return ID Directly for Group Querying
+  console.log(response);
   return response;
 };
 

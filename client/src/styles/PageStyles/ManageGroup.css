@@ -1,5 +1,6 @@
 .container {
-  background-color: teal;
+  background-image: url("../../images/GradientBG.jpg");
+  background-size: cover no-repeat;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -8,6 +9,7 @@
 .groupTypesContainer {
   display: flex;
   margin: 0 1rem 0 1rem;
+  text-align: center;
 }
 
 .GroupListContainer {
@@ -18,10 +20,10 @@
 .GroupListHeader {
   display: flex;
   flex-direction: row;
-  margin-left: 2%;
-  margin-right: 5%;
+  margin-right: 3%;
   background: white;
-  height: 35px;
+  height: 40px;
+  border-bottom: 1px solid black;
 }
 
 .GroupNameHeader {
@@ -47,7 +49,6 @@
 
 .GroupContainer {
   border: 1px solid black;
-  margin: 2%;
   height: 50px;
   background-color: white;
   box-sizing: border-box;
@@ -91,16 +92,19 @@
 }
 
 .ownedGroups {
-  background-color: rgb(255, 221, 221);
+  background-color: rgb(63, 160, 123);
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
   margin-top: 5%;
+  margin-right: 5%;
   flex-direction: column;
+  border-radius: 15px;
   flex: 1;
 }
 
 .otherGroups {
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-  background-color: rgb(0, 119, 128);
+  background-color: rgb(202, 189, 189);
+  border-radius: 15px;
   margin-top: 5%;
   display: flex;
   flex-direction: column;
@@ -118,6 +122,6 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: gray;
+  background: rgb(255, 255, 255, 0.4);
   border-radius: 10px;
 }

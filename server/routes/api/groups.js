@@ -15,39 +15,56 @@ router.use(passport.initialize());
  **/
 router.post("/create", async (req, res) => {
   let { groupName, passcode, userid, groupMode } = req.body.GroupDetails;
-  //First create group detail table
-  try {
-    pool.query(
-      `INSERT INTO GROUPAUTH(groupname,passcode,ownerid, mode) VALUES($1,$2,$3,$4) RETURNING id`,
-      [groupName, passcode, userid, groupMode],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-        //Then insert the admin with the group id in the group table
-        let groupid = results.rows[0].id;
-        pool.query(
-          `INSERT INTO GROUPS (id,userid,role) VALUES($1,$2,$3) RETURNING id, role`,
-          [groupid, userid, "Admin"],
-          (err, results) => {
-            if (err) {
-              throw err;
-            }
-            if (results.rows[0].role === "Admin") {
-              results.rows[0].groupname = groupName;
-              results.rows[0].passcode = passcode;
-              results.rows[0].mode = groupMode;
-              res.status(201).json(results.rows[0]);
-            } else {
-              res.status(400).json({ msg: "Error Creating Group" });
-            }
-          }
-        );
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
+  //First check to see if the group already exists
+  const response = await pool
+    .query(`SELECT * FROM GROUPAUTH where groupname = $1`, [groupName])
+    .then((res) => {
+      return res.rows[0];
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+      return;
+    });
+
+  //If we find a group, return an error
+  if (response) {
+    res.status(400).json("Group Already Exists");
+    return;
   }
+
+  //If the group doesnt exist already, make a new group
+  const groupid = await pool
+    .query(
+      `INSERT INTO GROUPAUTH(groupname,passcode,ownerid, mode) VALUES($1,$2,$3,$4) RETURNING id`,
+      [groupName, passcode, userid, groupMode]
+    )
+    .then((res) => {
+      return res.rows[0].id;
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+      return;
+    });
+
+  //Then insert the admin with the group id in the group table
+  pool
+    .query(
+      `INSERT INTO GROUPS (id,userid,role) VALUES($1,$2,$3) RETURNING id, role`,
+      [groupid, userid, "Admin"]
+    )
+    .then((results) => {
+      if (results.rows[0].role === "Admin") {
+        results.rows[0].groupname = groupName;
+        results.rows[0].passcode = passcode;
+        results.rows[0].mode = groupMode;
+        res.status(201).json(results.rows[0]);
+      } else {
+        res.status(400).json("Error Creating Group");
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
 });
 
 /**
@@ -56,57 +73,65 @@ router.post("/create", async (req, res) => {
  **/
 router.post("/users", async (req, res) => {
   let { groupname, passcode, userid } = req.body;
-  try {
-    //Check if the user is already in the group.
-    pool.query(
+
+  let response;
+
+  //Check if the Group exists
+  response = await pool
+    .query(`SELECT passcode, id,mode FROM GROUPAUTH WHERE groupname = $1`, [
+      groupname,
+    ])
+    .then((results) => {
+      return results;
+    })
+    .catch((err) => console.log(err));
+
+  if (!response.rows.length) {
+    res.status(400).json("Group Does Not Exist");
+    return;
+  }
+
+  let groupmode = response.rows[0].mode;
+  if (groupmode === 1) {
+    //If the group is set to a wedding registry. Only one member is allowed in the group.
+    res.status(400).json("This group is full");
+    return;
+  }
+
+  //Check if the passcode matches
+  if (passcode === response.rows[0].passcode) {
+    let groupid = response.rows[0].id;
+    pool
+      .query(
+        `INSERT INTO GROUPS(id, userid,role) VALUES($1,$2,$3) RETURNING *`,
+        [groupid, userid, "Member"]
+      )
+      .then((results) => {
+        results.rows[0].groupname = groupname;
+        results.rows[0].mode = groupmode;
+        res.status(201).json(results.rows[0]);
+        return;
+      })
+      .catch((error) => res.status(400).json(error));
+  } else {
+    res.status(400).json("Incorrect Passcode");
+  }
+
+  //Check if the user is already in the group.
+  response = await pool
+    .query(
       `SELECT groups.userid FROM GROUPS JOIN GROUPAUTH ON 
       groups.id = groupauth.id WHERE groupauth.groupname = $1 AND
       groups.userid = $2`,
-      [groupname, userid],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-        if (results.rows[0]) {
-          res.status(400).json({ message: "User Already in Group" });
-        } else {
-          pool.query(
-            `SELECT passcode, id,mode FROM GROUPAUTH WHERE groupname = $1`,
-            [groupname],
-            (err, results) => {
-              if (err) {
-                throw err;
-              }
-
-              let groupmode = results.rows[0].mode;
-              if (!results.rows.length) {
-                res.status(400).json({ message: "Group Does Not Exist" });
-              } else {
-                //Check if the passcode matches
-                if (passcode === results.rows[0].passcode) {
-                  let groupid = results.rows[0].id;
-                  pool.query(
-                    `INSERT INTO GROUPS(id, userid,role) VALUES($1,$2,$3) RETURNING *`,
-                    [groupid, userid, "Member"],
-                    (err, results) => {
-                      if (err) {
-                        throw err;
-                      }
-                      //console.log(results.rows);
-                      results.rows[0].groupname = groupname;
-                      results.rows[0].mode = groupmode;
-                      res.status(201).json(results.rows[0]);
-                    }
-                  );
-                }
-              }
-            }
-          );
-        }
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
+      [groupname, userid]
+    )
+    .then((results) => {
+      return results;
+    })
+    .catch((err) => console.log(err));
+  if (response.rows[0]) {
+    res.status(400).json("User Already in Group");
+    return;
   }
 });
 
@@ -117,31 +142,22 @@ router.post("/users", async (req, res) => {
 router.post("/removeUser", async (req, res) => {
   let { groupID, userID } = req.body;
 
-  try {
-    //First delete the user from the group.
-    pool.query(
-      `DELETE from GROUPS WHERE id=$1 AND userid = $2`,
-      [groupID, userID],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-        //Then delete the user's items for that group.
-        //This cascade deletes the user details table entries as well.
-        pool.query(
-          `DELETE from ITEMS WHERE groupid=$1 AND userid = $2`,
-          [groupID, userID],
-          (err, results) => {
-            if (err) {
-              throw err;
-            }
-          }
-        );
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
-  }
+  //First delete the user from the group.
+  pool
+    .query(`DELETE from GROUPS WHERE id=$1 AND userid = $2`, [groupID, userID])
+    .catch((error) => {
+      res.status(400).json(error);
+      return;
+    });
+
+  //Then delete the user's items for that group.
+  //This cascade deletes the user details table entries as well.
+  pool
+    .query(`DELETE from ITEMS WHERE groupid=$1 AND userid = $2`, [
+      groupID,
+      userID,
+    ])
+    .catch((error) => res.status(400).json(error));
 });
 
 /**
@@ -149,43 +165,40 @@ router.post("/removeUser", async (req, res) => {
  * @description  Get all of the groups a user is in
  **/
 router.get("/user", async (req, res) => {
-  try {
-    let { userid } = req.query;
+  let { userid } = req.query;
 
-    //First get the groups the user does not own
-    pool.query(
+  //First get the groups the user does not own
+  let memberGroups = await pool
+    .query(
       `SELECT groups.id,groups.role,groupauth.groupname,groupauth.mode FROM GROUPS INNER JOIN GROUPAUTH
       ON groupauth.id = groups.id
       WHERE groups.userid = $1 AND groups.role = 'Member'`,
-      [userid],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
+      [userid]
+    )
+    .then((results) => {
+      return results.rows;
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+      return;
+    });
 
-        let memberGroups = results.rows;
-
-        //Then get the user's owned groups with passcodes
-        pool.query(
-          `SELECT groups.id,groupauth.groupname,groups.role, groupauth.passcode,groupauth.mode 
+  //Then get the user's owned groups with passcodes
+  pool
+    .query(
+      `SELECT groups.id,groupauth.groupname,groups.role, groupauth.passcode,groupauth.mode 
           FROM GROUPS INNER JOIN GROUPAUTH 
           ON groupauth.id = groups.id WHERE role = 'Admin'AND groups.userid = $1;`,
-          [userid],
-          (err, results) => {
-            if (err) {
-              throw err;
-            }
-
-            //Add all the groups together
-            let groups = results.rows.concat(memberGroups);
-            res.status(200).json(groups);
-          }
-        );
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
-  }
+      [userid]
+    )
+    .then((results) => {
+      //Add all the groups together
+      let groups = results.rows.concat(memberGroups);
+      res.status(200).json(groups);
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+    });
 });
 
 /**
@@ -193,21 +206,16 @@ router.get("/user", async (req, res) => {
  * @description  Get all members of a group
  **/
 router.get("/members", async (req, res) => {
-  try {
-    let { groupid } = req.query;
-    pool.query(
+  let { groupid } = req.query;
+  pool
+    .query(
       `SELECT users.name,users.id,groups.role FROM USERS INNER JOIN GROUPS ON groups.userid = users.id WHERE groups.id = $1;`,
-      [groupid],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-        res.status(200).json(results.rows);
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
-  }
+      [groupid]
+    )
+    .then((results) => {
+      res.status(200).json(results.rows);
+    })
+    .catch((error) => res.status(400).json(error));
 });
 
 /**
@@ -216,22 +224,14 @@ router.get("/members", async (req, res) => {
  **/
 router.delete("/delete", async (req, res) => {
   let { groupid } = req.query;
-  try {
-    //Deletes both group auth and group table entries using cascade deletion
-    pool.query(
-      `DELETE from GROUPAUTH WHERE id = $1`,
-      [groupid],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
 
-        console.log(results.rows);
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message, success: false });
-  }
+  //Deletes both group auth and group table entries using cascade deletion
+  pool
+    .query(`DELETE from GROUPAUTH WHERE id = $1`, [groupid])
+    .then(res.status(200).json("Group Deleted"))
+    .catch((error) => {
+      res.status(400).json(error);
+    });
 });
 
 /**
@@ -239,46 +239,35 @@ router.delete("/delete", async (req, res) => {
  * @description  Get a group
  **/
 router.get("/", async (req, res) => {
-  try {
-    let { groupid } = req.query;
-    let resultObject = {};
-    //First get the group name.
-    pool.query(
-      `SELECT groupname FROM GROUPAUTH WHERE id= $1`,
-      [groupid],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-        //console.log(results.rows);
+  let { groupid } = req.query;
+  let resultObject = {};
+  //First get the group name and type
+  let Group = await pool
+    .query(`SELECT groupname, mode FROM GROUPAUTH WHERE id= $1`, [groupid])
+    .then((results) => {
+      return results.rows[0];
+    })
+    .catch((error) => res.status(400).json(error));
 
-        //If we dont find the group return and notify.
-        if (!results.rows) {
-          res.status(400).json({ message: "Group Not Found" });
-          return;
-        }
-        //Otherwise, find the id and names of all the members in the group
-        else {
-          resultObject.name = results.rows[0].groupname;
-          resultObject.id = groupid;
-          pool.query(
-            `SELECT name,id,profileimage FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
-            [groupid],
-            (err, results) => {
-              if (err) {
-                throw err;
-              }
-              // console.log(results.rows);
-              resultObject.members = results.rows;
-              res.status(200).json(resultObject);
-            }
-          );
-        }
-      }
-    );
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
+  //If we dont find the group return and notify.
+  if (!Group) {
+    res.status(400).json({ message: "Group Not Found" });
+    return;
   }
+  //Otherwise, find the id and names of all the members in the group
+  resultObject.name = Group.groupname;
+  resultObject.mode = Group.mode;
+  resultObject.id = groupid;
+  pool
+    .query(
+      `SELECT name,id,profileimage FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
+      [groupid]
+    )
+    .then((results) => {
+      resultObject.members = results.rows;
+      res.status(200).json(resultObject);
+    })
+    .catch((error) => res.status(400).json(error));
 });
 
 /**
@@ -289,20 +278,15 @@ router.post("/edit", async (req, res) => {
   let editParams = req.body;
 
   if (editParams.PassObject) {
-    try {
-      pool.query(
-        `UPDATE groupauth SET passcode = $1 WHERE id = $2 `,
-        [editParams.PassObject.newPass, editParams.PassObject.GroupID],
-        (err, results) => {
-          if (err) {
-            throw err;
-          }
-          res.status(201).json("Passcode Successfully Changed");
-        }
-      );
-    } catch (e) {
-      res.status(400).json({ msg: e.message });
-    }
+    pool
+      .query(`UPDATE groupauth SET passcode = $1 WHERE id = $2 `, [
+        editParams.PassObject.newPass,
+        editParams.PassObject.GroupID,
+      ])
+      .then(res.status(201).json("Passcode Successfully Changed"))
+      .catch((error) => {
+        res.status(400).json(error);
+      });
   }
 });
 

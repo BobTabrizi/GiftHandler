@@ -6,6 +6,8 @@ import { Menu } from "./ModalComponents/EditGroupModal/Menu";
 import { Passcode } from "./ModalComponents/EditGroupModal/Passcode";
 import { Members } from "./ModalComponents/EditGroupModal/Members";
 import { ConfirmDelete } from "./ModalComponents/EditGroupModal/ConfirmDelete";
+import { deactivateModal, setModalPage } from "../../actions/modalActions";
+import { IoArrowBack } from "react-icons/io5";
 /**
  *
  * @PageLocation ManageGroup
@@ -21,11 +23,18 @@ export const EditGroupModal = () => {
     (state) => state.group.selectedGroup.displayEditGroupModal
   );
   const [modalComponent, setModalComponent] = useState(<Menu />);
+  const [modalTitle, setModalTitle] = useState("Menu");
   const dispatch = useDispatch();
+
+  /*     Move back to modal menu     */
+  const changeModal = () => {
+    dispatch(setModalPage("GroupMenu"));
+  };
 
   /* Close modal entirely */
   const handleModalClose = async () => {
     dispatch(unSelectEditGroup());
+    dispatch(deactivateModal());
   };
 
   /*Render modal pages based on redux store state */
@@ -33,23 +42,28 @@ export const EditGroupModal = () => {
     switch (ActiveModal) {
       case "GroupMenu":
         setModalComponent(<Menu />);
+        setModalTitle("Menu");
         break;
 
       case "Passcode":
         setModalComponent(<Passcode />);
+        setModalTitle("Change Passcode");
         break;
 
       case "ManageMembers":
         setModalComponent(<Members />);
+        setModalTitle("Manage Members");
         break;
 
       case "Delete":
         setModalComponent(<ConfirmDelete />);
+        setModalTitle("Delete Group");
         break;
     }
     const handleClick = (e) => {
-      if (e.target && e.target.className === "GroupModalBackground") {
+      if (e.target && e.target.className === "GrpModalBackground") {
         dispatch(unSelectEditGroup());
+        dispatch(deactivateModal());
       }
     };
     if (ShowModal) {
@@ -61,13 +75,25 @@ export const EditGroupModal = () => {
     <>
       <div className="GrpModalBackground">
         <div className="GrpModalContainer">
-          <div className="modalCloseButton">
-            <button
-              onClick={() => handleModalClose()}
-              style={{ fontSize: 22, cursor: "pointer" }}
-            >
-              X
-            </button>
+          <div className="GrpModalHeader">
+            <div>
+              <IoArrowBack
+                onClick={() => changeModal("Menu")}
+                style={{
+                  cursor: "pointer",
+                  visibility: modalTitle === "Menu" ? "hidden" : "visible",
+                }}
+              />
+            </div>
+            <div>{modalTitle}</div>
+            <div className="modalCloseButton">
+              <button
+                onClick={() => handleModalClose()}
+                style={{ fontSize: 22, cursor: "pointer" }}
+              >
+                X
+              </button>
+            </div>
           </div>
           {modalComponent}
         </div>

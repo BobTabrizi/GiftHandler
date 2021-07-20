@@ -33,13 +33,22 @@ export const Dashboard = () => {
 
   return (
     <>
-      <div className="dashContainer">
+      <div
+        className="dashContainer"
+        style={{
+          position: !GroupID ? "absolute" : "static",
+        }}
+      >
         {ActiveModal === "AddItem" && <AddItemModal />}
         {showEditModal && <EditItemModal />}
         <NavBar title="HomePage" />
         <GroupComponent />
-        <div style={{ textAlign: "center", fontSize: 36 }}>
-          {GroupID ? `Your Wishlist` : `Select a Group`}
+
+        <div
+          className="registryPlaceholder"
+          style={{ display: !GroupID ? "block" : "none" }}
+        >
+          <div>{GroupID ? `Your Wishlist` : `No Group Selected`}</div>
         </div>
 
         <div
