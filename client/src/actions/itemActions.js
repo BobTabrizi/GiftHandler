@@ -30,7 +30,7 @@ export const getItems = (UserID, GroupID) => async (dispatch) => {
 
 export const addItem = (Item) => (dispatch) => {
   axios
-    .post(`http://localhost:3005/api/items/add`, {
+    .post(`/api/items/add`, {
       Item,
     })
     .then((res) => {
