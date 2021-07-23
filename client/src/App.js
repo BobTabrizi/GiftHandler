@@ -1,7 +1,6 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { Login } from "./Pages/Login";
-import { Register } from "./Pages/Register";
 import { Dashboard } from "./Pages/Dashboard";
 import "./App.css";
 import { useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import PrivateRoute from "./Routes/PrivateRoute";
 import { ManageGroup } from "./Pages/ManageGroup";
 import { UserGroupPage } from "./Pages/UserGroupPage";
 import { ProfilePage } from "./Pages/ProfilePage";
+import { PasswordReset } from "./Pages/PasswordReset";
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
@@ -18,14 +18,13 @@ function App() {
       <Router history={history}>
         <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
           <Route
             path="/groups/:gid/users/:id"
             exact
             component={UserGroupPage}
           />
           <Route path="/groups/:id" component={GroupPage} />
-
+          <Route path="/passwordReset/:id" component={PasswordReset} />
           <PrivateRoute
             path="/managegroups"
             isAuthenticated={isAuthenticated}

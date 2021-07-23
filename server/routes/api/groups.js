@@ -76,6 +76,23 @@ router.post("/users", async (req, res) => {
 
   let response;
 
+  //Check if the user is already in the group.
+  response = await pool
+    .query(
+      `SELECT groups.userid FROM GROUPS JOIN GROUPAUTH ON 
+      groups.id = groupauth.id WHERE groupauth.groupname = $1 AND
+      groups.userid = $2`,
+      [groupname, userid]
+    )
+    .then((results) => {
+      return results;
+    })
+    .catch((err) => console.log(err));
+  if (response.rows[0]) {
+    res.status(400).json("User Already in Group");
+    return;
+  }
+
   //Check if the Group exists
   response = await pool
     .query(`SELECT passcode, id,mode FROM GROUPAUTH WHERE groupname = $1`, [
@@ -115,23 +132,6 @@ router.post("/users", async (req, res) => {
       .catch((error) => res.status(400).json(error));
   } else {
     res.status(400).json("Incorrect Passcode");
-  }
-
-  //Check if the user is already in the group.
-  response = await pool
-    .query(
-      `SELECT groups.userid FROM GROUPS JOIN GROUPAUTH ON 
-      groups.id = groupauth.id WHERE groupauth.groupname = $1 AND
-      groups.userid = $2`,
-      [groupname, userid]
-    )
-    .then((results) => {
-      return results;
-    })
-    .catch((err) => console.log(err));
-  if (response.rows[0]) {
-    res.status(400).json("User Already in Group");
-    return;
   }
 });
 

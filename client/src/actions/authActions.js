@@ -10,6 +10,10 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  PW_RESET_REQ,
+  PW_RESET_REQ_FAIL,
+  PW_RESET,
+  PW_RESET_FAIL,
 } from "../actions/types";
 import { history } from "../helpers/history";
 //Check token and load user
@@ -41,7 +45,7 @@ export const loadUser = () => async (dispatch, getState) => {
     });
 
   //Return ID Directly for Group Querying
-  console.log(response);
+  //console.log(response);
   return response;
 };
 
@@ -115,8 +119,46 @@ export const updateUser = (user) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      dispatch(returnErrors(err.response.data, err.response.status));
     });
+};
+
+export const passResetProcess = (pid, code, password) => async (dispatch) => {
+  let Response = await axios
+    .post("/api/auth/processReset", {
+      pid: pid,
+      code: code,
+      password: password,
+    })
+    .then((res) => {
+      dispatch({
+        type: PW_RESET,
+        payload: res.data,
+      });
+      return res;
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      return err.response;
+    });
+  return Response;
+};
+
+export const passResetRequest = (email, pid) => async (dispatch) => {
+  let Response = await axios
+    .post("/api/auth/resetReq", {
+      email: email,
+      pid: pid,
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      return err.response;
+    });
+
+  return Response;
 };
 
 export const logout = () => {

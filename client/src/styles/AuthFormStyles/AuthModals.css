@@ -1,0 +1,66 @@
+/****** ------------------------ START Register Modal ----------------------*****/
+
+.RegisterModalBackground,
+.PassResetModalBackground {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.RegisterModalContainer,
+.PassResetContainer {
+  background-color: white;
+  border-radius: 25px;
+  display: flex;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  top: 25%;
+  left: 0;
+  right: 0;
+  width: 65vh;
+  height: 50vh;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+}
+/****** ------------------------ END Register Modal ----------------------*****/
+
+/****** ------------------------ START Password Reset Modal ----------------------*****/
+.PassResetModalBackground {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.PassResetContainer {
+  top: 29%;
+  height: 300px;
+  width: 400px;
+  border-radius: 0px;
+}
+.PassResetHeader {
+  display: flex;
+}
+
+.PassResetCloseBtn {
+  font-size: 20px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+}
+.PassResetBody,
+.PassResetSuccess {
+  margin-top: 2rem;
+}
+
+.ResetSuccessBtn {
+  background-color: dodgerblue;
+  height: 30px;
+  width: 70px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10%;
+}
+
+/****** ------------------------ END Password Reset Modal ----------------------*****/

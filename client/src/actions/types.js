@@ -39,6 +39,10 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const PW_RESET_REQ = "PW_RESET_REQ";
+export const PW_RESET_REQ_FAIL = "PW_RESET_REQ_FAIL";
+export const PW_RESET = "PW_RESET";
+export const PW_RESET_FAIL = "PW_RESET_FAIL";
 
 /*              Other Users                 */
 export const GET_EXT_USER = "GET_EXT_USER";

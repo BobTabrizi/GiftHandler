@@ -41,6 +41,13 @@ export default function authReducer(state = initialState, action) {
         isLoading: false,
         user: action.payload,
       };
+    case UPDATE_USER:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        user: action.payload,
+      };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);

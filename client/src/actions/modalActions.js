@@ -32,7 +32,6 @@ export const deactivateModal = () => (dispatch) => {
 };
 
 export const updateModalData = (Data) => (dispatch) => {
-  console.log(Data);
   dispatch({
     type: UPDATE_MODAL_DATA,
     payload: {

@@ -1,14 +1,13 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const express = require("express");
 const passport = require("passport");
 const pool = require("../../db");
+const nodemailer = require("nodemailer");
 const initializePassport = require("../../passport");
-
 initializePassport(passport);
-
 const router = express.Router();
-
 router.use(passport.initialize());
 
 /**
@@ -39,8 +38,6 @@ router.post("/login", async (req, res) => {
           // assign jwt to the cookie
           res.cookie("jwt", token, { httpOnly: true, secure: true });
           payload.token = token;
-          //For now, sending token, but ultimately want to set cookie on browser.
-          //TODO revisit this, Doesn't seem to be possible to set cookie with my current configuration, so this will do for now.
           res.status(200).send(payload);
         }
       });
@@ -85,10 +82,8 @@ router.post("/register", async (req, res) => {
               [name, email, hashedPassword, profileImage],
               (err, results) => {
                 if (err) {
-                  //TD Also pass DB error back if necessary (unique email constraint)
                   throw err;
                 }
-                // console.log(results.rows);
                 let user = {
                   id: results.rows[0].id,
                   name: results.rows[0].name,
@@ -169,6 +164,139 @@ router.post("/update", async (req, res) => {
       }
     }
   );
+});
+
+/**
+ * @route   POST api/auth/processReset
+ * @description   Reset Password for a user
+ **/
+router.post("/processReset", async (req, res) => {
+  let { pid, code, password } = req.body;
+
+  //First check and make sure password is the 6 character requirement.
+  if (password.length < 6) {
+    res.status(400).json("Password must be 6 or more characters");
+    return;
+  }
+
+  let response = await pool
+    .query(`SELECT * FROM passwordreset WHERE pid = $1`, [pid])
+    .then((results) => {
+      return results.rows[0];
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+      return;
+    });
+
+  //Handle case if there for some reason is no record of the link.
+  if (!response) {
+    res.status(400).json("The password link has been expired or is incorrect.");
+    return;
+  }
+
+  //Check if the codes match.
+  if (code !== response.code) {
+    res.status(400).json("Incorrect Reset Code");
+    return;
+  }
+  //If they do, hash new password and update
+  const salt = await bcrypt.genSalt(10);
+  let hashedPassword = await bcrypt.hash(password, salt);
+  let UpdateResponse = await pool
+    .query(`UPDATE users SET password = $1 WHERE email = $2 `, [
+      hashedPassword,
+      response.email,
+    ])
+    .then((results) => {
+      return true;
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+      return false;
+    });
+
+  //If we successfully updated the DB record. Remove the reset request and purge expired records (30 min expire currently).
+  if (UpdateResponse === true) {
+    let TimeDiff = Math.floor(new Date().getTime() / 1000) - 3000000;
+    let deleteResponse = await pool
+      .query(`DELETE FROM passwordreset WHERE code = $1 OR time < $2  `, [
+        code,
+        TimeDiff,
+      ])
+      .then((results) => {
+        return true;
+      })
+      .catch((error) => {
+        res.status(400).json(error);
+        return false;
+      });
+    if (deleteResponse) {
+      res.status(201).json("Password Successfully Changed");
+    }
+  }
+});
+
+/**
+ * @route   POST api/auth/resetReq
+ * @description    Generate and email link for a password reset
+ **/
+router.post("/resetReq", async (req, res) => {
+  let { email } = req.body;
+
+  let response = await pool
+    .query(`SELECT * FROM USERS WHERE email = $1`, [email])
+    .then((results) => {
+      return results.rows[0];
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+      return;
+    });
+
+  if (!response) {
+    res.status(404).json("Email is not registered");
+    return;
+  } else {
+    //Get time stamp and create page id and reset code.
+    let time = Math.floor(new Date().getTime() / 1000);
+    let pid = crypto.randomBytes(15).toString("hex");
+    let code = crypto.randomBytes(8).toString("hex");
+    pool.query(
+      `INSERT INTO passwordreset (email,pid,code,time) VALUES ($1,$2,$3,$4)`,
+      [email, pid, code, time]
+    );
+
+    //Mail out the reset code and password reset link
+    const transporter = nodemailer.createTransport({
+      port: 465,
+      host: "smtp.gmail.com",
+      auth: {
+        user: "noreply.gifthandler@gmail.com",
+        pass: `${process.env.EMAIL_PASSWORD}`,
+      },
+      secure: true,
+    });
+    const Mail = {
+      from: "noreply.gifthandler@gmail.com",
+      to: email,
+      subject: "Reset Your Gift Handler Account Password",
+      html: `<b>Please follow these instructions to reset your password.</b> <br/>
+      <p>Please enter in the following code when resetting your password:<b>${code}</b></p>.<br/> 
+      <p>To reset your password, visit the following link below:<p><br/>
+      <a> http://localhost:3000/passwordReset/${pid}</a>`,
+    };
+
+    transporter.sendMail(Mail, (err, info) => {
+      if (err) {
+        res.status(400).json("There was an issue sending a link to the email");
+      } else {
+        res
+          .status(201)
+          .json("A Password reset link & code has been sent to the email");
+      }
+    });
+  }
 });
 
 module.exports = router;

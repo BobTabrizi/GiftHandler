@@ -55,17 +55,6 @@ form {
   height: 50vh;
   align-items: center;
 }
-
-.RegisterFormContainer {
-  background-color: rgb(255, 255, 255, 1);
-  border-radius: 25px;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 65vh;
-  height: 50vh;
-  align-items: center;
-}
 form .form-inner h2 {
   font-size: 28px;
   font-weight: 500;
@@ -117,4 +106,16 @@ form .form-inner input[type="submit"] {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
+  margin: auto;
+  width: 30%;
+}
+
+.passResetReqBtn {
+  font-size: 14px;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  width: 50%;
+  margin: auto;
+  margin-top: 15%;
 }

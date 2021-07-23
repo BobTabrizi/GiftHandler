@@ -53,20 +53,18 @@ export default function NavBar({ title }) {
               );
             })}
             <hr />
-            <li className="nav-text">
-              <div className="sidebarItem">
-                <Link
-                  to="/login"
-                  onClick={handleLogout}
-                  style={{
-                    textDecoration: "none",
-                    color: "white",
-                  }}
-                >
-                  Sign Out
-                </Link>
-              </div>
-            </li>
+            <Link
+              to="/login"
+              onClick={handleLogout}
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}
+            >
+              <li className="nav-text">
+                <div className="sidebarItem">Sign Out</div>
+              </li>
+            </Link>
           </ul>
         </nav>
       </IconContext.Provider>
