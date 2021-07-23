@@ -7,6 +7,9 @@ Technologies: React.JS, Redux, Express, Node.JS, PostgreSQL, AWS S3/RDS/EC2, NGI
 
 ### Instructions & Current Functionality
 
+You can check out the live alpha build hosted on AWS EC2 here: http://54.193.8.100.
+**Note: Final styling will be added shortly. Currently testing functionality.**
+
 Register and login to create or join a registry group. 
 
 Currently there are two different types of groups: Secret Santa and Wedding/Shower/Birthday registries.
