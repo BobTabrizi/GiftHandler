@@ -13,7 +13,6 @@ router.use(passport.initialize());
  **/
 router.get("/user", async (req, res) => {
   let { userid, groupid } = req.query;
-
   pool
     .query(
       `SELECT * FROM itemdetails WHERE itemid IN (SELECT itemid FROM items WHERE userid = $1 AND groupid = $2)`,

@@ -8,6 +8,7 @@ import { GroupComponent } from "../components/Groups/GroupComponent";
 import { RegistryList } from "../components/Items/RegistryList";
 import { AddItemModal } from "../components/Modals/AddItemModal";
 import { EditItemModal } from "../components/Modals/EditItemModal";
+import { FilterColumn } from "../components/Filters/FilterColumn";
 /**
  *
  * @Page Dashboard
@@ -46,20 +47,24 @@ export const Dashboard = () => {
         {ActiveModal === "AddItem" && <AddItemModal />}
         {showEditModal && <EditItemModal />}
         <NavBar title="HomePage" />
-        <GroupComponent />
 
-        <div
-          className="registryPlaceholder"
-          style={{ display: !GroupID ? "block" : "none" }}
-        >
-          <div>{GroupID ? `Your Wishlist` : `No Group Selected`}</div>
-        </div>
+        <div className="DashBody">
+          <FilterColumn />
+          <div className="registryBody">
+            <div
+              className="registryPlaceholder"
+              style={{ display: !GroupID ? "block" : "none" }}
+            >
+              <div>{GroupID ? `Your Wishlist` : <GroupComponent />} </div>
+            </div>
 
-        <div
-          className="registryDashContainer"
-          style={{ display: GroupID ? "block" : "none" }}
-        >
-          {GroupID && <RegistryList PageType={"Dashboard"} />}
+            <div
+              className="registryDashContainer"
+              style={{ display: GroupID ? "block" : "none" }}
+            >
+              {GroupID && <RegistryList PageType={"Dashboard"} />}
+            </div>
+          </div>
         </div>
       </div>
     </>

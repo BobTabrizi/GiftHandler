@@ -17,7 +17,6 @@ export const ItemDetails = (item) => {
   const handleEditItem = () => {
     dispatch(selectEditItem(item));
   };
-
   return (
     <>
       <div className="ItemDetailContainer" onClick={() => handleEditItem()}>

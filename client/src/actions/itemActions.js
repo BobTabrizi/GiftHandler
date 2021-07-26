@@ -8,6 +8,9 @@ import {
   UNSELECT_EDIT_ITEM,
   ITEMS_LOADING,
   PURCHASE_ITEM,
+  FILTER_ITEM,
+  SET_FILTER_ITEM,
+  CLEAR_FILTER_ITEMS,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -94,6 +97,29 @@ export const purchaseItem = (item) => (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const filterItems = (FilterParam) => {
+  return {
+    type: FILTER_ITEM,
+    payload: {
+      FilterParam: FilterParam,
+    },
+  };
+};
+
+export const setFilterItem = (item) => {
+  return {
+    type: SET_FILTER_ITEM,
+    payload: item,
+  };
+};
+
+export const clearFilterItems = () => {
+  return {
+    type: CLEAR_FILTER_ITEMS,
+    payload: null,
+  };
 };
 
 export const selectEditItem = (item) => (dispatch) => {

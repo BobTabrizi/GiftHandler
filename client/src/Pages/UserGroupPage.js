@@ -6,6 +6,7 @@ import { RegistryList } from "../components/Items/RegistryList";
 import { getItems } from "../actions/itemActions";
 import { getUser } from "../actions/userActions";
 import { getGroup } from "../actions/groupActions";
+import { FilterOtherUsers } from "../components/Filters/FilterOtherUsers";
 /**
  *
  * @Page User Group Page
@@ -34,14 +35,11 @@ export const UserGroupPage = (props) => {
     <>
       <div className="UserPageContainer">
         <NavBar title="User Page" />
-        <div className="UserInfo">
-          <div className="UserName">{userName}</div>
-          <div className="UserImage">
-            <img height="100%" width="100%" src={`/api/images/${image}`}></img>
+        <div className="UserPageBody">
+          <FilterOtherUsers />
+          <div className="registryContainer">
+            <RegistryList />
           </div>
-        </div>
-        <div className="registryContainer">
-          <RegistryList />
         </div>
       </div>
     </>

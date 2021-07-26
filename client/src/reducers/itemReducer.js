@@ -7,10 +7,13 @@ import {
   SELECT_EDIT_ITEM,
   UNSELECT_EDIT_ITEM,
   ITEMS_LOADING,
+  FILTER_ITEM,
+  SET_FILTER_ITEM,
+  CLEAR_FILTER_ITEMS,
 } from "../actions/types";
 
 const initialState = {
-  items: null,
+  filteredItems: null,
   memberItems: null,
   selectedItem: {
     displayEditModal: false,
@@ -49,6 +52,57 @@ export default function itemReducer(state = initialState, action) {
         memberItems: state.memberItems.filter(
           (item) => item.itemid !== action.payload
         ),
+      };
+    case SET_FILTER_ITEM:
+      return {
+        ...state,
+        filteredItems: [action.payload],
+      };
+    case CLEAR_FILTER_ITEMS:
+      return {
+        ...state,
+        filteredItems: null,
+      };
+    case FILTER_ITEM:
+      let lowPriceFilter;
+      let highPriceFilter;
+      let filteredItems;
+
+      //If the less than filter is set, convert to a number
+      if (action.payload.FilterParam.LowerThan) {
+        lowPriceFilter = Number(
+          action.payload.FilterParam.LowerThan.substring(1)
+        );
+      }
+
+      //If the more than filter is set, convert to a number
+      if (action.payload.FilterParam.MoreThan) {
+        highPriceFilter = Number(
+          action.payload.FilterParam.MoreThan.substring(1)
+        );
+      }
+
+      //Filter items based on filter parameters set. Convert item prices to numbers
+      if (lowPriceFilter && highPriceFilter) {
+        filteredItems = state.memberItems.filter(
+          (item) =>
+            Number(item.price.replace(/[^0-9\.]+/g, "")) < lowPriceFilter &&
+            Number(item.price.replace(/[^0-9\.]+/g, "")) > highPriceFilter
+        );
+      } else if (lowPriceFilter) {
+        filteredItems = state.memberItems.filter(
+          (item) =>
+            Number(item.price.replace(/[^0-9\.]+/g, "")) < lowPriceFilter
+        );
+      } else if (highPriceFilter) {
+        filteredItems = state.memberItems.filter(
+          (item) =>
+            Number(item.price.replace(/[^0-9\.]+/g, "")) > highPriceFilter
+        );
+      }
+      return {
+        ...state,
+        filteredItems: filteredItems,
       };
     case EDIT_ITEM:
       let arr = state.memberItems;

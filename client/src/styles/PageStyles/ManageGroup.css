@@ -122,6 +122,6 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(255, 255, 255, 0.4);
+  background: rgba(170, 170, 170, 0.4);
   border-radius: 10px;
 }

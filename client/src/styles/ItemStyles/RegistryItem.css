@@ -2,15 +2,14 @@
   display: flex;
   flex-direction: row;
   flex-flow: row;
-  width: 100%;
   flex-wrap: wrap;
 }
 
 .ItemContainer {
   border: 1px solid black;
-  margin: 2%;
-  width: 20%;
-  height: 380px;
+  margin: 1%;
+  width: 14%;
+  height: 340px;
   border-radius: 15px;
   background-color: rgb(255, 255, 255, 0.5);
   box-sizing: border-box;
@@ -35,7 +34,7 @@
 
 .ItemImage {
   object-fit: contain;
-  height: 200px;
+  height: 175px;
   border: 1px solid gray;
 }
 .ListItemPrice,
@@ -64,10 +63,10 @@
 .AddItemCard {
   display: flex;
   flex-direction: column;
-  margin: 2%;
+  margin: 1%;
   border: 2px solid black;
-  width: 20%;
-  height: 380px;
+  width: 14%;
+  height: 340px;
   padding: 1%;
   border-radius: 15px;
   background-color: white;

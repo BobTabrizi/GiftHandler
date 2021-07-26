@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../styles/ItemStyles/RegistryItem.css";
 import { ItemDetails } from "./ItemDetails";
@@ -16,17 +16,31 @@ import { AddItemCard } from "./AddItemCard";
  */
 export const RegistryList = (props) => {
   const items = useSelector((state) => state.item.memberItems);
+  const filteredItems = useSelector((state) => state.item.filteredItems);
 
   //Seperate Item functionalities based on page.
   //Allow editing/Deleting on user Dashboard
   //Allow Item purchase on user page
+
   if (props.PageType === "Dashboard") {
     return (
       <>
         <div className="ItemListContainer">
-          <AddItemCard />
-          {items &&
-            items.map((item, index) => (
+          {!filteredItems && (
+            <>
+              <AddItemCard />
+
+              {items &&
+                items.map((item, index) => (
+                  <div className="ItemContainer" key={index}>
+                    <ItemDetails {...item} />
+                  </div>
+                ))}
+            </>
+          )}
+
+          {filteredItems &&
+            filteredItems.map((item, index) => (
               <div className="ItemContainer" key={index}>
                 <ItemDetails {...item} />
               </div>
@@ -38,12 +52,26 @@ export const RegistryList = (props) => {
     return (
       <>
         <div className="ItemListContainer">
-          {items &&
-            items.map((item, index) => (
-              <>
-                <UserItemDetails {...item} />
-              </>
-            ))}
+          {!filteredItems && (
+            <>
+              {items &&
+                items.map((item, index) => (
+                  <>
+                    <UserItemDetails {...item} />
+                  </>
+                ))}
+            </>
+          )}
+          {filteredItems && (
+            <>
+              {filteredItems &&
+                filteredItems.map((item, index) => (
+                  <>
+                    <UserItemDetails {...item} />
+                  </>
+                ))}
+            </>
+          )}
         </div>
       </>
     );

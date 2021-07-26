@@ -1,0 +1,72 @@
+.FilterColumnBackground {
+  height: 85vh;
+  background-color: rgb(191, 191, 255);
+  padding: 15px;
+}
+
+.FilterColContainer {
+  height: 100%;
+}
+.ItemInfoContainer {
+  flex-direction: column;
+}
+
+.ItemInfoNumber {
+  font-weight: bold;
+}
+.ItemInfoLabel {
+  font-size: 16px;
+}
+
+.FilterColItems {
+  text-align: center;
+}
+
+.FilterColHeader {
+  text-align: center;
+}
+
+.FilterItemCount {
+  display: flex;
+  flex-direction: row;
+}
+
+.FilterButtons {
+  margin-top: 10%;
+  text-align: center;
+}
+
+.FilterBtn {
+  width: 15px;
+  height: 15px;
+  -webkit-appearance: checkbox;
+  flex: 1;
+}
+
+.FilterBtnLabel {
+  flex: 2;
+}
+
+.FilterBtnItem {
+  margin: 2%;
+  display: flex;
+}
+
+.FilterPriceInput {
+  background-color: white;
+  width: 35%;
+  padding: 1%;
+  flex: 1;
+}
+
+.ClearFilterBtn,
+.FilterPriceBtn {
+  cursor: pointer;
+  padding: 3%;
+  background-color: dodgerblue;
+  border-radius: 5px;
+}
+
+.FilterSearch {
+  text-align: center;
+}

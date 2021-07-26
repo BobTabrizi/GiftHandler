@@ -11,6 +11,7 @@ import { ManageGroup } from "./Pages/ManageGroup";
 import { UserGroupPage } from "./Pages/UserGroupPage";
 import { ProfilePage } from "./Pages/ProfilePage";
 import { PasswordReset } from "./Pages/PasswordReset";
+import { FTUE } from "./Pages/FTUE";
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
@@ -25,6 +26,11 @@ function App() {
           />
           <Route path="/groups/:id" component={GroupPage} />
           <Route path="/passwordReset/:id" component={PasswordReset} />
+          <PrivateRoute
+            path="/welcome"
+            isAuthenticated={isAuthenticated}
+            component={FTUE}
+          />
           <PrivateRoute
             path="/managegroups"
             isAuthenticated={isAuthenticated}

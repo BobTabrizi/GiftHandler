@@ -1,0 +1,38 @@
+.FTUEContainer {
+  background-color: lightgray;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.FTUEBody {
+  text-align: center;
+}
+
+.FTUEModalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*****---------------------START FTUE MODALS---------------*****/
+
+.StepOneContainer {
+  background-color: rgb(255, 255, 255);
+  width: 70%;
+  height: 500px;
+  display: flex;
+}
+
+.MoveBack,
+.MoveForward {
+  flex: 1;
+  margin: auto;
+  cursor: pointer;
+}
+
+.FTUEModalContent {
+  flex: 9;
+}
+
+/*****---------------------END FTUE MODALS---------------*****/

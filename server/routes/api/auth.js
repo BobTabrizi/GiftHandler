@@ -284,7 +284,7 @@ router.post("/resetReq", async (req, res) => {
       html: `<b>Please follow these instructions to reset your password.</b> <br/>
       <p>Please enter in the following code when resetting your password:<b>${code}</b></p>.<br/> 
       <p>To reset your password, visit the following link below:<p><br/>
-      <a> http://localhost:3000/passwordReset/${pid}</a>`,
+      <a> http://54.193.8.100/passwordReset/${pid}</a>`,
     };
 
     transporter.sendMail(Mail, (err, info) => {

@@ -9,6 +9,9 @@ export const SELECT_EDIT_ITEM = "SELECT_EDIT_ITEM";
 export const UNSELECT_EDIT_ITEM = "UNSELECT_EDIT_ITEM";
 export const ITEMS_LOADING = "ITEMS_LOADING";
 export const PURCHASE_ITEM = "PURCHASE_ITEM";
+export const FILTER_ITEM = "FILTER_ITEM";
+export const SET_FILTER_ITEM = "SET_FILTER_ITEM";
+export const CLEAR_FILTER_ITEMS = "CLEAR_FILTER_ITEMS";
 
 /*            Groups                      */
 export const GET_USERS_GROUPS = "GET_GROUPS";

@@ -64,7 +64,9 @@ export const register =
           type: REGISTER_SUCCESS,
           payload: res.data,
         });
-        history.push("/");
+
+        /*  Direct to FTUE Page  */
+        history.push("/welcome");
       })
       .catch((err) => {
         dispatch(

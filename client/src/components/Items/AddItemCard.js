@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../../styles/ItemStyles/RegistryItem.css";
 import { setActiveModal } from "../../actions/modalActions";
 import { IoAdd } from "react-icons/io5";
@@ -14,18 +14,32 @@ import { IoAdd } from "react-icons/io5";
  */
 export const AddItemCard = () => {
   const dispatch = useDispatch();
-
+  const items = useSelector((state) => state.item.memberItems);
   const handleAddItem = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(setActiveModal("AddItem"));
   };
   return (
     <>
-      <div className="AddItemCard" onClick={() => handleAddItem()}>
-        <div className="ItemName">ADD NEW ITEM</div>
+      {items && items.length !== 0 && (
+        <div className="AddItemCard" onClick={() => handleAddItem()}>
+          <div className="ItemName">ADD NEW ITEM</div>
+          <IoAdd style={{ fontSize: 150, color: "gray" }} />
+        </div>
+      )}
 
-        <IoAdd style={{ fontSize: 250, color: "gray" }} />
-      </div>
+      {(!items || items.length === 0) && (
+        <>
+          <div
+            className="AddItemCard"
+            onClick={() => handleAddItem()}
+            style={{ width: "14%" }}
+          >
+            <div className="ItemName">Start by adding an item</div>
+            <IoAdd style={{ fontSize: 150, color: "gray" }} />
+          </div>
+        </>
+      )}
     </>
   );
 };
