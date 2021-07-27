@@ -8,6 +8,7 @@ import { GroupList } from "../components/Groups/GroupList";
 import { CreateJoinGroup } from "../components/Groups/CreateJoinGroup";
 import { EditGroupModal } from "../components/Modals/EditGroupModal";
 import { AddJoinGroupModal } from "../components/Modals/AddJoinGroupModal";
+import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
 /**
  *
  * @Page Group Manager Page
@@ -35,9 +36,9 @@ export const ManageGroup = () => {
       <div className="container">
         {ShowEditGroupModal && <EditGroupModal />}
         {ActiveModal === "Group" && <AddJoinGroupModal />}
+        {ActiveModal === "Confirm" && <ConfirmationModal />}
         <NavBar title="Manage Groups" />
         <CreateJoinGroup />
-
         <div className="groupTypesContainer">
           <div className="ownedGroups">
             <h1>Owned Groups</h1>

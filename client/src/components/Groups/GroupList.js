@@ -8,6 +8,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { selectEditGroup } from "../../actions/groupActions";
 import { leaveGroup } from "../../actions/groupActions";
 import { GrLogout } from "react-icons/gr";
+import { setActiveModal, updateModalData } from "../../actions/modalActions";
 /**
  * @PageLocation ManageGroup
  * @Component GroupList
@@ -33,7 +34,15 @@ export const GroupList = ({ FilterType }) => {
   };
 
   const handleLeaveGroup = (groupID) => {
-    dispatch(leaveGroup(groupID, userID));
+    dispatch(setActiveModal("Confirm"));
+
+    let ModalData = {
+      ActionID: 0,
+      groupID: groupID,
+      userID: userID,
+    };
+    dispatch(updateModalData(ModalData));
+    //dispatch(leaveGroup(groupID, userID));
   };
 
   return (
@@ -52,14 +61,26 @@ export const GroupList = ({ FilterType }) => {
             .map((group, index) => (
               <div className="GroupContainer" key={index}>
                 <div className="GroupLabel">
-                  <Link
-                    to={`/groups/${group.id}`}
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {group.groupname}
-                  </Link>
+                  {group.mode !== 1 && (
+                    <Link
+                      to={`/groups/${group.id}`}
+                      style={{
+                        textDecoration: "none",
+                      }}
+                    >
+                      {group.groupname}
+                    </Link>
+                  )}
+                  {group.mode === 1 && (
+                    <Link
+                      to={`/groups/${group.id}/event/users/${userID}`}
+                      style={{
+                        textDecoration: "none",
+                      }}
+                    >
+                      {group.groupname}
+                    </Link>
+                  )}
                 </div>
                 <div className="VerticalLine"></div>
                 <div className="GroupMode">

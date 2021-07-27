@@ -34,8 +34,6 @@ export const deactivateModal = () => (dispatch) => {
 export const updateModalData = (Data) => (dispatch) => {
   dispatch({
     type: UPDATE_MODAL_DATA,
-    payload: {
-      addGroupSettings: Data,
-    },
+    payload: Data,
   });
 };

@@ -2,6 +2,8 @@
   height: 85vh;
   background-color: rgb(191, 191, 255);
   padding: 15px;
+  position: sticky;
+  top: 0;
 }
 
 .FilterColContainer {
@@ -69,4 +71,10 @@
 
 .FilterSearch {
   text-align: center;
+}
+
+.EventFilterHeader {
+  text-align: center;
+  font-weight: bold;
+  font-size: 21px;
 }

@@ -94,6 +94,19 @@
 
 /***-------------END ModeSelect Modal ------------*/
 
+/***-------------START EventInfo Modal --------- -*/
+
+.EventModalInput {
+  color: black;
+  background-color: rgba(175, 171, 171, 0.747);
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+  resize: none;
+}
+
+/***-------------END EventInfo Modal ------- -----*/
+
 /***-------------START GroupRegister Modal ------------*/
 
 .GroupRegisterHeader {
@@ -191,8 +204,23 @@
   flex: 1;
 }
 
+.AssignPartnerBtn {
+  color: white;
+  padding: 2%;
+  border-radius: 10px;
+}
+
+.AdminPartnerBtn {
+  width: 15px;
+  height: 15px;
+  -webkit-appearance: checkbox;
+  flex: 1;
+}
+
 .NameHeader,
 .RoleHeader,
+.PartnerHeader,
+.PartnerName,
 .MemberRole,
 .MemberName {
   flex: 3;

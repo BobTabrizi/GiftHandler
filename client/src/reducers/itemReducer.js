@@ -10,6 +10,7 @@ import {
   FILTER_ITEM,
   SET_FILTER_ITEM,
   CLEAR_FILTER_ITEMS,
+  CLEAR_ITEMS,
 } from "../actions/types";
 
 const initialState = {
@@ -18,9 +19,6 @@ const initialState = {
   selectedItem: {
     displayEditModal: false,
     itemDetails: null,
-  },
-  itemAddition: {
-    displayAddModal: false,
   },
   loading: false,
 };
@@ -57,6 +55,11 @@ export default function itemReducer(state = initialState, action) {
       return {
         ...state,
         filteredItems: [action.payload],
+      };
+    case CLEAR_ITEMS:
+      return {
+        ...state,
+        memberItems: null,
       };
     case CLEAR_FILTER_ITEMS:
       return {

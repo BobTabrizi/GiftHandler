@@ -6,6 +6,7 @@ import { deleteItem } from "../../actions/itemActions";
 import { addImage, deleteImage } from "../../actions/imageActions";
 import CurrencyInput from "../Items/CurrencyInput";
 import { unSelectEditItem } from "../../actions/itemActions";
+import { setActiveModal, updateModalData } from "../../actions/modalActions";
 
 /**
  *
@@ -68,8 +69,13 @@ export const EditItemModal = () => {
 
   /*  Handle Deletion of selected item */
   const handleDeleteItem = () => {
-    dispatch(deleteItem(item.itemid, item.image));
-    dispatch(unSelectEditItem());
+    let ModalData = {
+      ActionID: 1,
+      ItemID: item.itemid,
+      ItemImage: item.image,
+    };
+    dispatch(updateModalData(ModalData));
+    dispatch(setActiveModal("Confirm"));
   };
 
   /*   Handle Edit of the item */

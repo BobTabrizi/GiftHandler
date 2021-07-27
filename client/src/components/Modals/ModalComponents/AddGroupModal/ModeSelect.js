@@ -14,15 +14,18 @@ import { updateModalData } from "../../../../actions/modalActions";
 export const ModeSelect = () => {
   //Save group modes in DB as single integers,
   //Current: 0 -> Secret Santa ; 1 -> Wedding ; 2 -> Other
-  const [radioState, setRadioState] = useState(0);
+  const [eventType, setEventType] = useState(0);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    let GroupSettings = {
-      Mode: radioState,
+    let ModalData = {
+      Mode: eventType,
     };
-    dispatch(updateModalData(GroupSettings));
-    dispatch(setModalPage("GroupRegister"));
+    dispatch(updateModalData(ModalData));
+
+    dispatch(setModalPage("EventInfo"));
+
+    // dispatch(setModalPage("GroupRegister"));
   };
 
   return (
@@ -37,7 +40,7 @@ export const ModeSelect = () => {
             className="radBtn"
             value="Secret Santa"
             name="groupmode"
-            onClick={() => setRadioState(0)}
+            onClick={() => setEventType(0)}
             defaultChecked
           />
           Secret Santa
@@ -48,22 +51,11 @@ export const ModeSelect = () => {
             type="radio"
             className="radBtn"
             value="Wedding"
-            onClick={() => setRadioState(1)}
+            onClick={() => setEventType(1)}
             name="groupmode"
           />{" "}
           Wedding
           <div className="ModeInfo">Group Size: 1</div>
-        </div>
-        <div className="ModeBtn">
-          <input
-            type="radio"
-            className="radBtn"
-            value="Other"
-            onClick={() => setRadioState(2)}
-            name="groupmode"
-          />{" "}
-          Other
-          <div className="ModeInfo">Group Size: Any</div>
         </div>
       </div>
       <div className="ModeSelectFooter">

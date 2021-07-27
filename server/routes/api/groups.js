@@ -14,7 +14,7 @@ router.use(passport.initialize());
  * @description    Create a group
  **/
 router.post("/create", async (req, res) => {
-  let { groupName, passcode, userid, groupMode } = req.body.GroupDetails;
+  let { groupName, passcode, userid, groupMode, Bio } = req.body.GroupDetails;
   //First check to see if the group already exists
   const response = await pool
     .query(`SELECT * FROM GROUPAUTH where groupname = $1`, [groupName])
@@ -40,6 +40,19 @@ router.post("/create", async (req, res) => {
     )
     .then((res) => {
       return res.rows[0].id;
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+      return;
+    });
+
+  pool
+    .query(`INSERT INTO eventinfo (groupid,description) VALUES ($1,$2)`, [
+      groupid,
+      Bio,
+    ])
+    .then((results) => {
+      console.log(results);
     })
     .catch((err) => {
       res.status(400).json(err);
@@ -170,9 +183,9 @@ router.get("/user", async (req, res) => {
   //First get the groups the user does not own
   let memberGroups = await pool
     .query(
-      `SELECT groups.id,groups.role,groupauth.groupname,groupauth.mode FROM GROUPS INNER JOIN GROUPAUTH
-      ON groupauth.id = groups.id
-      WHERE groups.userid = $1 AND groups.role = 'Member' ORDER BY groups.id DESC`,
+      `SELECT groups.id,groupauth.groupname, groups.partnerid,groups.role, groupauth.passcode,groupauth.mode,partners.name AS partner 
+      FROM GROUPS INNER JOIN GROUPAUTH ON groupauth.id = groups.id LEFT OUTER JOIN users partners ON 
+      groups.partnerid = partners.id WHERE role = 'Member' AND groups.userid = $1 ORDER BY groups.id DESC;`,
       [userid]
     )
     .then((results) => {
@@ -186,9 +199,9 @@ router.get("/user", async (req, res) => {
   //Then get the user's owned groups with passcodes
   pool
     .query(
-      `SELECT groups.id,groupauth.groupname,groups.role, groupauth.passcode,groupauth.mode 
-          FROM GROUPS INNER JOIN GROUPAUTH 
-          ON groupauth.id = groups.id WHERE role = 'Admin'AND groups.userid = $1 ORDER BY groups.id DESC`,
+      `SELECT groups.id,groupauth.groupname, groups.partnerid,groups.role, groupauth.passcode,groupauth.mode,partners.name AS partner 
+      FROM GROUPS INNER JOIN GROUPAUTH ON groupauth.id = groups.id LEFT OUTER JOIN users partners ON 
+      groups.partnerid = partners.id WHERE role = 'Admin' AND groups.userid = $1 ORDER BY groups.id DESC;`,
       [userid]
     )
     .then((results) => {
@@ -209,7 +222,7 @@ router.get("/members", async (req, res) => {
   let { groupid } = req.query;
   pool
     .query(
-      `SELECT users.name,users.id,groups.role FROM USERS INNER JOIN GROUPS ON groups.userid = users.id WHERE groups.id = $1;`,
+      `SELECT users.name,partners.name AS partner,users.id,groups.role,groups.partnerid FROM USERS INNER JOIN GROUPS ON groups.userid = users.id LEFT OUTER JOIN users partners ON groups.partnerid = partners.id WHERE groups.id = $1;`,
       [groupid]
     )
     .then((results) => {
@@ -255,9 +268,19 @@ router.get("/", async (req, res) => {
     return;
   }
   //Otherwise, find the id and names of all the members in the group
+
+  let Bio = await pool
+    .query(`SELECT description FROM eventinfo WHERE groupid= $1`, [groupid])
+    .then((results) => {
+      return results.rows[0];
+    })
+    .catch((error) => res.status(400).json(error));
+
+  resultObject.Bio = Bio;
   resultObject.name = Group.groupname;
   resultObject.mode = Group.mode;
   resultObject.id = groupid;
+
   pool
     .query(
       `SELECT name,id,profileimage FROM USERS WHERE id IN (SELECT userid FROM GROUPS WHERE id= $1)`,
@@ -268,6 +291,37 @@ router.get("/", async (req, res) => {
       res.status(200).json(resultObject);
     })
     .catch((error) => res.status(400).json(error));
+});
+
+/**
+ * @route   POST api/groups/assignPartners
+ * @description  Assign gifting partners in a group
+ **/
+router.post("/assignPartners", async (req, res) => {
+  let groupParams = req.body.GroupParameters;
+  let Partner1 = groupParams.PartnerList[0];
+  let Partner2 = groupParams.PartnerList[1];
+
+  pool
+    .query(`UPDATE GROUPS SET partnerid = $1 WHERE userid = $2 AND id = $3 `, [
+      Partner2,
+      Partner1,
+      groupParams.GroupID,
+    ])
+    .catch((error) => {
+      res.status(400).json(error);
+    });
+
+  pool
+    .query(`UPDATE GROUPS SET partnerid = $1 WHERE userid = $2 AND id = $3 `, [
+      Partner1,
+      Partner2,
+      groupParams.GroupID,
+    ])
+    .then(res.status(201).json("Added Partners"))
+    .catch((error) => {
+      res.status(400).json(error);
+    });
 });
 
 /**

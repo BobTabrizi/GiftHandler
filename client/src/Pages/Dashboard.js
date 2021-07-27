@@ -9,6 +9,8 @@ import { RegistryList } from "../components/Items/RegistryList";
 import { AddItemModal } from "../components/Modals/AddItemModal";
 import { EditItemModal } from "../components/Modals/EditItemModal";
 import { FilterColumn } from "../components/Filters/FilterColumn";
+import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
+import { clearItems } from "../actions/itemActions";
 /**
  *
  * @Page Dashboard
@@ -26,6 +28,7 @@ export const Dashboard = () => {
   );
   const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);
   useEffect(() => {
+    dispatch(clearItems());
     async function getData() {
       let UID = await dispatch(loadUser());
       dispatch(getGroups(UID));
@@ -44,8 +47,9 @@ export const Dashboard = () => {
               : "static",
         }}
       >
+        {ActiveModal === "Confirm" && <ConfirmationModal />}
         {ActiveModal === "AddItem" && <AddItemModal />}
-        {showEditModal && <EditItemModal />}
+        {showEditModal && ActiveModal !== "Confirm" && <EditItemModal />}
         <NavBar title="HomePage" />
 
         <div className="DashBody">

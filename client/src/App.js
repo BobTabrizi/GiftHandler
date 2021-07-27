@@ -12,6 +12,7 @@ import { UserGroupPage } from "./Pages/UserGroupPage";
 import { ProfilePage } from "./Pages/ProfilePage";
 import { PasswordReset } from "./Pages/PasswordReset";
 import { FTUE } from "./Pages/FTUE";
+import { SpecialGroupPage } from "./Pages/SpecialGroupPage";
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
@@ -19,6 +20,11 @@ function App() {
       <Router history={history}>
         <Switch>
           <Route path="/login" component={Login} />
+
+          <Route
+            path="/groups/:GID/event/users/:UID"
+            component={SpecialGroupPage}
+          />
           <Route
             path="/groups/:gid/users/:id"
             exact
@@ -26,6 +32,7 @@ function App() {
           />
           <Route path="/groups/:id" component={GroupPage} />
           <Route path="/passwordReset/:id" component={PasswordReset} />
+
           <PrivateRoute
             path="/welcome"
             isAuthenticated={isAuthenticated}

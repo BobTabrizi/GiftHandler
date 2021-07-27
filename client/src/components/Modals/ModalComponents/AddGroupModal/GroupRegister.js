@@ -16,9 +16,7 @@ import {
  */
 export const GroupRegister = () => {
   const id = useSelector((state) => state.auth.user.id);
-  const GroupMode = useSelector(
-    (state) => state.modal.modalData.addGroupSettings.Mode
-  );
+  const GroupData = useSelector((state) => state.modal.modalData);
   const [groupname, setGroupName] = useState("");
   const [passcode, setPasscode] = useState("");
   const [errors, setErrors] = useState("");
@@ -29,10 +27,10 @@ export const GroupRegister = () => {
       groupName: groupname,
       passcode: passcode,
       userid: id,
-      groupMode: GroupMode,
+      groupMode: GroupData.Mode,
+      Bio: GroupData.Bio,
     };
     let resp = await dispatch(addGroup(GroupDetails));
-    console.log(resp);
     if (resp === "Success") {
       dispatch(setModalPage("AddSuccess"));
     } else {

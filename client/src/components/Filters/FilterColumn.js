@@ -7,6 +7,7 @@ import { clearFilterItems, filterItems } from "../../actions/itemActions";
 import { setFilterItem } from "../../actions/itemActions";
 import { setActiveGroup } from "../../actions/groupActions";
 import { getItems } from "../../actions/itemActions";
+import { Link } from "react-router-dom";
 /**
  *
  * @PageLocation Dashboard
@@ -109,7 +110,17 @@ export const FilterColumn = () => {
                 <p>Group Type: {ModeList[GroupData.mode]}</p>
               </>
             )}
-            {GroupData.mode === 0 && <p>Assigned Member:</p>}
+            {GroupData.mode === 0 && (
+              <>
+                Assigned Member:
+                <Link
+                  to={`/groups/${GroupData.id}/users/${GroupData.partnerid}`}
+                >
+                  {GroupData.partner && <>{GroupData.partner}</>}
+                </Link>
+                {!GroupData.partner && <> None</>}
+              </>
+            )}
           </div>
           <hr />
           <div className="FilterColItems">

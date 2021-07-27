@@ -77,26 +77,32 @@ export const FilterOtherUsers = () => {
       <div className="FilterColumnBackground">
         <div className="FilterColContainer">
           <div className="GroupInfo">
-            <div className="FilterColHeader">
-              <div className="UserInfo">
-                <div className="UserName">{userName}</div>
-                <div className="UserImage">
-                  <img
-                    height="75%"
-                    width="75%"
-                    src={`/api/images/${image}`}
-                  ></img>
+            {GroupData.mode !== 1 && (
+              <div className="FilterColHeader">
+                <div className="UserInfo">
+                  <div className="UserName">{userName}</div>
+                  <div className="UserImage">
+                    <img
+                      height="100%"
+                      width="100%"
+                      src={`/api/images/${image}`}
+                      style={{ borderRadius: "50%" }}
+                    ></img>
+                  </div>
                 </div>
+                Current Group
+                <br />
+                <b>{GroupData.name}</b>
+                {!GroupData.name && <b>None</b>}
               </div>
-              Current Group
-              <br />
-              <b>{GroupData.name}</b>
-              {!GroupData.name && <b>None</b>}
-            </div>
-            {Items && (
+            )}
+            {Items && GroupData.mode !== 1 && (
               <>
                 <p>Group Type: {ModeList[GroupData.mode]}</p>
               </>
+            )}
+            {GroupData.mode === 1 && (
+              <div className="EventFilterHeader">Registry Details</div>
             )}
           </div>
           <hr />
@@ -138,7 +144,7 @@ export const FilterOtherUsers = () => {
                   values={searchFilterItem}
                   labelField="name"
                   valueField="itemid"
-                  placeholder={`Hehe`}
+                  placeholder={`Item Search`}
                   style={{
                     width: 200,
                     margin: "auto",

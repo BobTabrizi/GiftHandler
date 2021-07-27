@@ -12,6 +12,7 @@ export const PURCHASE_ITEM = "PURCHASE_ITEM";
 export const FILTER_ITEM = "FILTER_ITEM";
 export const SET_FILTER_ITEM = "SET_FILTER_ITEM";
 export const CLEAR_FILTER_ITEMS = "CLEAR_FILTER_ITEMS";
+export const CLEAR_ITEMS = "CLEAR_ITEMS";
 
 /*            Groups                      */
 export const GET_USERS_GROUPS = "GET_GROUPS";
@@ -29,6 +30,8 @@ export const GET_GROUP_MEMBERS = "GET_GROUP_MEMBERS";
 export const GROUP_LOADING = "GROUP_LOADING";
 export const GROUP_MEMBERS_LOADING = "GROUP_MEMBERS_LOADING";
 export const ADD_MEMBER_FAILURE = "ADD_MEMBER_FAILURE";
+export const ASSIGN_PARTNERS = "ASSIGN_PARTNERS";
+export const CLEAR_CURRENT_GROUP = "CLEAR_CURRENT_GROUP";
 
 /*         Auth/Login/Errors              */
 export const USER_LOADING = "USER_LOADING";

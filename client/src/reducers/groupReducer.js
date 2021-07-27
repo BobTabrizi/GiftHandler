@@ -13,6 +13,8 @@ import {
   GET_GROUP_MEMBERS,
   GROUP_MEMBERS_LOADING,
   SET_ACTIVE_GROUP,
+  ASSIGN_PARTNERS,
+  CLEAR_CURRENT_GROUP,
 } from "../actions/types";
 
 const initialState = {
@@ -29,9 +31,6 @@ const initialState = {
     displayEditGroupModal: false,
     groupDetails: null,
     groupMembers: null,
-  },
-  addGroup: {
-    displayAddGroupmodal: false,
   },
   pageGroup: [],
   loading: false,
@@ -82,6 +81,12 @@ export default function groupReducer(state = initialState, action) {
             (user) => user.id !== action.payload
           ),
         },
+      };
+
+    case CLEAR_CURRENT_GROUP:
+      return {
+        ...state,
+        currentGroup: action.payload,
       };
     case LEAVE_GROUP:
       return {

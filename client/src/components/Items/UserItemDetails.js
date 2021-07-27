@@ -2,6 +2,7 @@ import React from "react";
 import "../../styles/ItemStyles/RegistryItem.css";
 import { useSelector, useDispatch } from "react-redux";
 import { editItem } from "../../actions/itemActions";
+import { setActiveModal, updateModalData } from "../../actions/modalActions";
 /**
  * @PageLocation UserGroupPage
  * @Component UserItemDetails
@@ -18,12 +19,13 @@ export const UserItemDetails = (item) => {
   );
 
   const dispatch = useDispatch();
+
   const handlePurchase = () => {
     let NewQty = ItemState[0].quantity;
     if (NewQty >= 0) {
       NewQty--;
     }
-    let itemObject = {
+    let itemData = {
       itemid: item.itemid,
       price: item.price,
       quantity: NewQty,
@@ -31,7 +33,16 @@ export const UserItemDetails = (item) => {
       imageKey: item.image,
       name: item.name,
     };
-    dispatch(editItem(itemObject));
+
+    let ModalData = {
+      ActionID: 2,
+      item: itemData,
+    };
+
+    dispatch(updateModalData(ModalData));
+    dispatch(setActiveModal("Confirm"));
+
+    // dispatch(editItem(itemObject));
   };
   return (
     <>

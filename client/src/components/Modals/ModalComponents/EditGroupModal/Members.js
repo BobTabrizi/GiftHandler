@@ -4,11 +4,9 @@ import "../../../../styles/GroupStyles/GroupModals.css";
 import { getGroupMembers } from "../../../../actions/groupActions";
 import { setModalPage } from "../../../../actions/modalActions";
 import { removeGroupMember } from "../../../../actions/groupActions";
-import { unSelectEditGroup } from "../../../../actions/groupActions";
-import { deactivateModal } from "../../../../actions/modalActions";
 import { IoBan } from "react-icons/io5";
 import { IoStar } from "react-icons/io5";
-import { IoArrowBack } from "react-icons/io5";
+import { assignPartners } from "../../../../actions/groupActions";
 /**
  *
  * @PageLocation ManageGroups
@@ -20,13 +18,48 @@ import { IoArrowBack } from "react-icons/io5";
 export const Members = () => {
   const [confirmModal, setConfirmModal] = useState(false);
   const [selectedUserID, setSelectedUserID] = useState(null);
-  const GroupID = useSelector(
-    (state) => state.group.selectedGroup.groupDetails.id
+  const [adminIsPartner, setAdminIsPartner] = useState(false);
+  const GroupDetails = useSelector(
+    (state) => state.group.selectedGroup.groupDetails
   );
   const GroupMembers = useSelector(
     (state) => state.group.selectedGroup.groupMembers
   );
   const dispatch = useDispatch();
+
+  const assign = () => {
+    let PartnerList = [];
+    let idx = 0;
+    let PartnerMap = [];
+    if (!adminIsPartner) {
+      idx = 1;
+      PartnerMap.push([GroupMembers[0].id, -1]);
+    }
+    //put all ids in an array
+    for (let i = idx; i < GroupMembers.length; i++) {
+      PartnerList.push(GroupMembers[i].id);
+    }
+
+    //Randomly assign unique sets of partners
+    while (PartnerList.length >= 2) {
+      let r1 = Math.random() * PartnerList.length;
+      let person1 = PartnerList.splice(r1, 1)[0];
+
+      let r2 = Math.random() * PartnerList.length;
+      let person2 = PartnerList.splice(r2, 1)[0];
+      PartnerMap.push([person1, person2]);
+    }
+
+    let GroupParams;
+    for (let i = 0; i < PartnerMap.length; i++) {
+      GroupParams = {
+        PartnerList: PartnerMap[i],
+        GroupID: GroupDetails.id,
+      };
+
+      dispatch(assignPartners(GroupParams));
+    }
+  };
 
   /*  Displays Confirmation Modal */
   const confirmKick = (UserID) => {
@@ -42,23 +75,12 @@ export const Members = () => {
   /* If user accepts the confirmation, remove user */
   const handleKick = () => {
     setConfirmModal(false);
-    dispatch(removeGroupMember(GroupID, selectedUserID));
-  };
-
-  /*     Close out the modal entirely   */
-  const closeModal = () => {
-    dispatch(unSelectEditGroup());
-    dispatch(deactivateModal());
-  };
-
-  /*     Move back to modal menu     */
-  const changeModal = () => {
-    dispatch(setModalPage("GroupMenu"));
+    dispatch(removeGroupMember(GroupDetails.id, selectedUserID));
   };
 
   useEffect(() => {
     async function getMembers() {
-      await dispatch(getGroupMembers(GroupID));
+      await dispatch(getGroupMembers(GroupDetails.id));
     }
     getMembers();
   }, []);
@@ -73,6 +95,7 @@ export const Members = () => {
           <div className="MemberModalHeaderItem">
             <div className="NameHeader">Name</div>
             <div className="RoleHeader">Role</div>
+            <div className="PartnerHeader">Partner</div>
             <div className="IconHeader">Action</div>
           </div>
           <div className="MemberModalContainer">
@@ -81,6 +104,7 @@ export const Members = () => {
                 <div key={index} className="MemberItem">
                   <div className="MemberName">{Member.name}</div>
                   <div className="MemberRole">{Member.role}</div>
+                  <div className="PartnerName">{Member.partner}</div>
                   <div className="MemberActionBtns">
                     {Member.role !== "Admin" && (
                       <IoBan
@@ -93,6 +117,43 @@ export const Members = () => {
                 </div>
               ))}
           </div>
+          {GroupMembers && (
+            <>
+              <div>
+                <button
+                  className="AssignPartnerBtn"
+                  onClick={() => assign()}
+                  disabled={
+                    GroupMembers.length < 2 ||
+                    (GroupMembers.length % 2 === 1 &&
+                      adminIsPartner === true) ||
+                    (GroupMembers.length === 2 && adminIsPartner === false)
+                      ? true
+                      : false
+                  }
+                  style={{
+                    backgroundColor:
+                      GroupMembers.length < 2 ||
+                      (GroupMembers.length % 2 === 1 &&
+                        adminIsPartner === true) ||
+                      (GroupMembers.length === 2 && adminIsPartner === false)
+                        ? "gray"
+                        : "dodgerblue",
+                  }}
+                >
+                  Assign Partners
+                </button>
+              </div>
+              <input
+                className="AdminPartnerBtn"
+                type="checkbox"
+                disabled={GroupMembers.length % 2 === 0 ? false : true}
+                checked={adminIsPartner}
+                onChange={() => setAdminIsPartner(!adminIsPartner)}
+              ></input>
+              Assign Admin (you) to a partner
+            </>
+          )}
         </div>
       </div>
 

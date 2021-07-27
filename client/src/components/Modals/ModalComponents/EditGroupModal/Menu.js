@@ -13,8 +13,8 @@ import { setModalPage } from "../../../../actions/modalActions";
  */
 export const Menu = () => {
   const dispatch = useDispatch();
-  const GroupPasscode = useSelector(
-    (state) => state.group.selectedGroup.groupDetails.passcode
+  const GroupDetails = useSelector(
+    (state) => state.group.selectedGroup.groupDetails
   );
   const handleModalChange = (modalType) => {
     dispatch(setModalPage(modalType));
@@ -23,7 +23,7 @@ export const Menu = () => {
   return (
     <>
       <div className="MenuContainer">
-        <h3>Group Passcode: {GroupPasscode}</h3>
+        <h3>Group Passcode: {GroupDetails.passcode}</h3>
         <div className="MenuBody">
           <h2
             style={{ cursor: "pointer" }}
@@ -31,12 +31,14 @@ export const Menu = () => {
           >
             Change Passcode
           </h2>
-          <h2
-            style={{ cursor: "pointer" }}
-            onClick={() => handleModalChange("ManageMembers")}
-          >
-            Manage Members
-          </h2>
+          {GroupDetails.mode !== 1 && (
+            <h2
+              style={{ cursor: "pointer" }}
+              onClick={() => handleModalChange("ManageMembers")}
+            >
+              Manage Members
+            </h2>
+          )}
           <h2
             style={{ cursor: "pointer" }}
             onClick={() => handleModalChange("Delete")}

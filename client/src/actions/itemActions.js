@@ -11,6 +11,7 @@ import {
   FILTER_ITEM,
   SET_FILTER_ITEM,
   CLEAR_FILTER_ITEMS,
+  CLEAR_ITEMS,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -122,6 +123,12 @@ export const clearFilterItems = () => {
   };
 };
 
+export const clearItems = () => {
+  return {
+    type: CLEAR_ITEMS,
+    payload: null,
+  };
+};
 export const selectEditItem = (item) => (dispatch) => {
   dispatch({
     type: SELECT_EDIT_ITEM,

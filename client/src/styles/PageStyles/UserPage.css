@@ -1,5 +1,6 @@
 .UserPageContainer {
-  background-color: grey;
+  background-image: url("../../images/HPBG.jpg");
+  background-size: cover;
   width: 100%;
   height: 100%;
   position: relative;
@@ -7,12 +8,10 @@
 
 .registryContainer {
   text-align: center;
-  border: 1px sandybrown solid;
-  background-color: grey;
   border-width: 2px;
-  margin: auto;
   border-radius: 25px;
   width: 95vw;
+  padding: 1%;
 }
 
 .UserInfo {

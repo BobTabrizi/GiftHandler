@@ -11,7 +11,7 @@
   width: 14%;
   height: 340px;
   border-radius: 15px;
-  background-color: rgb(255, 255, 255, 0.5);
+  background-color: rgb(255, 255, 255, 1);
   box-sizing: border-box;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.3s ease-in-out;
@@ -19,7 +19,6 @@
 
 .ItemContainer:hover {
   box-shadow: 0 5px 15px rgba(19, 83, 156, 0.8);
-  cursor: pointer;
 }
 
 .ListItemName {
@@ -39,7 +38,7 @@
 }
 .ListItemPrice,
 .ListItemQuant {
-  font-size: 21px;
+  font-size: 17px;
 }
 
 .PlaceHolderAddImage {
@@ -114,12 +113,13 @@
 }
 
 .PurchaseBtn {
-  background-color: rgb(255, 255, 255, 0.9);
+  background-color: rgb(0, 0, 0, 0.2);
   width: 50%;
   margin: auto;
   border-radius: 10px;
   padding: 1%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
 }
 
 #edit {
@@ -132,4 +132,30 @@
   background-color: red;
   width: 30%;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 1200px) {
+  .ItemContainer {
+    width: 23%;
+    height: 340px;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .ItemContainer {
+    width: 31%;
+    height: 340px;
+  }
+}
+@media only screen and (max-width: 850px) {
+  .ItemContainer {
+    width: 47%;
+    height: 340px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .ItemContainer {
+    width: 100%;
+    height: 340px;
+  }
 }

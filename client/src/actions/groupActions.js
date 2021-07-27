@@ -15,6 +15,8 @@ import {
   GET_GROUP_MEMBERS,
   GROUP_MEMBERS_LOADING,
   ADD_MEMBER_FAILURE,
+  ASSIGN_PARTNERS,
+  CLEAR_CURRENT_GROUP,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -169,6 +171,24 @@ export const leaveGroup = (groupID, userID) => (dispatch) => {
     );
 };
 
+export const assignPartners = (GroupParameters) => (dispatch) => {
+  axios
+    .post("/api/groups/assignPartners", {
+      GroupParameters,
+    })
+    .then(() => {
+      dispatch({
+        type: ASSIGN_PARTNERS,
+        payload: GroupParameters,
+      });
+
+      dispatch(getGroupMembers(GroupParameters.GroupID));
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
 export const setGroupsLoading = () => {
   return {
     type: USER_GROUPS_LOADING,
@@ -205,4 +225,18 @@ export const unSelectEditGroup = () => (dispatch) => {
       groupDetails: null,
     },
   });
+};
+
+export const clearCurrentGroup = () => {
+  return {
+    type: CLEAR_CURRENT_GROUP,
+    payload: {
+      Group: {
+        id: null,
+        name: null,
+        groupname: null,
+        role: null,
+      },
+    },
+  };
 };

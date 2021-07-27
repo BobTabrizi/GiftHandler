@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../styles/GroupStyles/GroupModals.css";
 import { useDispatch, useSelector } from "react-redux";
 import { ModeSelect } from "./ModalComponents/AddGroupModal/ModeSelect";
+import { EventInfo } from "./ModalComponents/AddGroupModal/EventInfo";
 import { GroupRegister } from "./ModalComponents/AddGroupModal/GroupRegister";
 import { AddSuccess } from "./ModalComponents/AddGroupModal/AddSuccess";
 import { JoinRegister } from "./ModalComponents/JoinGroupModal/JoinRegister";
@@ -20,7 +21,6 @@ export const AddJoinGroupModal = () => {
   const ActiveModal = useSelector(
     (state) => state.modal.activeModal.activePage
   );
-  const ShowModal = useSelector((state) => state.modal.activeModal.modalType);
   const [modalComponent, setModalComponent] = useState(<ModeSelect />);
   const [modalTitle, setModalTitle] = useState("ModeSelect");
   const dispatch = useDispatch();
@@ -42,7 +42,6 @@ export const AddJoinGroupModal = () => {
 
       case "GroupRegister":
         setModalComponent(<GroupRegister />);
-
         break;
 
       case "AddSuccess":
@@ -53,17 +52,10 @@ export const AddJoinGroupModal = () => {
         setModalComponent(<JoinRegister />);
         setModalTitle("Join a Group");
         break;
+      case "EventInfo":
+        setModalComponent(<EventInfo />);
     }
-
-    const handleClick = (e) => {
-      if (e.target && e.target.className === "GrpModalBackground") {
-        dispatch(deactivateModal());
-      }
-    };
-    if (ShowModal === "Group") {
-      window.addEventListener("click", handleClick);
-    }
-  }, [ShowModal, ActiveModal]);
+  }, [ActiveModal]);
 
   return (
     <>
