@@ -7,7 +7,8 @@ Technologies: React.JS, Redux, Express, Node.JS, PostgreSQL, AWS S3/RDS/EC2, NGI
 
 ### Instructions & Current Functionality
 
-You can check out the live alpha build hosted on AWS EC2 here: http://54.193.8.100.
+You can check out the live alpha build hosted on AWS EC2 here: http://54.193.8.100
+
 An example page can be seen without logging in here: http://54.193.8.100/groups/8/event/users/1
 
 **Note: Final styling will be added shortly. Currently testing functionality.**
