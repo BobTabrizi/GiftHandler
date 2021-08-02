@@ -7,16 +7,24 @@
 }
 
 .registryContainer {
+  margin-top: 2rem;
+}
+.UserPageWrapper {
   text-align: center;
   border-width: 2px;
   border-radius: 25px;
-  width: 95vw;
+  width: 100vw;
   padding: 1%;
 }
 
 .UserInfo {
   text-align: center;
   padding: 3%;
+}
+
+.UserInfoName {
+  font-size: 32px;
+  padding: 2% 0 1% 0;
 }
 
 .UserPageBody {
@@ -31,4 +39,47 @@
   height: 150px;
   width: 200px;
   margin: auto;
+}
+
+.Avatar img {
+  border-radius: 50%;
+  position: relative;
+  margin-left: -35px;
+  z-index: 1;
+}
+
+.Avatars {
+  direction: rtl;
+  padding-left: 25px;
+}
+
+#ExtraMembers {
+  background-color: white;
+  display: inline-block;
+  height: 65px;
+  width: 70px;
+  border-radius: 50%;
+  position: relative;
+  margin-left: -25px;
+  z-index: 3;
+  font-size: 28px;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.ExtraLabel {
+  margin-top: 15%;
+}
+
+.MemberList {
+  height: 30vh;
+  width: 25vw;
+  margin: auto;
+  overflow-y: scroll;
+  background-color: white;
+  direction: ltr;
+}
+
+.UserMemberContainer {
+  text-align: center;
 }

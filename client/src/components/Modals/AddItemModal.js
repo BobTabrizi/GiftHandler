@@ -13,14 +13,15 @@ import { deactivateModal } from "../../actions/modalActions";
  *
  */
 export const AddItemModal = () => {
-  const id = useSelector((state) => state.auth.user.id);
-  const GroupID = useSelector((state) => state.group.currentGroup.Group.id);
+  const AuthInfo = useSelector((state) => state.auth);
+  const GroupID = useSelector((state) => state.group.pageGroup.id);
   const DispModal = useSelector((state) => state.modal.activeModal.modalType);
   const [itemprice, setItemPrice] = useState(0.0);
   const [itemname, setItemName] = useState("New Item");
   const [itemQuantity, setItemQuantity] = useState(1);
   const [itemLink, setItemLink] = useState(null);
   const [file, setFile] = useState(null);
+  const [UID, setUID] = useState(null);
   const [previewImage, setPreviewImage] = useState(`/api/images/DefaultItem`);
   const dispatch = useDispatch();
 
@@ -61,6 +62,14 @@ export const AddItemModal = () => {
     }
   };
 
+  function jwtDecode(t) {
+    let token = {};
+    token.raw = t;
+    token.header = JSON.parse(window.atob(t.split(".")[0]));
+    token.payload = JSON.parse(window.atob(t.split(".")[1]));
+    return token.payload.user;
+  }
+
   /*  Add Event listener to close modal on background click      */
   useEffect(() => {
     const handleClick = (e) => {
@@ -71,6 +80,10 @@ export const AddItemModal = () => {
     if (DispModal === "AddItem") {
       window.addEventListener("click", handleClick);
     }
+
+    let user = jwtDecode(AuthInfo.token);
+
+    setUID(user.id);
   }, [DispModal]);
 
   /*  Upon File Input, set file state and display a preview image  */
@@ -82,7 +95,6 @@ export const AddItemModal = () => {
 
   /*      Save image to S3             */
   const postImage = async ({ image }) => {
-    console.log(image);
     let formData = new FormData();
     formData.append("image", image);
     const result = await dispatch(addImage(formData));
@@ -104,7 +116,7 @@ export const AddItemModal = () => {
     }
 
     let newItem = {
-      userID: id,
+      userID: UID,
       price: itemprice,
       quantity: itemQuantity,
       link: itemLink,

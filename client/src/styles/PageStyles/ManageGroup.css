@@ -11,49 +11,22 @@
   margin: 0 1rem 0 1rem;
   text-align: center;
 }
+.GroupBody {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
 
 .GroupListContainer {
-  flex-direction: column;
-  height: 50vh;
-  overflow-y: scroll;
-}
-.GroupListHeader {
-  display: flex;
   flex-direction: row;
-  margin-right: 3%;
-  background: white;
-  height: 40px;
-  border-bottom: 1px solid black;
-}
-
-.GroupNameHeader {
-  flex: 3;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  margin-left: 1rem;
-}
-.GroupTypeHeader {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.GroupActionHeader {
-  flex: 0.5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .GroupContainer {
-  border: 1px solid black;
-  height: 50px;
-  background-color: white;
   box-sizing: border-box;
-  flex-direction: row;
-  display: flex;
+  margin: 4%;
 }
 
 .GroupLabel {
@@ -84,32 +57,71 @@
   cursor: pointer;
 }
 
+.GroupTitle {
+  font-size: 28px;
+  text-align: center;
+}
+
+.MemberContainer {
+  text-align: center;
+  width: 95vw;
+}
+
+.GroupManageContainer {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  text-align: center;
+}
+
+.ActionButton {
+  font-size: 24px;
+  text-align: center;
+  color: aliceblue;
+  border: 2px solid rgb(0, 30, 128);
+  cursor: pointer;
+  margin: auto;
+  border-radius: 25px;
+  margin-top: 2rem;
+  padding: 0.5rem;
+}
+
+#Abtn {
+  color: black;
+  background-color: rgb(63, 160, 123);
+}
+
+#Jbtn {
+  color: black;
+  background-color: rgb(202, 189, 189);
+}
+.ActionButton:hover {
+  background-color: honeydew;
+  color: black;
+}
+
+.CreateBtn,
+.JoinBtn {
+  flex: 1;
+}
+
+.GroupActionBtn {
+  position: absolute;
+  margin-left: 0.8%;
+  margin-top: 0.75%;
+  height: 40px;
+  width: 40px;
+  background-color: rgb(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
 .VerticalLine {
-  width: 0.5px; /* Line width */
-  background-color: black; /* Line color */
-  height: 100%; /* Override in-line if you want specific height. */
+  width: 0.5px;
+  background-color: black;
+  height: 100%;
   display: inline-block;
 }
 
-.ownedGroups {
-  background-color: rgb(63, 160, 123);
-  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-  margin-top: 5%;
-  margin-right: 5%;
-  flex-direction: column;
-  border-radius: 15px;
-  flex: 1;
-}
-
-.otherGroups {
-  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-  background-color: rgb(202, 189, 189);
-  border-radius: 15px;
-  margin-top: 5%;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
 ::-webkit-scrollbar {
   width: 20px;
 }

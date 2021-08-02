@@ -16,7 +16,6 @@ export const AddItemCard = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.item.memberItems);
   const handleAddItem = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(setActiveModal("AddItem"));
   };
   return (

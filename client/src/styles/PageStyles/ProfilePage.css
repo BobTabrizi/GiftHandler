@@ -1,8 +1,9 @@
 .ProfileContainer {
-  background-color: teal;
-  height: 100%;
+  color: "black";
+  background-image: url("../../images/HPBG.jpg");
+  background-size: cover;
   width: 100%;
-  position: absolute;
+  height: 100%;
 }
 
 .ProfileInfo {
@@ -10,10 +11,45 @@
   text-align: center;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
+
+.UserInfo {
+  font-size: 29px;
+  margin-top: -3%;
+  font-weight: 600;
+}
+
 .ProfileImgBtn {
   cursor: pointer;
   background-color: skyblue;
   border-radius: 15px;
   padding: 0.5rem;
+}
+
+.HomePageProfileImg {
+  display: flex;
+}
+
+.ChangeProfileImgBtn {
+  background-color: white;
+  border: 0.1px solid gray;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  font-size: 27px;
+  position: relative;
+  left: 7rem;
+  top: -9.5rem;
+  color: gray;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.registryPlaceholder {
+  text-align: center;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -43,8 +43,17 @@ export const ModeSelect = () => {
             onClick={() => setEventType(0)}
             defaultChecked
           />
-          Secret Santa
-          <div className="ModeInfo">Group Size: Any</div>
+
+          <div className="ModeInfo">
+            <div className="ModeInfoHeader">
+              <div className="ModeTitle">Secret Santa </div>
+              <div className="ModeSize"> Group Size: Any</div>
+            </div>
+            <div>
+              The standard secret santa group. Requires at least 2 people and
+              there must be an even number of people in the group.
+            </div>
+          </div>
         </div>
         <div className="ModeBtn">
           <input
@@ -54,8 +63,17 @@ export const ModeSelect = () => {
             onClick={() => setEventType(1)}
             name="groupmode"
           />{" "}
-          Wedding
-          <div className="ModeInfo">Group Size: 1</div>
+          <div className="ModeInfo">
+            <div className="ModeInfoHeader">
+              <div className="ModeTitle">Birthday/Wedding/Other </div>
+              <div className="ModeSize"> Group Size: 1</div>
+            </div>
+            <div>
+              For events which only one person (yourself) has a registry list.
+              Your page will be viewable by link to others, even those without
+              accounts.
+            </div>
+          </div>
         </div>
       </div>
       <div className="ModeSelectFooter">

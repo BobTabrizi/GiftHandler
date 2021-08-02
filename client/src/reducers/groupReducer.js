@@ -15,6 +15,7 @@ import {
   SET_ACTIVE_GROUP,
   ASSIGN_PARTNERS,
   CLEAR_CURRENT_GROUP,
+  CLEAR_PAGE_GROUP,
 } from "../actions/types";
 
 const initialState = {
@@ -87,6 +88,11 @@ export default function groupReducer(state = initialState, action) {
       return {
         ...state,
         currentGroup: action.payload,
+      };
+    case CLEAR_PAGE_GROUP:
+      return {
+        ...state,
+        pageGroup: action.payload,
       };
     case LEAVE_GROUP:
       return {

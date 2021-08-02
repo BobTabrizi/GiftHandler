@@ -17,6 +17,7 @@ import {
   ADD_MEMBER_FAILURE,
   ASSIGN_PARTNERS,
   CLEAR_CURRENT_GROUP,
+  CLEAR_PAGE_GROUP,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -238,5 +239,12 @@ export const clearCurrentGroup = () => {
         role: null,
       },
     },
+  };
+};
+
+export const clearPageGroup = () => {
+  return {
+    type: CLEAR_PAGE_GROUP,
+    payload: [],
   };
 };

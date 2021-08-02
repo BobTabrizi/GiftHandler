@@ -88,23 +88,7 @@ export const FilterColumn = () => {
               <h2>{GroupData.groupname}</h2>
               {!GroupData.groupname && <h2>None</h2>}
             </div>
-            <Select
-              options={groups}
-              onChange={(values) => handleGrpChange(values)}
-              values={[]}
-              labelField="groupname"
-              valueField="id"
-              placeholder={`${activeGroupName} `}
-              style={{
-                width: 200,
-                margin: "auto",
-                textAlign: "center",
-                backgroundColor: "white",
-              }}
-              dropdownHeight="200px"
-              dropdownGap={-5}
-              searchable={false}
-            />
+
             {Items && (
               <>
                 <p>Group Type: {ModeList[GroupData.mode]}</p>

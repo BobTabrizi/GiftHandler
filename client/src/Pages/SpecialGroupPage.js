@@ -43,7 +43,7 @@ export const SpecialGroupPage = (props) => {
         {AuthInfo.token && <NavBar title="Event Page" />}
         <div className="EventPageBody">
           <FilterOtherUsers />
-          <div className="EventRegistryWrapper">
+          <div className="RegistryWrapper">
             <div className="EventHeader">
               <div className="EventUserInfo">
                 <div className="EventUserName">{userName}</div>

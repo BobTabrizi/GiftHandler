@@ -32,6 +32,7 @@ export const GROUP_MEMBERS_LOADING = "GROUP_MEMBERS_LOADING";
 export const ADD_MEMBER_FAILURE = "ADD_MEMBER_FAILURE";
 export const ASSIGN_PARTNERS = "ASSIGN_PARTNERS";
 export const CLEAR_CURRENT_GROUP = "CLEAR_CURRENT_GROUP";
+export const CLEAR_PAGE_GROUP = "CLEAR_PAGE_GROUP";
 
 /*         Auth/Login/Errors              */
 export const USER_LOADING = "USER_LOADING";

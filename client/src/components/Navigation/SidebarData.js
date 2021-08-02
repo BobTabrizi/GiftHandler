@@ -17,15 +17,9 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Groups",
-    path: "/managegroups",
-    icon: <IoIcons.IoMdPeople />,
-    cName: "nav-text",
-  },
-  {
-    title: "Profile",
-    path: "/profile",
-    icon: <IoIcons.IoMdPeople />,
+    title: "Settings",
+    path: "/",
+    icon: <AiIcons.AiFillHome />,
     cName: "nav-text",
   },
 ];
