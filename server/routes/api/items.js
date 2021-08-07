@@ -5,6 +5,8 @@ const pool = require("../../db");
 const initializePassport = require("../../passport");
 initializePassport(passport);
 const router = express.Router();
+const puppeteer = require("puppeteer");
+const axios = require("axios");
 router.use(passport.initialize());
 
 /**
@@ -129,6 +131,116 @@ router.delete("/delete", async (req, res) => {
   } catch (e) {
     res.status(400).json({ msg: e.message, success: false });
   }
+});
+
+router.get("/scrape", async (req, res) => {
+  let { Vendor, Link } = req.query;
+
+  const browser = await puppeteer.launch({
+    headless: true,
+  });
+  const page = await browser.newPage();
+  await page.goto(Link);
+
+  let ItemImage;
+  let ItemPrice;
+  let ItemName;
+  if (Vendor === "Target") {
+    const PriceSelector = await page.waitForSelector(".elGGzp");
+    const ImageSelector = await page.waitForSelector(
+      ".eKyPHV .slide--active img"
+    );
+    const NameSelector = await page.waitForSelector(".dkHWUj");
+    ItemPrice = await PriceSelector.evaluate((el) => el.textContent);
+    ItemName = await NameSelector.evaluate((el) => el.textContent);
+    ItemImage = await ImageSelector.evaluate((el) => el.getAttribute("src"));
+  }
+
+  if (Vendor === "Etsy") {
+    const IDSelector = await page.waitForSelector(
+      ".listing-page-image-carousel-component"
+    );
+    let ShopID = await IDSelector.evaluate((el) =>
+      el.getAttribute("data-shop-id")
+    );
+    let ListingID = await IDSelector.evaluate((el) =>
+      el.getAttribute("data-palette-listing-id")
+    );
+    console.log(ListingID);
+    axios.defaults.headers.common = {
+      "X-API-Key": `${process.env.ETSY_KEYSTRING}`,
+    };
+    let EtsyResponse = await axios
+      .get(`https://openapi.etsy.com/v3/application/listings/${ListingID}`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => console.log(err));
+
+    let EtsyImage = await axios
+      .get(
+        `https://openapi.etsy.com/v3/application/shops/${ShopID}/listings/${ListingID}/images`
+      )
+      .then((res) => {
+        return res.data.results[0].url_fullxfull;
+      })
+      .catch((err) => console.log(err));
+    ItemPrice = "$" + EtsyResponse.price.amount / EtsyResponse.price.divisor;
+    ItemName = EtsyResponse.title;
+    ItemImage = EtsyImage;
+  }
+
+  if (Vendor === "Amazon") {
+    //Scrape the price of the item
+    ItemPrice = await page.evaluate(() => {
+      try {
+        return document
+          .getElementById("price_inside_buybox")
+          .innerHTML.replace(/\n/g, "");
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        return document.getElementById("price").innerHTML.replace(/\n/g, "");
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    //Then scrape the name of the item
+    ItemName = await page.evaluate(() => {
+      try {
+        return document
+          .getElementById("productTitle")
+          .innerHTML.replace(/\n/g, "");
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    //Then lastly scrape the url image of the item
+    ItemImage = await page.evaluate(() => {
+      try {
+        return document.getElementById("imgBlkFront").getAttribute("src");
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        return document.querySelector(".selected img[src]").getAttribute("src");
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  let ItemDetails = {
+    ItemImage,
+    ItemPrice,
+    ItemName,
+  };
+  console.log(ItemDetails);
+  browser.close();
+  res.status(201).json(ItemDetails);
 });
 
 module.exports = router;

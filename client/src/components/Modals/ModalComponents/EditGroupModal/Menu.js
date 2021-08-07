@@ -1,7 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
-import { setModalPage } from "../../../../actions/modalActions";
+import {
+  deactivateModal,
+  setModalPage,
+} from "../../../../actions/modalActions";
+import { unSelectEditGroup } from "../../../../actions/groupActions";
 /**
  *
  * @PageLocation ManageGroups
@@ -20,6 +24,10 @@ export const Menu = () => {
     dispatch(setModalPage(modalType));
   };
 
+  const handleModalClose = async () => {
+    dispatch(unSelectEditGroup());
+    dispatch(deactivateModal());
+  };
   return (
     <>
       <div className="MenuContainer">
@@ -48,7 +56,7 @@ export const Menu = () => {
         </div>
 
         <div className="MenuFooter">
-          <button className="ExitMenuBtn" onClick={() => console.log("HI")}>
+          <button className="ExitMenuBtn" onClick={() => handleModalClose()}>
             Exit
           </button>
         </div>

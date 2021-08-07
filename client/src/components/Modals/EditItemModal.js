@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/ItemStyles/ItemModals.css";
 import { useDispatch, useSelector } from "react-redux";
-import { editItem } from "../../actions/itemActions";
-import { deleteItem } from "../../actions/itemActions";
+import { editItem, getItemImage } from "../../actions/itemActions";
 import { addImage, deleteImage } from "../../actions/imageActions";
 import CurrencyInput from "../Items/CurrencyInput";
 import { unSelectEditItem } from "../../actions/itemActions";
@@ -27,6 +26,7 @@ export const EditItemModal = () => {
   const [itemLink, setItemLink] = useState(item.link);
   const [file, setFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(`/api/images/${item.image}`);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   /*  Upon File Input, set file state and display a preview image  */
@@ -34,6 +34,51 @@ export const EditItemModal = () => {
     const file = e.target.files[0];
     setFile(file);
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const HandleLink = async (e) => {
+    setItemLink(e);
+    let Vendor;
+    if (e.includes("amazon.com/")) {
+      Vendor = "Amazon";
+    }
+    if (e.includes("target.com/")) {
+      Vendor = "Target";
+    }
+    if (e.includes("etsy.com/")) {
+      Vendor = "Etsy";
+    }
+
+    let ItemDetails = {
+      Vendor: Vendor,
+      Link: e,
+    };
+
+    if (Vendor && e.length > 25) {
+      setIsLoading(true);
+      let ItemResponse = await dispatch(getItemImage(ItemDetails));
+      //If the request was successful
+      if (ItemResponse.status === 201) {
+        //First set the price and name
+        if (ItemResponse.data.ItemPrice != "undefined") {
+          setItemPrice(ItemResponse.data.ItemPrice.substring(1));
+        }
+        setItemName(ItemResponse.data.ItemName);
+
+        //Then convert the image url and set the preview using a heroku CORS proxy to fetch image client side
+        fetch(
+          `${process.env.REACT_APP_HEROKU_CORS_PROXY}${ItemResponse.data.ItemImage}`
+        )
+          .then((res) => res.blob())
+          .then((blob) => {
+            //Convert Blob to file for storage into S3
+            var imgFile = new File([blob], "image");
+            setFile(imgFile);
+            setPreviewImage(URL.createObjectURL(blob));
+          });
+        setIsLoading(false);
+      }
+    }
   };
 
   /*  Add Event listener to close modal on background click      */
@@ -111,7 +156,11 @@ export const EditItemModal = () => {
             onChange={fileSelected}
             accept="image/*"
           ></input>
-          <label htmlFor="imageUpload" className="NewImageBtn">
+          <label
+            htmlFor="imageUpload"
+            className="NewImageBtn"
+            style={{ opacity: isLoading ? 0 : 1 }}
+          >
             <div className="ImageContainer">
               <div className="content">
                 <div className="content-overlay"></div>
@@ -127,10 +176,12 @@ export const EditItemModal = () => {
               </div>
             </div>
           </label>
+          <div className="loader" style={{ opacity: isLoading ? 1 : 0 }} />
           <div className="ItemName">
             <input
               className="ItemModalInputName"
               placeholder={`${item.name}`}
+              value={itemname}
               onChange={(e) => setItemName(e.target.value)}
             ></input>
           </div>
@@ -140,6 +191,7 @@ export const EditItemModal = () => {
             <CurrencyInput
               className="ItemModalInputPrice"
               placeholder={`${item.price}`}
+              value={itemprice}
               onChange={(e) => setItemPrice(e.target.value)}
             />
           </div>
@@ -156,7 +208,7 @@ export const EditItemModal = () => {
             <input
               className="ItemModalInputPrice"
               placeholder={`${item.link}`}
-              onChange={(e) => setItemLink(e.target.value)}
+              onChange={(e) => HandleLink(e.target.value)}
             ></input>
           </div>
           <button className="ItemModalSubmitBtn" onClick={() => handleSubmit()}>

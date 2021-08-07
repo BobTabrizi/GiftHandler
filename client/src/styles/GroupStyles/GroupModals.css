@@ -19,6 +19,8 @@
   right: 0;
   display: flex;
   flex-direction: column;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
 .AddGrpModalContainer {

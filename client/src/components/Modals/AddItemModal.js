@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/ItemStyles/ItemModals.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../actions/itemActions";
+import { addItem, getItemImage } from "../../actions/itemActions";
 import { addImage } from "../../actions/imageActions";
 import CurrencyInput from "../Items/CurrencyInput";
 import { deactivateModal } from "../../actions/modalActions";
@@ -23,41 +23,50 @@ export const AddItemModal = () => {
   const [file, setFile] = useState(null);
   const [UID, setUID] = useState(null);
   const [previewImage, setPreviewImage] = useState(`/api/images/DefaultItem`);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleLink = (e) => {
+  const HandleLink = async (e) => {
     setItemLink(e);
-    /*     Check to see if link is an amazon link, if it is, try to parse for the ASIN to pull an image      */
+    let Vendor;
     if (e.includes("amazon.com/")) {
-      try {
-        //Most common prefix for ASIN is /dp/
-        let idx = e.indexOf("/dp/");
-        let offset = 4;
+      Vendor = "Amazon";
+    }
+    if (e.includes("target.com/")) {
+      Vendor = "Target";
+    }
+    if (e.includes("etsy.com/")) {
+      Vendor = "Etsy";
+    }
 
-        //Another prefix is /gp/
-        if (idx === -1) {
-          idx = e.indexOf("/gp/");
-          offset = 12;
+    let ItemDetails = {
+      Vendor: Vendor,
+      Link: e,
+    };
+
+    if (Vendor && e.length > 25) {
+      setIsLoading(true);
+      let ItemResponse = await dispatch(getItemImage(ItemDetails));
+      //If the request was successful
+      if (ItemResponse.status === 201) {
+        //First set the price and name
+        if (ItemResponse.data.ItemPrice != "undefined") {
+          setItemPrice(ItemResponse.data.ItemPrice.substring(1));
         }
+        setItemName(ItemResponse.data.ItemName);
 
-        //Extract ASIN with varying offset based on the prefix
-        let ASIN = e.substr(idx + offset, 10);
-
-        //Double check the ASIN is a valid length 10 string and use a heroku CORS proxy to fetch image client side
-        if (ASIN.length === 10) {
-          fetch(
-            `${process.env.REACT_APP_HEROKU_CORS_PROXY}https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${ASIN}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL250`
-          )
-            .then((res) => res.blob())
-            .then((blob) => {
-              //Convert Blob to file for storage into S3
-              var imgFile = new File([blob], "image");
-              setFile(imgFile);
-              setPreviewImage(URL.createObjectURL(blob));
-            });
-        }
-      } catch (e) {
-        console.log(e);
+        //Then convert the image url and set the preview using a heroku CORS proxy to fetch image client side
+        fetch(
+          `${process.env.REACT_APP_HEROKU_CORS_PROXY}${ItemResponse.data.ItemImage}`
+        )
+          .then((res) => res.blob())
+          .then((blob) => {
+            //Convert Blob to file for storage into S3
+            var imgFile = new File([blob], "image");
+            setFile(imgFile);
+            setPreviewImage(URL.createObjectURL(blob));
+          });
+        setIsLoading(false);
       }
     }
   };
@@ -141,7 +150,12 @@ export const AddItemModal = () => {
             onChange={fileSelected}
             accept="image/*"
           ></input>
-          <label htmlFor="imageUpload" className="NewImageBtn">
+
+          <label
+            htmlFor="imageUpload"
+            className="NewImageBtn"
+            style={{ opacity: isLoading ? 0 : 1 }}
+          >
             <div className="ImageContainer">
               <div className="content">
                 <div className="content-overlay"></div>
@@ -157,9 +171,11 @@ export const AddItemModal = () => {
               </div>
             </div>
           </label>
+          <div className="loader" style={{ opacity: isLoading ? 1 : 0 }} />
           <div className="ItemName">
             <input
               className="ItemModalInputName"
+              value={itemname}
               placeholder="New Item"
               onChange={(e) => setItemName(e.target.value)}
             ></input>
@@ -170,6 +186,7 @@ export const AddItemModal = () => {
             <CurrencyInput
               className="ItemModalInputPrice"
               placeholder="0.00"
+              value={itemprice}
               onChange={(e) => setItemPrice(e.target.value)}
             />
           </div>
@@ -186,7 +203,7 @@ export const AddItemModal = () => {
             <input
               className="ItemModalInputPrice"
               placeholder="Purchase Link"
-              onChange={(e) => handleLink(e.target.value)}
+              onChange={(e) => HandleLink(e.target.value)}
             ></input>
           </div>
           <button className="ItemModalSubmitBtn" onClick={() => handleSubmit()}>

@@ -3,6 +3,7 @@ import {
   GET_ITEMS,
   ADD_ITEM,
   DELETE_ITEM,
+  GET_ITEM_IMAGE,
   EDIT_ITEM,
   SELECT_EDIT_ITEM,
   UNSELECT_EDIT_ITEM,
@@ -98,6 +99,21 @@ export const purchaseItem = (item) => (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const getItemImage = (ItemDetails) => async (dispatch) => {
+  console.log(ItemDetails);
+  let Response = await axios
+    .get(
+      `/api/items/scrape?Vendor=${ItemDetails.Vendor}&Link=${ItemDetails.Link}`
+    )
+    .then((res) => {
+      return res;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+  return Response;
 };
 
 export const filterItems = (FilterParam) => {
