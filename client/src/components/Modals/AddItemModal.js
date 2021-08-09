@@ -5,6 +5,7 @@ import { addItem, getItemImage } from "../../actions/itemActions";
 import { addImage } from "../../actions/imageActions";
 import CurrencyInput from "../Items/CurrencyInput";
 import { deactivateModal } from "../../actions/modalActions";
+import { UserChecker } from "../../components/Auth/UserChecker";
 /**
  *
  * @PageLocation Dashboard
@@ -14,7 +15,7 @@ import { deactivateModal } from "../../actions/modalActions";
  */
 export const AddItemModal = () => {
   const AuthInfo = useSelector((state) => state.auth);
-  const GroupID = useSelector((state) => state.group.pageGroup.id);
+  const GroupID = useSelector((state) => state.group.pageGroup.groupid);
   const DispModal = useSelector((state) => state.modal.activeModal.modalType);
   const [itemprice, setItemPrice] = useState(0.0);
   const [itemname, setItemName] = useState("New Item");
@@ -50,7 +51,7 @@ export const AddItemModal = () => {
       //If the request was successful
       if (ItemResponse.status === 201) {
         //First set the price and name
-        if (ItemResponse.data.ItemPrice != "undefined") {
+        if (ItemResponse.data.ItemPrice !== "undefined") {
           setItemPrice(ItemResponse.data.ItemPrice.substring(1));
         }
         setItemName(ItemResponse.data.ItemName);
@@ -71,14 +72,6 @@ export const AddItemModal = () => {
     }
   };
 
-  function jwtDecode(t) {
-    let token = {};
-    token.raw = t;
-    token.header = JSON.parse(window.atob(t.split(".")[0]));
-    token.payload = JSON.parse(window.atob(t.split(".")[1]));
-    return token.payload.user;
-  }
-
   /*  Add Event listener to close modal on background click      */
   useEffect(() => {
     const handleClick = (e) => {
@@ -90,7 +83,7 @@ export const AddItemModal = () => {
       window.addEventListener("click", handleClick);
     }
 
-    let user = jwtDecode(AuthInfo.token);
+    let user = UserChecker(AuthInfo.token);
 
     setUID(user.id);
   }, [DispModal]);

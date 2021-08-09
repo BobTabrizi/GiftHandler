@@ -27,8 +27,8 @@ export const GroupRegister = () => {
       groupName: groupname,
       passcode: passcode,
       userid: id,
-      groupMode: GroupData.Mode,
-      Bio: GroupData.Bio,
+      groupType: GroupData.GroupType,
+      description: GroupData.Description,
     };
     let resp = await dispatch(addGroup(GroupDetails));
     if (resp === "Success") {

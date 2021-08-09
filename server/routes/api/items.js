@@ -2,6 +2,8 @@ const express = require("express");
 const { deleteFile } = require("../../s3");
 const passport = require("passport");
 const pool = require("../../db");
+const redisClient = require("../../redis");
+const { checkItems } = require("../../RedisFunctions");
 const initializePassport = require("../../passport");
 initializePassport(passport);
 const router = express.Router();
@@ -15,12 +17,32 @@ router.use(passport.initialize());
  **/
 router.get("/user", async (req, res) => {
   let { userid, groupid } = req.query;
+
+  //First check redis cache for the data
+  let ItemCacheResult = await checkItems(`${userid}/${groupid}/Items`).then(
+    function (results) {
+      return results[0];
+    }
+  );
+  //If data is found, pull the data from the cache and skip the DB call
+  if (ItemCacheResult !== null) {
+    console.log("Items in cache");
+    return res.status(200).json(JSON.parse(ItemCacheResult));
+  }
+
   pool
     .query(
       `SELECT * FROM itemdetails WHERE itemid IN (SELECT itemid FROM items WHERE userid = $1 AND groupid = $2)`,
       [userid, groupid]
     )
     .then((result) => {
+      //Store data temporarily in cache, stringifying the object since redis only takes in strings
+      //Key will be a string in the format UserID/GroupID/Items
+      redisClient.setex(
+        `${userid}/${groupid}/Items`,
+        300,
+        JSON.stringify(result.rows)
+      );
       res.status(200).json(result.rows);
     })
     .catch((error) => res.status(400).json(error));
@@ -33,7 +55,6 @@ router.get("/user", async (req, res) => {
 router.post("/add", async (req, res) => {
   let { Item } = req.body;
   //First add to items table and get the generated item id
-
   let itemID = await pool
     .query(
       `INSERT INTO ITEMS (userid,groupid) VALUES($1,$2) RETURNING itemid`,
@@ -47,7 +68,6 @@ router.post("/add", async (req, res) => {
       return;
     });
   //Then add item details to item detail table with the generated item id
-
   pool
     .query(
       `INSERT INTO ITEMDETAILS (itemid,price,quantity,link,purchased,image,name) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
@@ -63,6 +83,8 @@ router.post("/add", async (req, res) => {
     )
     .then((result) => {
       if (result.rows[0].itemid === itemID) {
+        //If an item is modified, delete the old cache entry
+        redisClient.del(`${Item.userID}/${Item.groupID}/Items`);
         res.status(201).json(result.rows[0]);
       } else {
         res.status(400).json({ message: "Error Adding Item" });
@@ -136,6 +158,9 @@ router.delete("/delete", async (req, res) => {
 router.get("/scrape", async (req, res) => {
   let { Vendor, Link } = req.query;
 
+  //Check for a vendor, and find data based on the vendor. Some vendors have open API's, some don't.
+  //For those that don't we will use puppeteer to webscrape what we need.
+
   const browser = await puppeteer.launch({
     headless: true,
   });
@@ -145,6 +170,7 @@ router.get("/scrape", async (req, res) => {
   let ItemImage;
   let ItemPrice;
   let ItemName;
+
   if (Vendor === "Target") {
     const PriceSelector = await page.waitForSelector(".elGGzp");
     const ImageSelector = await page.waitForSelector(
@@ -156,6 +182,7 @@ router.get("/scrape", async (req, res) => {
     ItemImage = await ImageSelector.evaluate((el) => el.getAttribute("src"));
   }
 
+  //Etsy has an openAPI, which we will use instead of web scraping.
   if (Vendor === "Etsy") {
     const IDSelector = await page.waitForSelector(
       ".listing-page-image-carousel-component"
@@ -166,7 +193,7 @@ router.get("/scrape", async (req, res) => {
     let ListingID = await IDSelector.evaluate((el) =>
       el.getAttribute("data-palette-listing-id")
     );
-    console.log(ListingID);
+
     axios.defaults.headers.common = {
       "X-API-Key": `${process.env.ETSY_KEYSTRING}`,
     };
@@ -238,7 +265,6 @@ router.get("/scrape", async (req, res) => {
     ItemPrice,
     ItemName,
   };
-  console.log(ItemDetails);
   browser.close();
   res.status(201).json(ItemDetails);
 });

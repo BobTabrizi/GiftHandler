@@ -16,14 +16,14 @@ import {
  */
 export const EventInfo = () => {
   const id = useSelector((state) => state.auth.user.id);
-  const GroupMode = useSelector((state) => state.modal.modalData.Mode);
+  const GroupType = useSelector((state) => state.modal.modalData.GroupType);
   const [eventInfo, setEventInfo] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     let ModalData = {
-      Mode: GroupMode,
-      Bio: eventInfo,
+      GroupType: GroupType,
+      Description: eventInfo,
     };
     dispatch(updateModalData(ModalData));
     dispatch(setModalPage("GroupRegister"));

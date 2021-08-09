@@ -54,7 +54,7 @@ export const Members = () => {
     for (let i = 0; i < PartnerMap.length; i++) {
       GroupParams = {
         PartnerList: PartnerMap[i],
-        GroupID: GroupDetails.id,
+        GroupID: GroupDetails.groupid,
       };
 
       dispatch(assignPartners(GroupParams));
@@ -75,12 +75,12 @@ export const Members = () => {
   /* If user accepts the confirmation, remove user */
   const handleKick = () => {
     setConfirmModal(false);
-    dispatch(removeGroupMember(GroupDetails.id, selectedUserID));
+    dispatch(removeGroupMember(GroupDetails.groupid, selectedUserID));
   };
 
   useEffect(() => {
     async function getMembers() {
-      await dispatch(getGroupMembers(GroupDetails.id));
+      await dispatch(getGroupMembers(GroupDetails.groupid));
     }
     getMembers();
   }, []);

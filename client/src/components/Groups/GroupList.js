@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import { IoKey } from "react-icons/io5";
 import { IoPerson } from "react-icons/io5";
 import { selectEditGroup } from "../../actions/groupActions";
-import { leaveGroup } from "../../actions/groupActions";
-import { GrLogout } from "react-icons/gr";
 import { setActiveModal, updateModalData } from "../../actions/modalActions";
 /**
  * @PageLocation ManageGroup
@@ -48,7 +46,6 @@ export const GroupList = () => {
       userID: userID,
     };
     dispatch(updateModalData(ModalData));
-    //dispatch(leaveGroup(groupID, userID));
   };
 
   return (
@@ -57,7 +54,7 @@ export const GroupList = () => {
         {groups &&
           groups.map((group, index) => (
             <div className="GroupContainer" key={index}>
-              {group.mode !== 1 && (
+              {group.grouptype !== 1 && (
                 <div className="GroupBody">
                   {group.role === "Admin" && (
                     <div
@@ -76,7 +73,7 @@ export const GroupList = () => {
                   {group.role === "Member" && (
                     <div
                       className="GroupActionBtn"
-                      onClick={() => handleLeaveGroup(group.id)}
+                      onClick={() => handleLeaveGroup(group.groupid)}
                     >
                       <IoPerson
                         style={{
@@ -88,7 +85,7 @@ export const GroupList = () => {
                     </div>
                   )}
                   <Link
-                    to={`/groups/${group.id}/users/${userID}`}
+                    to={`/groups/${group.groupid}/users/${userID}`}
                     style={{
                       textDecoration: "none",
                     }}
@@ -100,12 +97,13 @@ export const GroupList = () => {
                         height: 175,
                         borderRadius: 25,
                       }}
+                      alt="Group"
                     ></img>
                   </Link>
                   <div className="GroupTitle">{group.groupname}</div>
                 </div>
               )}
-              {group.mode === 1 && (
+              {group.grouptype === 1 && (
                 <div className="GroupBody">
                   {group.role === "Admin" && (
                     <div
@@ -122,7 +120,7 @@ export const GroupList = () => {
                     </div>
                   )}
                   <Link
-                    to={`/groups/${group.id}/event/users/${userID}`}
+                    to={`/groups/${group.groupid}/event/users/${userID}`}
                     style={{
                       textDecoration: "none",
                     }}
@@ -134,6 +132,7 @@ export const GroupList = () => {
                         height: 175,
                         borderRadius: 25,
                       }}
+                      alt="Event Group"
                     ></img>
                   </Link>
                   <div className="GroupTitle">{group.groupname}</div>

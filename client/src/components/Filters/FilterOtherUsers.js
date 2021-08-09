@@ -7,7 +7,7 @@ import { clearFilterItems, filterItems } from "../../actions/itemActions";
 import { setFilterItem } from "../../actions/itemActions";
 /**
  *
- * @PageLocation User Group Pages
+ * @PageLocation Unowned User Group Pages
  * @Component FilterOtherUsers
  * @Description Allows filtering of other users items
  *
@@ -15,7 +15,7 @@ import { setFilterItem } from "../../actions/itemActions";
 
 const ModeList = {
   0: "Secret Santa",
-  1: "Wedding",
+  1: "Event",
   2: "Other",
 };
 export const FilterOtherUsers = () => {
@@ -77,12 +77,12 @@ export const FilterOtherUsers = () => {
       <div className="FilterColumnBackground">
         <div className="FilterColContainer">
           <div className="GroupInfo">
-            {Items && GroupData.mode !== 1 && (
+            {Items && GroupData.grouptype !== 1 && (
               <>
-                <p>Group Type: {ModeList[GroupData.mode]}</p>
+                <p>Group Type: {ModeList[GroupData.grouptype]}</p>
               </>
             )}
-            {GroupData.mode === 1 && (
+            {GroupData.grouptype === 1 && (
               <div className="EventFilterHeader">Registry Details</div>
             )}
           </div>

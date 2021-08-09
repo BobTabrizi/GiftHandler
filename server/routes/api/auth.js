@@ -180,7 +180,7 @@ router.post("/processReset", async (req, res) => {
   }
 
   let response = await pool
-    .query(`SELECT * FROM passwordreset WHERE pid = $1`, [pid])
+    .query(`SELECT * FROM passwordreset WHERE pageid = $1`, [pid])
     .then((results) => {
       return results.rows[0];
     })
@@ -263,7 +263,7 @@ router.post("/resetReq", async (req, res) => {
     let pid = crypto.randomBytes(15).toString("hex");
     let code = crypto.randomBytes(8).toString("hex");
     pool.query(
-      `INSERT INTO passwordreset (email,pid,code,time) VALUES ($1,$2,$3,$4)`,
+      `INSERT INTO passwordreset (email,pageid,code,time) VALUES ($1,$2,$3,$4)`,
       [email, pid, code, time]
     );
 

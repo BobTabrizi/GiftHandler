@@ -9,7 +9,8 @@
 .registryContainer {
   margin-top: 2rem;
 }
-.UserPageWrapper {
+
+.UserRegistryWrap {
   text-align: center;
   border-width: 2px;
   border-radius: 25px;
@@ -72,14 +73,29 @@
 }
 
 .MemberList {
-  height: 30vh;
-  width: 25vw;
   margin: auto;
   overflow-y: scroll;
   background-color: white;
   direction: ltr;
+  border-radius: 15px;
+  font-size: 17px;
+  position: fixed;
+  left: 50%;
+  z-index: 5;
+  padding: 1%;
 }
 
 .UserMemberContainer {
   text-align: center;
+  flex-direction: row;
+  display: flex;
+}
+
+.UserMemberContainer:hover {
+  background-color: blanchedalmond;
+  cursor: pointer;
+}
+
+.AvatarImage:hover {
+  cursor: pointer;
 }

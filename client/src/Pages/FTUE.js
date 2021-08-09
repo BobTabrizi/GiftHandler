@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/PageStyles/FTUE.css";
-import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { Tutorial } from "../components/Modals/FTUEModals/Tutorial";
 /**

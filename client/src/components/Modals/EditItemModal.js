@@ -15,7 +15,6 @@ import { setActiveModal, updateModalData } from "../../actions/modalActions";
  *
  */
 export const EditItemModal = () => {
-  const id = useSelector((state) => state.auth.user.id);
   const item = useSelector((state) => state.item.selectedItem.itemDetails);
   const DispModal = useSelector(
     (state) => state.item.selectedItem.displayEditModal
@@ -60,7 +59,7 @@ export const EditItemModal = () => {
       //If the request was successful
       if (ItemResponse.status === 201) {
         //First set the price and name
-        if (ItemResponse.data.ItemPrice != "undefined") {
+        if (ItemResponse.data.ItemPrice !== "undefined") {
           setItemPrice(ItemResponse.data.ItemPrice.substring(1));
         }
         setItemName(ItemResponse.data.ItemName);

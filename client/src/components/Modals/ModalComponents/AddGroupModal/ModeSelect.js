@@ -19,7 +19,7 @@ export const ModeSelect = () => {
 
   const handleSubmit = () => {
     let ModalData = {
-      Mode: eventType,
+      GroupType: eventType,
     };
     dispatch(updateModalData(ModalData));
 

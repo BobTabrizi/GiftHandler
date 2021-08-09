@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/PageStyles/Login.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { login } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
 import { RegisterModal } from "../Modals/RegisterModal";

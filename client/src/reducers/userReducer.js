@@ -1,8 +1,4 @@
-import {
-  GET_EXT_USER,
-  EXT_USER_LOADING,
-  UPDATE_EXT_USER,
-} from "../actions/types";
+import { GET_EXT_USER, EXT_USER_LOADING } from "../actions/types";
 
 const initialState = {
   externalUser: null,
@@ -22,11 +18,6 @@ export default function itemReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-      };
-    case UPDATE_EXT_USER:
-      return {
-        ...state,
-        externalUser: action.payload,
       };
     default:
       return state;

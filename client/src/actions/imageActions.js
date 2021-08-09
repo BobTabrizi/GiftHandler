@@ -17,7 +17,6 @@ export const addImage = (formData) => async (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
-  // console.log(response);
   return response;
 };
 
@@ -34,6 +33,5 @@ export const deleteImage = (imageKey) => async (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
-  // console.log(response);
   return response;
 };

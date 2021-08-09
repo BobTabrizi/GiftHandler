@@ -3,7 +3,6 @@ import {
   GET_ITEMS,
   ADD_ITEM,
   DELETE_ITEM,
-  GET_ITEM_IMAGE,
   EDIT_ITEM,
   SELECT_EDIT_ITEM,
   UNSELECT_EDIT_ITEM,
@@ -102,7 +101,6 @@ export const purchaseItem = (item) => (dispatch) => {
 };
 
 export const getItemImage = (ItemDetails) => async (dispatch) => {
-  console.log(ItemDetails);
   let Response = await axios
     .get(
       `/api/items/scrape?Vendor=${ItemDetails.Vendor}&Link=${ItemDetails.Link}`

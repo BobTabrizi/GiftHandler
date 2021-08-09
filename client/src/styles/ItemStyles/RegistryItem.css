@@ -23,6 +23,7 @@
 
 .ListItemName {
   font-size: 24px;
+  white-space: nowrap;
 }
 .ItemDivider {
   margin: 0;
@@ -135,27 +136,43 @@
 }
 
 @media only screen and (max-width: 1200px) {
-  .ItemContainer {
+  .ItemContainer,
+  .AddItemCard {
     width: 23%;
     height: 340px;
   }
 }
 
 @media only screen and (max-width: 950px) {
-  .ItemContainer {
+  .ItemContainer,
+  .AddItemCard {
     width: 31%;
     height: 340px;
   }
 }
 @media only screen and (max-width: 850px) {
-  .ItemContainer {
+  .ItemContainer,
+  .AddItemCard {
     width: 47%;
     height: 340px;
   }
 }
+
+@media only screen and (max-width: 715px) {
+  .ItemContainer,
+  .AddItemCard {
+    width: 55%;
+    margin-left: 20%;
+    margin-bottom: 10%;
+    height: 340px;
+  }
+}
 @media only screen and (max-width: 600px) {
-  .ItemContainer {
-    width: 100%;
+  .ItemContainer,
+  .AddItemCard {
+    width: 55%;
+    margin-left: 20%;
+    margin-bottom: 10%;
     height: 340px;
   }
 }

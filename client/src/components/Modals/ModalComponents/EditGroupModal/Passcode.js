@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
 import { deactivateModal } from "../../../../actions/modalActions";
 import { setModalPage } from "../../../../actions/modalActions";
 import "../../../../styles/GroupStyles/GroupModals.css";
-import { IoArrowBack } from "react-icons/io5";
+import { EditGroupDetails } from "../../../../actions/groupActions";
 /**
  *
  * @PageLocation ManageGroups
@@ -19,7 +18,7 @@ export const Passcode = () => {
   const [displaySuccess, setDisplaySuccess] = useState(false);
   const dispatch = useDispatch();
   const GroupID = useSelector(
-    (state) => state.group.selectedGroup.groupDetails.id
+    (state) => state.group.selectedGroup.groupDetails.groupid
   );
 
   /*     Close out the modal entirely   */
@@ -34,21 +33,18 @@ export const Passcode = () => {
   };
 
   /*   Process passcode change request  */
-  const handleSubmit = () => {
-    let PassObject = {
-      GroupID: GroupID,
-      newPass: passcode,
+  const handleSubmit = async () => {
+    let GroupProperties = {
+      PassObject: {
+        GroupID: GroupID,
+        newPass: passcode,
+      },
     };
-    axios
-      .post(`http://localhost:3005/api/groups/edit`, {
-        PassObject,
-      })
-      .then((res) => {
-        setDisplaySuccess(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    let Response = await dispatch(EditGroupDetails(GroupProperties));
+    if (Response.status === 201) {
+      setDisplaySuccess(true);
+    }
   };
 
   return (

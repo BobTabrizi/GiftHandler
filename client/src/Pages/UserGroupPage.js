@@ -11,6 +11,7 @@ import { EditItemModal } from "../components/Modals/EditItemModal";
 import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
 import { FilterOtherUsers } from "../components/Filters/FilterOtherUsers";
 import { FilterColumn } from "../components/Filters/FilterColumn";
+import { UserChecker } from "../components/Auth/UserChecker";
 
 /**
  *
@@ -21,15 +22,20 @@ import { FilterColumn } from "../components/Filters/FilterColumn";
  */
 export const UserGroupPage = (props) => {
   const [userName, setUserName] = useState("");
-  const [image, setImage] = useState("DefaultProfileImage");
-  const [members, setMembers] = useState(null);
   const [showMembers, setShowMembers] = useState(false);
   const [canEditPage, setCanEditPage] = useState(false);
   const UID = props.match.params.id;
   const GID = props.match.params.gid;
   const AuthInfo = useSelector((state) => state.auth);
   const PageInfo = useSelector((state) => state.group.pageGroup);
-  const PageMembers = useSelector((state) => {
+  const showEditModal = useSelector(
+    (state) => state.item.selectedItem.displayEditModal
+  );
+  const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);
+
+  //Selector to filter out the page owner from the members listed in their group.
+  //The list is reversed for visual purposes, making the page owner the first in the list
+  useSelector((state) => {
     if (state.group.pageGroup.length !== 0) {
       let idx = state.group.pageGroup.members.findIndex(
         (member) => member.id == UID
@@ -40,31 +46,20 @@ export const UserGroupPage = (props) => {
       state.group.pageGroup.members.reverse();
     }
   });
-  const showEditModal = useSelector(
-    (state) => state.item.selectedItem.displayEditModal
-  );
-  const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);
 
   const dispatch = useDispatch();
-
-  function jwtDecode(t) {
-    let token = {};
-    token.raw = t;
-    token.header = JSON.parse(window.atob(t.split(".")[0]));
-    token.payload = JSON.parse(window.atob(t.split(".")[1]));
-    return token.payload.user;
-  }
 
   useEffect(() => {
     async function getData() {
       let userInfo = await dispatch(getUser(UID));
       setUserName(userInfo[0].name);
-      setImage(userInfo[0].profileimage);
       await dispatch(getGroup(GID));
       await dispatch(getItems(UID, GID));
 
-      let user = jwtDecode(AuthInfo.token);
-      if (user.id == UID) {
+      //Check to see if the visitor is authenticated
+      let User = UserChecker(AuthInfo.token);
+      //If they are authenticated and own the page, give edit permissions
+      if (User && User.id == UID) {
         setCanEditPage(true);
       }
     }
@@ -89,7 +84,7 @@ export const UserGroupPage = (props) => {
               <FilterOtherUsers />
             </>
           )}
-          <div className="RegistryWrapper">
+          <div className="UserRegistryWrap">
             <div className="UserPageHeader">
               <div className="UserInfo">
                 {PageInfo.name && (
@@ -100,13 +95,23 @@ export const UserGroupPage = (props) => {
                   {PageInfo.members &&
                     PageInfo.members.length < 3 &&
                     PageInfo.members.map((member, index) => (
-                      <span className="Avatar">
-                        <img
-                          height="65px"
-                          width="70px"
-                          src={`/api/images/${member.profileimage}`}
-                        ></img>
-                      </span>
+                      <>
+                        <span className="Avatar" key={index}>
+                          <a
+                            onClick={() => {
+                              window.location.href = `/groups/${GID}/users/${member.id}`;
+                            }}
+                          >
+                            <img
+                              height="65px"
+                              width="70px"
+                              src={`/api/images/${member.profileimage}`}
+                              alt="User Avatar"
+                              title={member.name}
+                            ></img>
+                          </a>
+                        </span>
+                      </>
                     ))}
                   {PageInfo.members &&
                     PageInfo.members.length > 3 &&
@@ -114,12 +119,20 @@ export const UserGroupPage = (props) => {
                       if (index > PageInfo.members.length - 4) {
                         return (
                           <>
-                            <span className="Avatar">
-                              <img
-                                height="65px"
-                                width="70px"
-                                src={`/api/images/${member.profileimage}`}
-                              ></img>
+                            <span className="Avatar" key={index}>
+                              <a
+                                onClick={() => {
+                                  window.location.href = `/groups/${GID}/users/${member.id}`;
+                                }}
+                              >
+                                <img
+                                  className="AvatarImage"
+                                  height="65px"
+                                  width="70px"
+                                  title={member.name}
+                                  src={`/api/images/${member.profileimage}`}
+                                ></img>
+                              </a>
                             </span>
                           </>
                         );
@@ -130,6 +143,8 @@ export const UserGroupPage = (props) => {
                               className="Avatar"
                               id="ExtraMembers"
                               onClick={() => setShowMembers(!showMembers)}
+                              key={index}
+                              title="More Users"
                             >
                               <div className="ExtraLabel">
                                 {PageInfo.members.length - 3}
@@ -139,7 +154,6 @@ export const UserGroupPage = (props) => {
                         );
                       }
                     })}
-                  <div className="UserInfoName">{userName}</div>
                   <div
                     className="MemberList"
                     style={{ display: showMembers ? "block" : "none" }}
@@ -148,15 +162,34 @@ export const UserGroupPage = (props) => {
                     <hr />
                     {PageInfo.members &&
                       PageInfo.members.map((member, index) => (
-                        <div className="UserMemberContainer">{member.name}</div>
+                        <a
+                          onClick={() => {
+                            window.location.href = `/groups/${GID}/users/${member.id}`;
+                          }}
+                        >
+                          <div className="UserMemberContainer" key={index}>
+                            <div style={{ flex: 1 }}>
+                              <img
+                                className="AvatarImage"
+                                height="35px"
+                                width="40px"
+                                title={member.name}
+                                style={{ borderRadius: "50%" }}
+                                src={`/api/images/${member.profileimage}`}
+                              ></img>
+                            </div>
+                            <div style={{ flex: 5 }}>{member.name}</div>
+                          </div>
+                        </a>
                       ))}
                   </div>
+                  <div className="UserInfoName">{userName}</div>
                 </div>
               </div>
             </div>
 
             <div className="registryContainer">
-              <RegistryList PageType={"Dashboard"} />
+              <RegistryList PageType={"Dashboard"} CanEdit={canEditPage} />
             </div>
           </div>
         </div>

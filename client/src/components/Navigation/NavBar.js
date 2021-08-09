@@ -45,8 +45,9 @@ export default function NavBar({ title }) {
                 <Link
                   to={item.path}
                   style={{ textDecoration: "none", color: "white" }}
+                  key={index}
                 >
-                  <li key={index} className={item.cName} onClick={showSideBar}>
+                  <li className={item.cName} onClick={showSideBar}>
                     <div className="sidebarItem">{item.title}</div>
                   </li>
                 </Link>

@@ -5,25 +5,22 @@ import Select from "react-dropdown-select";
 import CurrencyInput from "../Items/CurrencyInput";
 import { clearFilterItems, filterItems } from "../../actions/itemActions";
 import { setFilterItem } from "../../actions/itemActions";
-import { setActiveGroup } from "../../actions/groupActions";
-import { getItems } from "../../actions/itemActions";
 import { Link } from "react-router-dom";
 /**
  *
- * @PageLocation Dashboard
+ * @PageLocation Owned User Group/Event Page
  * @Component FilterColumn
- * @Description Allows use to filter items
+ * @Description Displays information about current group and registry list. Allows for filtering of items.
  *
  */
 
 const ModeList = {
   0: "Secret Santa",
-  1: "Wedding",
+  1: "Event",
   2: "Other",
 };
 export const FilterColumn = () => {
-  const GroupData = useSelector((state) => state.group.currentGroup.Group);
-  const groups = useSelector((state) => state.group.groups);
+  const GroupData = useSelector((state) => state.group.pageGroup);
   const Items = useSelector((state) => state.item.memberItems);
   const UID = useSelector((state) => state.auth.user.id);
   const [lessFilter, SetLessFilter] = useState(0.0);
@@ -32,17 +29,7 @@ export const FilterColumn = () => {
   const [moreBtn, setMoreBtn] = useState(false);
   const [searchFilterItem, setSearchFilterItem] = useState([]);
   const [avgPrice, SetAvgPrice] = useState(0);
-  const [activeGroupName, setActiveGroupName] = useState("Select a Group");
   const dispatch = useDispatch();
-
-  const handleGrpChange = (values) => {
-    if (values.length > 0) {
-      dispatch(setActiveGroup(values[0]));
-      let GroupID = values[0].id;
-      dispatch(getItems(UID, GroupID));
-      setActiveGroupName(values[0].name);
-    }
-  };
 
   const handleFilterItems = () => {
     //Pass the filtered values as params only if the corresponding button is checked.
@@ -83,22 +70,16 @@ export const FilterColumn = () => {
       <div className="FilterColumnBackground">
         <div className="FilterColContainer">
           <div className="GroupInfo">
-            <div className="FilterColHeader">
-              Current Group
-              <h2>{GroupData.groupname}</h2>
-              {!GroupData.groupname && <h2>None</h2>}
-            </div>
-
             {Items && (
               <>
-                <p>Group Type: {ModeList[GroupData.mode]}</p>
+                <p>Group Type: {ModeList[GroupData.grouptype]}</p>
               </>
             )}
-            {GroupData.mode === 0 && (
+            {GroupData.grouptype === 0 && (
               <>
                 Assigned Member:
                 <Link
-                  to={`/groups/${GroupData.id}/users/${GroupData.partnerid}`}
+                  to={`/groups/${GroupData.groupid}/users/${GroupData.partnerid}`}
                 >
                   {GroupData.partner && <>{GroupData.partner}</>}
                 </Link>

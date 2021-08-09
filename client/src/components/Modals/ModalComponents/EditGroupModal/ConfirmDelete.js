@@ -15,7 +15,7 @@ import { deactivateModal } from "../../../../actions/modalActions";
  */
 export const ConfirmDelete = () => {
   const GroupID = useSelector(
-    (state) => state.group.selectedGroup.groupDetails.id
+    (state) => state.group.selectedGroup.groupDetails.groupid
   );
   const dispatch = useDispatch();
 

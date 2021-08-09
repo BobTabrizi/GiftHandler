@@ -25,15 +25,6 @@ export const SettingsPage = () => {
     getData();
   }, []);
 
-  const testScrape = async () => {
-    axios
-      .get(`/api/items/scrape`, {})
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => console.log(err));
-  };
-
   const fileSelected = async (e) => {
     const file = e.target.files[0];
     const imageInfo = await postImage({ image: file });
@@ -86,10 +77,6 @@ export const SettingsPage = () => {
               <div>Name: {user.name}</div>
               <div>Email: {user.email}</div>
             </div>
-
-            <button onClick={() => testScrape()} style={{ cursor: "pointer" }}>
-              Beep
-            </button>
           </div>
         )}
       </div>

@@ -6,10 +6,10 @@ import { IoAdd } from "react-icons/io5";
 
 /**
  *
- * @PageLocation Dashboard
+ * @PageLocation User Group/Event Pages
  * @Component PlaceHolderAddItem
- * @Description Add Item button for the user dashboard.
- *              Opens modal to add an item to a registry list.
+ * @Description  Opens a modal to add an item to a registry list.
+ *
  *
  */
 export const AddItemCard = () => {

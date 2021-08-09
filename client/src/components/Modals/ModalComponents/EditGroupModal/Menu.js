@@ -39,7 +39,7 @@ export const Menu = () => {
           >
             Change Passcode
           </h2>
-          {GroupDetails.mode !== 1 && (
+          {GroupDetails.grouptype !== 1 && (
             <h2
               style={{ cursor: "pointer" }}
               onClick={() => handleModalChange("ManageMembers")}
@@ -47,6 +47,14 @@ export const Menu = () => {
               Manage Members
             </h2>
           )}
+
+          <h2
+            style={{ cursor: "pointer" }}
+            onClick={() => handleModalChange("ChangeDescription")}
+          >
+            Edit Description
+          </h2>
+
           <h2
             style={{ cursor: "pointer" }}
             onClick={() => handleModalChange("Delete")}

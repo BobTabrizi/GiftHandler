@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../styles/PageStyles/ManageGroup.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setActiveModal } from "../../actions/modalActions";
 import { setModalPage } from "../../actions/modalActions";
 /**
@@ -11,7 +11,6 @@ import { setModalPage } from "../../actions/modalActions";
  */
 export const CreateJoinGroup = () => {
   const dispatch = useDispatch();
-
   const handleModal = (ModalType) => {
     if (ModalType === "Add") {
       dispatch(setActiveModal("Group"));

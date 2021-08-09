@@ -14,10 +14,10 @@ import {
   ADD_GROUP_MEMBER,
   GET_GROUP_MEMBERS,
   GROUP_MEMBERS_LOADING,
-  ADD_MEMBER_FAILURE,
   ASSIGN_PARTNERS,
   CLEAR_CURRENT_GROUP,
   CLEAR_PAGE_GROUP,
+  EDIT_GROUP_DETAILS,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -170,6 +170,24 @@ export const leaveGroup = (groupID, userID) => (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const EditGroupDetails = (GroupDetails) => async (dispatch) => {
+  let Response = await axios
+    .post("/api/groups/edit", {
+      GroupDetails,
+    })
+    .then((res) => {
+      dispatch({
+        type: EDIT_GROUP_DETAILS,
+        payload: GroupDetails,
+      });
+      return res;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+  return Response;
 };
 
 export const assignPartners = (GroupParameters) => (dispatch) => {

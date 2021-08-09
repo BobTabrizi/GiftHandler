@@ -128,7 +128,8 @@
   text-align: center;
 }
 
-.GroupRegisterBody {
+.GroupRegisterBody,
+.EditDescriptionBody {
   display: flex;
   flex-direction: column;
   padding: 5%;
@@ -138,7 +139,8 @@
   text-align: center;
 }
 
-.GroupRegisterBtn {
+.GroupRegisterBtn,
+.EditDescriptionBtn {
   font-size: 22px;
   cursor: pointer;
   background-color: palegreen;

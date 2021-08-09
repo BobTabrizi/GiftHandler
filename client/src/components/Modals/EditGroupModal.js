@@ -6,6 +6,7 @@ import { Menu } from "./ModalComponents/EditGroupModal/Menu";
 import { Passcode } from "./ModalComponents/EditGroupModal/Passcode";
 import { Members } from "./ModalComponents/EditGroupModal/Members";
 import { ConfirmDelete } from "./ModalComponents/EditGroupModal/ConfirmDelete";
+import { ChangeDescription } from "./ModalComponents/EditGroupModal/ChangeDescription";
 import { deactivateModal, setModalPage } from "../../actions/modalActions";
 import { IoArrowBack } from "react-icons/io5";
 /**
@@ -53,6 +54,11 @@ export const EditGroupModal = () => {
       case "ManageMembers":
         setModalComponent(<Members />);
         setModalTitle("Manage Members");
+        break;
+
+      case "ChangeDescription":
+        setModalComponent(<ChangeDescription />);
+        setModalTitle("Edit Description");
         break;
 
       case "Delete":
