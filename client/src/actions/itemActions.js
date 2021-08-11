@@ -103,7 +103,7 @@ export const purchaseItem = (item) => (dispatch) => {
 export const getItemImage = (ItemDetails) => async (dispatch) => {
   let Response = await axios
     .get(
-      `/api/items/scrape?Vendor=${ItemDetails.Vendor}&Link=${ItemDetails.Link}`
+      `/api/items/getData?Vendor=${ItemDetails.Vendor}&Link=${ItemDetails.Link}`
     )
     .then((res) => {
       return res;

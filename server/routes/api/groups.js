@@ -1,10 +1,9 @@
-const jwt = require("jsonwebtoken");
 const express = require("express");
 const passport = require("passport");
-const pool = require("../../db");
-const redisClient = require("../../redis");
-const { checkGroups } = require("../../RedisFunctions");
-const initializePassport = require("../../passport");
+const pool = require("../../utils/db");
+const redisClient = require("../../utils/redis");
+const { checkGroups } = require("../../utils/functions/RedisFunctions");
+const initializePassport = require("../../utils/passport");
 initializePassport(passport);
 
 const router = express.Router();
@@ -87,10 +86,10 @@ router.post("/create", async (req, res) => {
 });
 
 /**
- * @route   POST api/groups/users
+ * @route   POST api/groups/addMember
  * @description    Add a user to a group
  **/
-router.post("/users", async (req, res) => {
+router.post("/addMember", async (req, res) => {
   let { groupname, passcode, userid } = req.body;
 
   let response;
@@ -156,10 +155,10 @@ router.post("/users", async (req, res) => {
 });
 
 /**
- * @route   POST api/groups/removeUser
- * @description  Removes a user from a specified group
+ * @route   DELETE api/groups/removeMember
+ * @description  Removes a member from a specified group
  **/
-router.post("/removeUser", async (req, res) => {
+router.delete("/removeMember", async (req, res) => {
   let { groupID, userID } = req.body;
 
   //First delete the user from the group.
@@ -184,11 +183,11 @@ router.post("/removeUser", async (req, res) => {
 });
 
 /**
- * @route   GET api/groups/user
+ * @route   GET api/groups/user/:id
  * @description  Get all of the groups a user is in
  **/
-router.get("/user", async (req, res) => {
-  let { userid } = req.query;
+router.get("/user/:id", async (req, res) => {
+  const userid = req.params.id;
 
   //First check redis cache for the data
   let GroupCacheResult = await checkGroups(userid).then(function (results) {
@@ -239,11 +238,11 @@ router.get("/user", async (req, res) => {
 });
 
 /**
- * @route   GET api/groups/members
+ * @route   GET api/groups/members/:groupid
  * @description  Get all members of a group
  **/
-router.get("/members", async (req, res) => {
-  let { groupid } = req.query;
+router.get("/members/:groupid", async (req, res) => {
+  const groupid = req.params.groupid;
   pool
     .query(
       `SELECT users.name,partners.name AS partner,users.id,groups.role,groups.partnerid FROM USERS INNER JOIN GROUPS ON groups.userid = users.id LEFT OUTER JOIN users partners ON groups.partnerid = partners.id WHERE groups.groupid = $1;`,
@@ -256,11 +255,11 @@ router.get("/members", async (req, res) => {
 });
 
 /**
- * @route   GET api/groups/delete/
+ * @route   GET api/groups/delete/:groupid
  * @description  Delete a group by group id
  **/
-router.delete("/delete", async (req, res) => {
-  let { groupid } = req.query;
+router.delete("/delete/:groupid", async (req, res) => {
+  const groupid = req.params.groupid;
 
   //Deletes both group auth and group table entries using cascade deletion
   pool
@@ -276,11 +275,11 @@ router.delete("/delete", async (req, res) => {
 });
 
 /**
- * @route   GET api/groups/
+ * @route   GET api/groups/:groupid
  * @description  Get a group
  **/
-router.get("/", async (req, res) => {
-  let { groupid } = req.query;
+router.get("/:groupid", async (req, res) => {
+  const groupid = req.params.groupid;
   let resultObject = {};
 
   //First get the group name and type

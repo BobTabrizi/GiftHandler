@@ -4,11 +4,11 @@ const upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
-const { uploadFile, deleteFile, getFileStream } = require("../../s3");
+const { uploadFile, deleteFile, getFileStream } = require("../../utils/s3");
 const router = express.Router();
 
 /**
- * @route   GET api/images
+ * @route   GET api/images/:key
  * @description   Get an image from S3, given the image key
  **/
 router.get("/:key", async (req, res) => {
@@ -18,10 +18,10 @@ router.get("/:key", async (req, res) => {
 });
 
 /**
- * @route   POST api/images/create
+ * @route   POST api/images/add
  * @description   Upload image to S3, and return the URL to reference
  **/
-router.post("/create", upload.single("image"), async (req, res) => {
+router.post("/add", upload.single("image"), async (req, res) => {
   const file = req.file;
   let result = await uploadFile(file);
   result.imagePath = `/api/images/${result.key}`;

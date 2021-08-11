@@ -32,7 +32,7 @@ export const FilterOtherUsers = () => {
 
   const dispatch = useDispatch();
 
-  const UserData = useSelector((state) => state.user.externalUser);
+  const UserData = useSelector((state) => state.auth.externalUser);
 
   const handleFilterItems = () => {
     //Pass the filtered values as params only if the corresponding button is checked.

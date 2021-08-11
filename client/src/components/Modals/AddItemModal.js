@@ -10,7 +10,7 @@ import { UserChecker } from "../../components/Auth/UserChecker";
  *
  * @PageLocation Dashboard
  * @Component EditItemModal
- * @Description Modal that allows a user to edit attributes of an item
+ * @Description Modal that allows a user to edit attributes of an item. TODO ADD EXIT BUTTON
  *
  */
 export const AddItemModal = () => {
@@ -74,19 +74,9 @@ export const AddItemModal = () => {
 
   /*  Add Event listener to close modal on background click      */
   useEffect(() => {
-    const handleClick = (e) => {
-      if (e.target && e.target.className === "ItemModalBackground") {
-        dispatch(deactivateModal());
-      }
-    };
-    if (DispModal === "AddItem") {
-      window.addEventListener("click", handleClick);
-    }
-
     let user = UserChecker(AuthInfo.token);
-
     setUID(user.id);
-  }, [DispModal]);
+  }, []);
 
   /*  Upon File Input, set file state and display a preview image  */
   const fileSelected = (e) => {

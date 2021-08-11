@@ -1,15 +1,15 @@
 const express = require("express");
-const { deleteFile } = require("../../s3");
-const passport = require("passport");
-const pool = require("../../db");
-const redisClient = require("../../redis");
-const { checkItems } = require("../../RedisFunctions");
-const initializePassport = require("../../passport");
-initializePassport(passport);
+const pool = require("../../utils/db");
+const redisClient = require("../../utils/redis");
 const router = express.Router();
-const puppeteer = require("puppeteer");
-const axios = require("axios");
-router.use(passport.initialize());
+const { checkItems } = require("../../utils/functions/RedisFunctions");
+const { openPage } = require("../../utils/puppeteer");
+const { deleteFile } = require("../../utils/s3");
+const {
+  getTargetItem,
+  getEtsyItem,
+  getAmazonItem,
+} = require("../../utils/functions/ScrapeFunctions");
 
 /**
  * @route   GET api/items/user
@@ -137,16 +137,13 @@ router.post("/purchase", async (req, res) => {
 router.delete("/delete", async (req, res) => {
   try {
     let { itemid, itemKey } = req.query;
-
-    //Delete from multiple tables using SQL Cascading Delete
-    //Deletes from items and itemdetails tables
     pool
       .query(`DELETE FROM items WHERE itemid = $1`, [itemid])
       .catch((error) => {
         res.status(400).json(error);
         return;
       });
-    //Then delete the saved image in S3 if it is not the default
+    //Delete the saved image in S3 if it is not the default
     if (itemKey !== "DefaultItem") {
       await deleteFile(itemKey);
     }
@@ -155,116 +152,33 @@ router.delete("/delete", async (req, res) => {
   }
 });
 
-router.get("/scrape", async (req, res) => {
+/**
+ * @route   GET api/items/getData
+ * @description  Retrieves item data given a vendor link
+ **/
+router.get("/getData", async (req, res) => {
   let { Vendor, Link } = req.query;
 
   //Check for a vendor, and find data based on the vendor. Some vendors have open API's, some don't.
-  //For those that don't we will use puppeteer to webscrape what we need.
+  //For those that don't we will use the puppeteer library to webscrape everything we need.
 
-  const browser = await puppeteer.launch({
-    headless: true,
-  });
-  const page = await browser.newPage();
-  await page.goto(Link);
+  const { page, browser } = await openPage(Link);
 
-  let ItemImage;
-  let ItemPrice;
-  let ItemName;
+  let ItemDetails;
+  switch (Vendor) {
+    case "Target":
+      ItemDetails = await getTargetItem(page);
+      break;
 
-  if (Vendor === "Target") {
-    const PriceSelector = await page.waitForSelector(".elGGzp");
-    const ImageSelector = await page.waitForSelector(
-      ".eKyPHV .slide--active img"
-    );
-    const NameSelector = await page.waitForSelector(".dkHWUj");
-    ItemPrice = await PriceSelector.evaluate((el) => el.textContent);
-    ItemName = await NameSelector.evaluate((el) => el.textContent);
-    ItemImage = await ImageSelector.evaluate((el) => el.getAttribute("src"));
+    case "Etsy":
+      ItemDetails = await getEtsyItem(page);
+      break;
+
+    case "Amazon":
+      ItemDetails = await getAmazonItem(page);
+      break;
   }
 
-  //Etsy has an openAPI, which we will use instead of web scraping.
-  if (Vendor === "Etsy") {
-    const IDSelector = await page.waitForSelector(
-      ".listing-page-image-carousel-component"
-    );
-    let ShopID = await IDSelector.evaluate((el) =>
-      el.getAttribute("data-shop-id")
-    );
-    let ListingID = await IDSelector.evaluate((el) =>
-      el.getAttribute("data-palette-listing-id")
-    );
-
-    axios.defaults.headers.common = {
-      "X-API-Key": `${process.env.ETSY_KEYSTRING}`,
-    };
-    let EtsyResponse = await axios
-      .get(`https://openapi.etsy.com/v3/application/listings/${ListingID}`)
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => console.log(err));
-
-    let EtsyImage = await axios
-      .get(
-        `https://openapi.etsy.com/v3/application/shops/${ShopID}/listings/${ListingID}/images`
-      )
-      .then((res) => {
-        return res.data.results[0].url_fullxfull;
-      })
-      .catch((err) => console.log(err));
-    ItemPrice = "$" + EtsyResponse.price.amount / EtsyResponse.price.divisor;
-    ItemName = EtsyResponse.title;
-    ItemImage = EtsyImage;
-  }
-
-  if (Vendor === "Amazon") {
-    //Scrape the price of the item
-    ItemPrice = await page.evaluate(() => {
-      try {
-        return document
-          .getElementById("price_inside_buybox")
-          .innerHTML.replace(/\n/g, "");
-      } catch (error) {
-        console.log(error);
-      }
-      try {
-        return document.getElementById("price").innerHTML.replace(/\n/g, "");
-      } catch (error) {
-        console.log(error);
-      }
-    });
-
-    //Then scrape the name of the item
-    ItemName = await page.evaluate(() => {
-      try {
-        return document
-          .getElementById("productTitle")
-          .innerHTML.replace(/\n/g, "");
-      } catch (error) {
-        console.log(error);
-      }
-    });
-
-    //Then lastly scrape the url image of the item
-    ItemImage = await page.evaluate(() => {
-      try {
-        return document.getElementById("imgBlkFront").getAttribute("src");
-      } catch (error) {
-        console.log(error);
-      }
-      try {
-        return document.querySelector(".selected img[src]").getAttribute("src");
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  let ItemDetails = {
-    ItemImage,
-    ItemPrice,
-    ItemName,
-  };
   browser.close();
   res.status(201).json(ItemDetails);
 });

@@ -14,6 +14,8 @@ import {
   PW_RESET_REQ_FAIL,
   PW_RESET,
   PW_RESET_FAIL,
+  GET_PUBLIC_USER,
+  PUBLIC_USER_LOADING,
 } from "../actions/types";
 import { history } from "../helpers/history";
 //Check token and load user
@@ -29,7 +31,7 @@ export const loadUser = () => async (dispatch, getState) => {
   }
 
   let response = await axios
-    .get(`/api/auth/user?token=${token}`)
+    .get(`/api/auth/user/${token}`)
     .then((res) => {
       dispatch({
         type: USER_LOADED,
@@ -127,7 +129,7 @@ export const updateUser = (user) => (dispatch) => {
 
 export const passResetProcess = (pid, code, password) => async (dispatch) => {
   let Response = await axios
-    .post("/api/auth/processReset", {
+    .post("/api/auth/passReset", {
       pid: pid,
       code: code,
       password: password,
@@ -161,6 +163,28 @@ export const passResetRequest = (email, pid) => async (dispatch) => {
     });
 
   return Response;
+};
+
+export const getPublicUser = (userid) => async (dispatch) => {
+  dispatch(setPublicUserLoading());
+  let response = await axios
+    .get(`/api/auth/publicUser/${userid}`)
+    .then((res) => {
+      dispatch({
+        type: GET_PUBLIC_USER,
+        payload: res.data,
+      });
+      return res.data;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+  return response;
+};
+export const setPublicUserLoading = () => {
+  return {
+    type: PUBLIC_USER_LOADING,
+  };
 };
 
 export const logout = () => {

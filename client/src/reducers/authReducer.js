@@ -8,12 +8,16 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  GET_PUBLIC_USER,
+  PUBLIC_USER_LOADING,
+  PUBLIC_USER_LOADED,
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: localStorage.getItem("token") !== null ? true : false,
   isLoading: false,
+  externalUser: null,
   user: {
     name: "",
   },
@@ -33,6 +37,18 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         user: action.payload,
+      };
+    case GET_PUBLIC_USER:
+      return {
+        ...state,
+        externalUser: action.payload,
+        isloading: false,
+      };
+
+    case PUBLIC_USER_LOADING:
+      return {
+        ...state,
+        isloading: true,
       };
     case UPDATE_USER:
       return {

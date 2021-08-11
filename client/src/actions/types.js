@@ -34,7 +34,7 @@ export const CLEAR_CURRENT_GROUP = "CLEAR_CURRENT_GROUP";
 export const CLEAR_PAGE_GROUP = "CLEAR_PAGE_GROUP";
 export const EDIT_GROUP_DETAILS = "EDIT_GROUP_DETAILS";
 
-/*         Auth/Login/Errors              */
+/*         Auth/Users/Login/Errors              */
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const UPDATE_USER = "UPDATE_USER";
@@ -50,11 +50,9 @@ export const PW_RESET_REQ = "PW_RESET_REQ";
 export const PW_RESET_REQ_FAIL = "PW_RESET_REQ_FAIL";
 export const PW_RESET = "PW_RESET";
 export const PW_RESET_FAIL = "PW_RESET_FAIL";
-
-/*              Other Users                 */
-export const GET_EXT_USER = "GET_EXT_USER";
-export const EXT_USER_LOADING = "EXT_USER_LOADING";
-export const EXT_USER_LOADED = "EXT_USER_LOADED";
+export const GET_PUBLIC_USER = "GET_PUBLIC_USER";
+export const PUBLIC_USER_LOADING = "PUBLIC_USER_LOADING";
+export const PUBLIC_USER_LOADED = "PUBLIC_USER_LOADED";
 
 /*                Modals                    */
 export const SET_ACTIVE_MODAL = "SET_ACTIVE_MODAL";

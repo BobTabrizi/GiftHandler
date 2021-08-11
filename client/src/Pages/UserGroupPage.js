@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { RegistryList } from "../components/Items/RegistryList";
 import { getItems } from "../actions/itemActions";
-import { getUser } from "../actions/userActions";
+import { getPublicUser } from "../actions/authActions";
 import { getGroup } from "../actions/groupActions";
 import { AddItemModal } from "../components/Modals/AddItemModal";
 import { EditItemModal } from "../components/Modals/EditItemModal";
@@ -51,7 +51,8 @@ export const UserGroupPage = (props) => {
 
   useEffect(() => {
     async function getData() {
-      let userInfo = await dispatch(getUser(UID));
+      let userInfo = await dispatch(getPublicUser(UID));
+      console.log(userInfo);
       setUserName(userInfo[0].name);
       await dispatch(getGroup(GID));
       await dispatch(getItems(UID, GID));
