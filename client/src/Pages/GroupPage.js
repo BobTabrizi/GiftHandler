@@ -1,35 +1,78 @@
 import React, { useEffect, useState } from "react";
 import "../styles/PageStyles/GroupPage.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
+import { RegistryList } from "../components/Items/RegistryList";
+import { getItems } from "../actions/itemActions";
 import { getGroup } from "../actions/groupActions";
-import { UserList } from "../components/Groups/UserList";
-
+import { AddItemModal } from "../components/Modals/ItemModals/AddItemModal";
+import { EditItemModal } from "../components/Modals/ItemModals/EditItemModal";
+import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
+import { UserChecker } from "../components/Auth/UserChecker";
+import { GroupPageHeader } from "../components/Groups/GroupPageHeader";
+import { GroupInfoWrapper } from "../components/Groups/GroupInfoWrapper";
 /**
  *
- * @Page Group Page
- * @Description Information about the group and all its members
- * @route /groups/:id
+ * @Page User Group Page
+ * @Description Item page for a user in a specified group,
+ * @route /groups/:GID/users/:UID
  *
  */
-export const GroupPage = (props) => {
+export const UserGroupPage = (props) => {
+  const [canEditPage, setCanEditPage] = useState(false);
+  const UID = props.match.params.id;
+  const GID = props.match.params.gid;
+  const AuthInfo = useSelector((state) => state.auth);
+  const showEditModal = useSelector(
+    (state) => state.item.selectedItem.displayEditModal
+  );
+  const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);
+
+  //Selector to filter out the page owner from the members listed in their group.
+  //The list is reversed for visual purposes, making the page owner the first in the list
+  useSelector((state) => {
+    if (state.group.pageGroup.length !== 0) {
+      let idx = state.group.pageGroup.members.findIndex(
+        (member) => member.id == UID
+      );
+      let temp = state.group.pageGroup.members[0];
+      state.group.pageGroup.members[0] = state.group.pageGroup.members[idx];
+      state.group.pageGroup.members[idx] = temp;
+      state.group.pageGroup.members.reverse();
+    }
+  });
+
   const dispatch = useDispatch();
-  const [groupName, setGroupName] = useState("");
+
   useEffect(() => {
     async function getData() {
-      let PageInfo = await dispatch(getGroup(props.match.params.id));
-      setGroupName(PageInfo.name);
+      await dispatch(getGroup(GID));
+      await dispatch(getItems(UID, GID));
+      //Check to see if the visitor is authenticated
+      let User = UserChecker(AuthInfo.token);
+      //If they are authenticated and own the page, give edit permissions
+      if (User && User.id == UID) {
+        setCanEditPage(true);
+      }
     }
     getData();
   }, []);
 
   return (
     <>
-      <div className="container">
-        <NavBar title={groupName} />
-        <div className="MemberContainer">
-          <h1>Members in this group</h1>
-          <UserList />
+      <div className="UserPageContainer">
+        {ActiveModal === "Confirm" && <ConfirmationModal />}
+        {ActiveModal === "AddItem" && <AddItemModal />}
+        {showEditModal && ActiveModal !== "Confirm" && <EditItemModal />}
+        <NavBar title="User Page" />
+        <div className="UserPageBody">
+          <div className="UserRegistryWrap">
+            <GroupPageHeader GID={GID} />
+            <GroupInfoWrapper canEditPage={canEditPage} />
+            <div className="registryContainer">
+              <RegistryList PageType={"Dashboard"} CanEdit={canEditPage} />
+            </div>
+          </div>
         </div>
       </div>
     </>

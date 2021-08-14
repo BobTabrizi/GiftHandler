@@ -6,7 +6,7 @@ import "../../../../styles/GroupStyles/GroupModals.css";
 
 /**
  *
- * @PageLocation GroupPage
+ * @PageLocation Home Page
  * @Component JoinRegister
  * @Description Modal Component for the Edit Group Modal
  *
@@ -37,7 +37,7 @@ export const JoinRegister = () => {
           <div className="JoinInput">
             <p>Enter a group name</p>
             <input
-              className="modalInput"
+              className="JoinModalInput"
               placeholder="Enter name"
               onChange={(e) => setGroupName(e.target.value)}
             ></input>
@@ -45,7 +45,7 @@ export const JoinRegister = () => {
           <div className="JoinInput">
             <p>Enter the group passcode</p>
             <input
-              className="modalInput"
+              className="JoinModalInput"
               placeholder="Enter Passcode"
               onChange={(e) => setPasscode(e.target.value)}
             ></input>

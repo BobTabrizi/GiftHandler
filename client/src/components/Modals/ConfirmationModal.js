@@ -70,6 +70,7 @@ export const ConfirmationModal = () => {
                     padding: "5%",
                     color: "white",
                     fontSize: 30,
+                    width: "80px",
                     cursor: "pointer",
                   }}
                 >
@@ -85,6 +86,7 @@ export const ConfirmationModal = () => {
                     padding: "5%",
                     color: "white",
                     fontSize: 30,
+                    width: "80px",
                     cursor: "pointer",
                     marginLeft: "10%",
                   }}

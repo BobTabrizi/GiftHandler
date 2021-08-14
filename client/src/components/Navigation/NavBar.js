@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/NavigationStyles/NavBar.css";
-import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
-import { SidebarData } from "./SidebarData";
-import { IconContext } from "react-icons";
-import PrivateRoute from "../../Routes/PrivateRoute";
+import { NavData } from "./NavData";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions/authActions";
+import { IoIosMenu } from "react-icons/io";
 
 /**
  *
@@ -17,57 +14,59 @@ import { logout } from "../../actions/authActions";
  *              Title indicates the current page.
  *
  */
-export default function NavBar({ title }) {
-  const [sidebar, setSideBar] = useState(false);
+export default function NavBar() {
+  const [menu, setMenu] = useState(false);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
   };
-  const showSideBar = () => setSideBar(!sidebar);
+  const showMenu = () => setMenu(!menu);
   return (
     <>
-      <IconContext.Provider value={{ color: "white" }}>
-        <div className="navBar" style={{ color: "white" }}>
-          <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSideBar} />
-          </Link>
-          <div className="navText" style={{ fontSize: 25 }}>
-            {title}
-          </div>
+      <div className="navBar" style={{ color: "white" }}>
+        <div
+          className="menu-bars"
+          style={{ visibility: menu ? "hidden" : "visible" }}
+        >
+          <IoIosMenu color="black" onClick={showMenu} />
         </div>
-        <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
-          <ul className="nav-menu-items">
-            <li className="navbar-toggle" onClick={showSideBar}>
-              <AiIcons.AiOutlineClose style={{ cursor: "pointer" }} />
-            </li>
-            {SidebarData.map((item, index) => {
+        <div
+          className="navBarMenu"
+          style={{ display: menu ? "block" : "none" }}
+        >
+          <button className="CloseMenuBtn" onClick={showMenu}>
+            X
+          </button>
+          <ul className="MenuList">
+            {NavData.map((item, index) => {
               return (
-                <Link
-                  to={item.path}
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  <li key={index} className={item.cName} onClick={showSideBar}>
-                    <div className="sidebarItem">{item.title}</div>
-                  </li>
-                </Link>
+                <li key={index}>
+                  <Link
+                    to={item.path}
+                    style={{ textDecoration: "none", color: "black" }}
+                    key={index}
+                  >
+                    <div onClick={showMenu}>
+                      <div className="sidebarItem">{item.title}</div>
+                    </div>
+                  </Link>
+                </li>
               );
             })}
             <hr />
-            <Link
-              to="/login"
-              onClick={handleLogout}
-              style={{
-                textDecoration: "none",
-                color: "white",
-              }}
-            >
-              <li className="nav-text">
-                <div className="sidebarItem">Sign Out</div>
-              </li>
-            </Link>
+            <li>
+              <Link
+                to={"/login"}
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <div onClick={handleLogout}>
+                  <div className="sidebarItem">Sign Out</div>
+                </div>
+              </Link>
+            </li>
           </ul>
-        </nav>
-      </IconContext.Provider>
+        </div>
+      </div>
     </>
   );
 }

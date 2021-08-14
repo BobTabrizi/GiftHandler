@@ -1,10 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
-import { setModalPage } from "../../../../actions/modalActions";
+import {
+  deactivateModal,
+  setModalPage,
+} from "../../../../actions/modalActions";
+import { unSelectEditGroup } from "../../../../actions/groupActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component Menu
  * @Description Landing modal page for editing groups.
  *              Presents options of changing passcode, managing members, and deleting the group.
@@ -31,7 +35,7 @@ export const Menu = () => {
           >
             Change Passcode
           </h2>
-          {GroupDetails.mode !== 1 && (
+          {GroupDetails.grouptype !== 1 && (
             <h2
               style={{ cursor: "pointer" }}
               onClick={() => handleModalChange("ManageMembers")}
@@ -39,18 +43,20 @@ export const Menu = () => {
               Manage Members
             </h2>
           )}
+
+          <h2
+            style={{ cursor: "pointer" }}
+            onClick={() => handleModalChange("ChangeDescription")}
+          >
+            Edit Description
+          </h2>
+
           <h2
             style={{ cursor: "pointer" }}
             onClick={() => handleModalChange("Delete")}
           >
             Delete Group
           </h2>
-        </div>
-
-        <div className="MenuFooter">
-          <button className="ExitMenuBtn" onClick={() => console.log("HI")}>
-            Exit
-          </button>
         </div>
       </div>
     </>

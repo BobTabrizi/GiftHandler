@@ -3,9 +3,9 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const express = require("express");
 const passport = require("passport");
-const pool = require("../../db");
+const pool = require("../../utils/db");
 const nodemailer = require("nodemailer");
-const initializePassport = require("../../passport");
+const initializePassport = require("../../utils/passport");
 initializePassport(passport);
 const router = express.Router();
 router.use(passport.initialize());
@@ -122,11 +122,11 @@ router.post("/register", async (req, res) => {
 });
 
 /**
- * @route   GET api/auth/user
- * @description    Get a user's data
+ * @route   GET api/auth/user/:token
+ * @description    Get a logged in user's data
  **/
-router.get("/user", async (req, res) => {
-  let token = req.query.token;
+router.get("/user/:token", async (req, res) => {
+  const token = req.params.token;
   if (token) {
     let decoded = jwt.verify(token, process.env.SECRET);
     let UID = decoded.user.id;
@@ -141,6 +141,20 @@ router.get("/user", async (req, res) => {
       }
     });
   }
+});
+
+/**
+ * @route   GET api/auth/publicUser/:id
+ * @description  Get information about any user
+ **/
+router.get("/publicUser/:id", async (req, res) => {
+  const userid = req.params.id;
+  pool
+    .query(`SELECT name, profileimage FROM USERS WHERE id = $1`, [userid])
+    .then((result) => {
+      res.status(200).json(result.rows);
+    })
+    .catch((error) => res.status(400).json(error));
 });
 
 /**
@@ -167,10 +181,10 @@ router.post("/update", async (req, res) => {
 });
 
 /**
- * @route   POST api/auth/processReset
+ * @route   POST api/auth/passReset
  * @description   Reset Password for a user
  **/
-router.post("/processReset", async (req, res) => {
+router.post("/passReset", async (req, res) => {
   let { pid, code, password } = req.body;
 
   //First check and make sure password is the 6 character requirement.
@@ -180,7 +194,7 @@ router.post("/processReset", async (req, res) => {
   }
 
   let response = await pool
-    .query(`SELECT * FROM passwordreset WHERE pid = $1`, [pid])
+    .query(`SELECT * FROM passwordreset WHERE pageid = $1`, [pid])
     .then((results) => {
       return results.rows[0];
     })
@@ -263,7 +277,7 @@ router.post("/resetReq", async (req, res) => {
     let pid = crypto.randomBytes(15).toString("hex");
     let code = crypto.randomBytes(8).toString("hex");
     pool.query(
-      `INSERT INTO passwordreset (email,pid,code,time) VALUES ($1,$2,$3,$4)`,
+      `INSERT INTO passwordreset (email,pageid,code,time) VALUES ($1,$2,$3,$4)`,
       [email, pid, code, time]
     );
 

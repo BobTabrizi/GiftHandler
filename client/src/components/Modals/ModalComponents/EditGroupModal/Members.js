@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { getGroupMembers } from "../../../../actions/groupActions";
-import { setModalPage } from "../../../../actions/modalActions";
 import { removeGroupMember } from "../../../../actions/groupActions";
 import { IoBan } from "react-icons/io5";
 import { IoStar } from "react-icons/io5";
 import { assignPartners } from "../../../../actions/groupActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component Members
  * @Description Displays a list of members in a selected group, and allows group admins to kick members.
  *
@@ -54,7 +53,7 @@ export const Members = () => {
     for (let i = 0; i < PartnerMap.length; i++) {
       GroupParams = {
         PartnerList: PartnerMap[i],
-        GroupID: GroupDetails.id,
+        GroupID: GroupDetails.groupid,
       };
 
       dispatch(assignPartners(GroupParams));
@@ -75,12 +74,12 @@ export const Members = () => {
   /* If user accepts the confirmation, remove user */
   const handleKick = () => {
     setConfirmModal(false);
-    dispatch(removeGroupMember(GroupDetails.id, selectedUserID));
+    dispatch(removeGroupMember(GroupDetails.groupid, selectedUserID));
   };
 
   useEffect(() => {
     async function getMembers() {
-      await dispatch(getGroupMembers(GroupDetails.id));
+      await dispatch(getGroupMembers(GroupDetails.groupid));
     }
     getMembers();
   }, []);

@@ -4,7 +4,7 @@ import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
 /**
  *
- * @PageLocation Dashboard
+ * @PageLocation User Group/Event Pages
  * @Component CurrencyInput
  * @Description Formats and handles price inputting when editing/adding items
  *

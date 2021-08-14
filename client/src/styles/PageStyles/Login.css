@@ -2,6 +2,7 @@
   height: 100vh;
   width: 100%;
   display: flex;
+  font-family: Avenir;
 }
 
 .LoginContainer::before {
@@ -115,7 +116,7 @@ form .form-inner input[type="submit"] {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
-  width: 50%;
+  width: 60%;
   margin: auto;
-  margin-top: 15%;
+  margin-top: 10%;
 }

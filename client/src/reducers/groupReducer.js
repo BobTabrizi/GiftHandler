@@ -15,6 +15,8 @@ import {
   SET_ACTIVE_GROUP,
   ASSIGN_PARTNERS,
   CLEAR_CURRENT_GROUP,
+  CLEAR_PAGE_GROUP,
+  EDIT_GROUP_DETAILS,
 } from "../actions/types";
 
 const initialState = {
@@ -71,6 +73,23 @@ export default function groupReducer(state = initialState, action) {
         ...state,
         selectedGroup: action.payload,
       };
+
+    case EDIT_GROUP_DETAILS:
+      //Check what detail of the group is being changed, and modify store state accordingly
+      if (action.payload.DescObject) {
+        state.selectedGroup.groupDetails.description =
+          action.payload.DescObject.Description;
+      } else if (action.payload.PassObject) {
+        state.selectedGroup.groupDetails.description =
+          action.payload.PassObject.newPass;
+      }
+      return {
+        ...state,
+        selectedGroup: {
+          displayEditGroupModal: state.selectedGroup.displayEditGroupModal,
+          groupDetails: { ...state.selectedGroup.groupDetails },
+        },
+      };
     case REMOVE_GROUP_MEMBER:
       return {
         ...state,
@@ -88,15 +107,24 @@ export default function groupReducer(state = initialState, action) {
         ...state,
         currentGroup: action.payload,
       };
+    case CLEAR_PAGE_GROUP:
+      return {
+        ...state,
+        pageGroup: action.payload,
+      };
     case LEAVE_GROUP:
       return {
         ...state,
-        groups: state.groups.filter((group) => group.id !== action.payload),
+        groups: state.groups.filter(
+          (group) => group.groupid !== action.payload
+        ),
       };
     case DELETE_GROUP:
       return {
         ...state,
-        groups: state.groups.filter((group) => group.id !== action.payload),
+        groups: state.groups.filter(
+          (group) => group.groupid !== action.payload
+        ),
       };
     case ADD_GROUP:
       return {

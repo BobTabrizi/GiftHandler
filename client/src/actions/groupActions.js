@@ -14,16 +14,17 @@ import {
   ADD_GROUP_MEMBER,
   GET_GROUP_MEMBERS,
   GROUP_MEMBERS_LOADING,
-  ADD_MEMBER_FAILURE,
   ASSIGN_PARTNERS,
   CLEAR_CURRENT_GROUP,
+  CLEAR_PAGE_GROUP,
+  EDIT_GROUP_DETAILS,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
 export const getGroups = (id) => (dispatch) => {
   dispatch(setGroupsLoading());
   axios
-    .get(`/api/groups/user?userid=${id}`, {})
+    .get(`/api/groups/user/${id}`, {})
     .then((res) =>
       dispatch({
         type: GET_USERS_GROUPS,
@@ -38,7 +39,7 @@ export const getGroups = (id) => (dispatch) => {
 export const getGroup = (groupid) => async (dispatch) => {
   dispatch(setGroupLoading());
   let response = await axios
-    .get(`/api/groups?groupid=${groupid}`)
+    .get(`/api/groups/${groupid}`)
     .then((res) => {
       dispatch({
         type: GET_GROUP,
@@ -55,7 +56,7 @@ export const getGroup = (groupid) => async (dispatch) => {
 export const getGroupMembers = (groupid) => async (dispatch) => {
   dispatch(setGroupMembersLoading());
   let response = await axios
-    .get(`/api/groups/members?groupid=${groupid}`, {})
+    .get(`/api/groups/members/${groupid}`, {})
     .then((res) => {
       dispatch({
         type: GET_GROUP_MEMBERS,
@@ -94,7 +95,7 @@ export const addGroup = (GroupDetails) => async (dispatch) => {
 export const addGroupMember =
   (groupName, passcode, memberID) => async (dispatch) => {
     let Response = await axios
-      .post("/api/groups/users", {
+      .post("/api/groups/addMember", {
         groupname: groupName,
         passcode: passcode,
         userid: memberID,
@@ -116,7 +117,7 @@ export const addGroupMember =
 
 export const removeGroupMember = (GroupID, UserID) => (dispatch) => {
   axios
-    .post("/api/groups/removeUser", {
+    .delete("/api/groups/removeMember", {
       groupID: GroupID,
       userID: UserID,
     })
@@ -142,7 +143,7 @@ export const setActiveGroup = (Group) => (dispatch) => {
 
 export const deleteGroup = (id) => (dispatch) => {
   axios
-    .delete(`/api/groups/delete?groupid=${id}`)
+    .delete(`/api/groups/delete/${id}`)
     .then(
       dispatch({
         type: DELETE_GROUP,
@@ -169,6 +170,24 @@ export const leaveGroup = (groupID, userID) => (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const EditGroupDetails = (GroupDetails) => async (dispatch) => {
+  let Response = await axios
+    .post("/api/groups/edit", {
+      GroupDetails,
+    })
+    .then((res) => {
+      dispatch({
+        type: EDIT_GROUP_DETAILS,
+        payload: GroupDetails,
+      });
+      return res;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+  return Response;
 };
 
 export const assignPartners = (GroupParameters) => (dispatch) => {
@@ -238,5 +257,12 @@ export const clearCurrentGroup = () => {
         role: null,
       },
     },
+  };
+};
+
+export const clearPageGroup = () => {
+  return {
+    type: CLEAR_PAGE_GROUP,
+    payload: [],
   };
 };

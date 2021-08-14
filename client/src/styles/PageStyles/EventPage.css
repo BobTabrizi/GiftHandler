@@ -1,0 +1,68 @@
+.EventPageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.RegistryWrapper {
+  text-align: center;
+  border-width: 2px;
+  border-radius: 25px;
+  width: 100vw;
+  padding: 1%;
+}
+
+.EventPageBody {
+  display: flex;
+  flex-direction: row;
+}
+
+.EventUserInfo {
+  text-align: center;
+}
+.EventUserName {
+  font-size: 25px;
+  font-weight: bold;
+}
+.EventUserImage {
+  height: 150px;
+  width: 200px;
+  margin: auto;
+}
+
+.EventRegistryList {
+  margin-top: 2rem;
+}
+
+.EventName {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 1%;
+}
+
+.EventGroupInformation {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.EventGroupInformationBtn {
+  margin-right: 1rem;
+  font-size: 17px;
+  cursor: pointer;
+  padding: 1%;
+  z-index: 6;
+  width: 300px;
+  position: fixed;
+}
+
+.EventGroupInfoBody {
+  position: fixed;
+  right: 2.5rem;
+  top: 19rem;
+  z-index: 3;
+}
+
+@media only screen and (max-width: 1000px) {
+  .EventGroupInformation {
+    display: none;
+  }
+}

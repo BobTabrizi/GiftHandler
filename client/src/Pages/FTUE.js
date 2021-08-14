@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/PageStyles/FTUE.css";
-import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { Tutorial } from "../components/Modals/FTUEModals/Tutorial";
 /**
  *
- * @Page First time upon login
+ * @Page First time upon login or help button
  * @Description First time user experience. Upon first login, give user instructions on how to use the application
  *
  * @route /welcome

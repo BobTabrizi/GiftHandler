@@ -13,6 +13,7 @@ export const FILTER_ITEM = "FILTER_ITEM";
 export const SET_FILTER_ITEM = "SET_FILTER_ITEM";
 export const CLEAR_FILTER_ITEMS = "CLEAR_FILTER_ITEMS";
 export const CLEAR_ITEMS = "CLEAR_ITEMS";
+export const SELECT_VIEW_ITEM = "SELECT_VIEW_ITEM";
 
 /*            Groups                      */
 export const GET_USERS_GROUPS = "GET_GROUPS";
@@ -29,11 +30,12 @@ export const USER_GROUPS_LOADING = "GROUPS_LOADING";
 export const GET_GROUP_MEMBERS = "GET_GROUP_MEMBERS";
 export const GROUP_LOADING = "GROUP_LOADING";
 export const GROUP_MEMBERS_LOADING = "GROUP_MEMBERS_LOADING";
-export const ADD_MEMBER_FAILURE = "ADD_MEMBER_FAILURE";
 export const ASSIGN_PARTNERS = "ASSIGN_PARTNERS";
 export const CLEAR_CURRENT_GROUP = "CLEAR_CURRENT_GROUP";
+export const CLEAR_PAGE_GROUP = "CLEAR_PAGE_GROUP";
+export const EDIT_GROUP_DETAILS = "EDIT_GROUP_DETAILS";
 
-/*         Auth/Login/Errors              */
+/*         Auth/Users/Login/Errors              */
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const UPDATE_USER = "UPDATE_USER";
@@ -49,12 +51,9 @@ export const PW_RESET_REQ = "PW_RESET_REQ";
 export const PW_RESET_REQ_FAIL = "PW_RESET_REQ_FAIL";
 export const PW_RESET = "PW_RESET";
 export const PW_RESET_FAIL = "PW_RESET_FAIL";
-
-/*              Other Users                 */
-export const GET_EXT_USER = "GET_EXT_USER";
-export const EXT_USER_LOADING = "EXT_USER_LOADING";
-export const EXT_USER_LOADED = "EXT_USER_LOADED";
-export const UPDATE_EXT_USER = "UPDATE_EXT_USER";
+export const GET_PUBLIC_USER = "GET_PUBLIC_USER";
+export const PUBLIC_USER_LOADING = "PUBLIC_USER_LOADING";
+export const PUBLIC_USER_LOADED = "PUBLIC_USER_LOADED";
 
 /*                Modals                    */
 export const SET_ACTIVE_MODAL = "SET_ACTIVE_MODAL";

@@ -9,24 +9,23 @@ const authRoutes = require("./routes/api/auth");
 const groupRoutes = require("./routes/api/groups");
 const itemRoutes = require("./routes/api/items");
 const imageRoutes = require("./routes/api/images");
-const userRoutes = require("./routes/api/users");
 //middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static(path.join(__dirname, "public")));
 
 //use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/images", imageRoutes);
-app.use("/api/users", userRoutes);
 
+/*
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
   app.get(`/*`, (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
 }
-
+*/
 module.exports = app;

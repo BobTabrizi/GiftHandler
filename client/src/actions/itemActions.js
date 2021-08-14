@@ -12,6 +12,7 @@ import {
   SET_FILTER_ITEM,
   CLEAR_FILTER_ITEMS,
   CLEAR_ITEMS,
+  SELECT_VIEW_ITEM,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -100,6 +101,20 @@ export const purchaseItem = (item) => (dispatch) => {
     );
 };
 
+export const getItemImage = (ItemDetails) => async (dispatch) => {
+  let Response = await axios
+    .get(
+      `/api/items/getData?Vendor=${ItemDetails.Vendor}&Link=${ItemDetails.Link}`
+    )
+    .then((res) => {
+      return res;
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+  return Response;
+};
+
 export const filterItems = (FilterParam) => {
   return {
     type: FILTER_ITEM,
@@ -134,6 +149,16 @@ export const selectEditItem = (item) => (dispatch) => {
     type: SELECT_EDIT_ITEM,
     payload: {
       displayEditModal: true,
+      itemDetails: item,
+    },
+  });
+};
+
+export const selectViewItem = (item) => (dispatch) => {
+  dispatch({
+    type: SELECT_VIEW_ITEM,
+    payload: {
+      displayViewModal: true,
       itemDetails: item,
     },
   });

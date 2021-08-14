@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { deactivateModal } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component AddSuccess
  * @Description Group creation success feedback modal. Links user to item addition page for the created group.
  *

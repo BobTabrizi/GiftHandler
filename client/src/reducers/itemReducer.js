@@ -11,6 +11,7 @@ import {
   SET_FILTER_ITEM,
   CLEAR_FILTER_ITEMS,
   CLEAR_ITEMS,
+  SELECT_VIEW_ITEM,
 } from "../actions/types";
 
 const initialState = {
@@ -89,18 +90,17 @@ export default function itemReducer(state = initialState, action) {
       if (lowPriceFilter && highPriceFilter) {
         filteredItems = state.memberItems.filter(
           (item) =>
-            Number(item.price.replace(/[^0-9\.]+/g, "")) < lowPriceFilter &&
-            Number(item.price.replace(/[^0-9\.]+/g, "")) > highPriceFilter
+            Number(item.price.replace(/[^0-9.]+/g, "")) < lowPriceFilter &&
+            Number(item.price.replace(/[^0-9.]+/g, "")) > highPriceFilter
         );
       } else if (lowPriceFilter) {
         filteredItems = state.memberItems.filter(
-          (item) =>
-            Number(item.price.replace(/[^0-9\.]+/g, "")) < lowPriceFilter
+          (item) => Number(item.price.replace(/[^0-9.]+/g, "")) < lowPriceFilter
         );
       } else if (highPriceFilter) {
         filteredItems = state.memberItems.filter(
           (item) =>
-            Number(item.price.replace(/[^0-9\.]+/g, "")) > highPriceFilter
+            Number(item.price.replace(/[^0-9.]+/g, "")) > highPriceFilter
         );
       }
       return {
@@ -117,6 +117,11 @@ export default function itemReducer(state = initialState, action) {
         ...state,
         selectedItem: action.payload,
         memberItems: arr,
+      };
+    case SELECT_VIEW_ITEM:
+      return {
+        ...state,
+        selectedItem: action.payload,
       };
     case SELECT_EDIT_ITEM:
     case UNSELECT_EDIT_ITEM:
