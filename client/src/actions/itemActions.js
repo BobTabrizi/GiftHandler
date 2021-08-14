@@ -12,6 +12,7 @@ import {
   SET_FILTER_ITEM,
   CLEAR_FILTER_ITEMS,
   CLEAR_ITEMS,
+  SELECT_VIEW_ITEM,
 } from "./types";
 import { returnErrors } from "./errorActions";
 
@@ -148,6 +149,16 @@ export const selectEditItem = (item) => (dispatch) => {
     type: SELECT_EDIT_ITEM,
     payload: {
       displayEditModal: true,
+      itemDetails: item,
+    },
+  });
+};
+
+export const selectViewItem = (item) => (dispatch) => {
+  dispatch({
+    type: SELECT_VIEW_ITEM,
+    payload: {
+      displayViewModal: true,
       itemDetails: item,
     },
   });

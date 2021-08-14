@@ -25,18 +25,29 @@ export const RegistryList = (props) => {
           {!filteredItems && (
             <>
               <AddItemCard />
+
               {items &&
                 items.map((item, index) => (
-                  <div className="ItemContainer" key={index}>
-                    <ItemDetails item={item} CanEdit={props.CanEdit} />
+                  <div className="ItemSuperContainer">
+                    <div className="ItemContainer" key={index}>
+                      <ItemDetails item={item} CanEdit={props.CanEdit} />
+                    </div>
+                    <div className="ListItemName" style={{ color: "black" }}>
+                      {item.name.substring(0, 20)}
+                    </div>
                   </div>
                 ))}
             </>
           )}
           {filteredItems &&
             filteredItems.map((item, index) => (
-              <div className="ItemContainer" key={index}>
-                <ItemDetails item={item} CanEdit={props.CanEdit} />
+              <div className="ItemSuperContainer">
+                <div className="ItemContainer" key={index}>
+                  <ItemDetails item={item} CanEdit={props.CanEdit} />
+                </div>
+                <div className="ListItemName" style={{ color: "black" }}>
+                  {item.name.substring(0, 20)}
+                </div>
               </div>
             ))}
         </div>
@@ -51,8 +62,13 @@ export const RegistryList = (props) => {
               {items &&
                 items.map((item, index) => (
                   <>
-                    <div className="ItemContainer" key={index}>
-                      <ItemDetails item={item} CanEdit={props.CanEdit} />
+                    <div className="ItemSuperContainer">
+                      <div className="ItemContainer" key={index}>
+                        <ItemDetails item={item} CanEdit={props.CanEdit} />
+                        <div className="ListItemName">
+                          {item.name.substring(0, 20)}
+                        </div>
+                      </div>
                     </div>
                   </>
                 ))}
@@ -63,8 +79,13 @@ export const RegistryList = (props) => {
               {filteredItems &&
                 filteredItems.map((item, index) => (
                   <>
-                    <div className="ItemContainer" key={index}>
-                      <ItemDetails item={item} CanEdit={props.CanEdit} />
+                    <div className="ItemSuperContainer">
+                      <div className="ItemContainer" key={index}>
+                        <ItemDetails item={item} CanEdit={props.CanEdit} />
+                      </div>
+                      <div className="ListItemName" style={{ color: "black" }}>
+                        {item.name.substring(0, 20)}
+                      </div>
                     </div>
                   </>
                 ))}

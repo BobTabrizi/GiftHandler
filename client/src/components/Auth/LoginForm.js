@@ -3,9 +3,9 @@ import "../../styles/PageStyles/Login.css";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
-import { RegisterModal } from "../Modals/RegisterModal";
+import { RegisterModal } from "../Modals/AuthModals/RegisterModal";
 import { setActiveModal } from "../../actions/modalActions";
-import { PassResetModal } from "../Modals/PassResetModal";
+import { PassResetModal } from "../Modals/AuthModals/PassResetModal";
 
 /**
  *

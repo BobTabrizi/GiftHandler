@@ -1,14 +1,12 @@
 .navBar {
-  height: 60px;
-  display: flex;
-  justify-content: start;
-  display: center;
-  background-color: #060b26;
-  align-items: center;
-  text-align: center;
-  color: "white";
+  position: absolute;
+  width: 50%;
+  right: 10px;
+  top: 10px;
+  color: black;
   z-index: 5;
 }
+
 .navText {
   display: flex;
   margin: 0 auto;
@@ -18,10 +16,39 @@
 }
 
 .menu-bars {
-  right: 2rem;
+  right: 0.25rem;
+  top: 0.25rem;
   position: absolute;
   font-size: 2rem;
-  background: none;
+  background-color: rgb(214, 214, 214);
+  padding: 0.5% 1% 0 1%;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.navBarMenu {
+  background-color: rgb(214, 214, 214);
+  width: 200px;
+  border-radius: 5px;
+  right: 0rem;
+  color: black;
+  position: absolute;
+  text-align: center;
+}
+
+.CloseMenuBtn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+.MenuList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.MenuList li {
+  padding: 2.1%;
 }
 
 .nav-menu {
@@ -43,11 +70,9 @@
 }
 
 .nav-text {
-  display: flex;
   align-items: center;
   padding: 8px 0px 8px 16px;
   list-style: none;
-  height: 60px;
 }
 
 .nav-text a {
@@ -75,9 +100,7 @@
 }
 
 .sidebarItem {
-  text-align: center;
-  margin: auto;
-  padding: 5%;
+  cursor: pointer;
 }
 
 .nav-menu-items {

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../styles/PageStyles/ManageGroup.css";
 import { Link } from "react-router-dom";
-import { IoKey } from "react-icons/io5";
+import { BiShieldQuarter } from "react-icons/bi";
 import { IoPerson } from "react-icons/io5";
 import { selectEditGroup } from "../../actions/groupActions";
 import { setActiveModal, updateModalData } from "../../actions/modalActions";
 /**
- * @PageLocation ManageGroup
+ * @PageLocation Home Page
  * @Component GroupList
  * @Description Array of groups that link to respective group pages
  *              Takes in a parameter string of "Admin" or "Member"
@@ -61,10 +61,10 @@ export const GroupList = () => {
                       className="GroupActionBtn"
                       onClick={() => handleEditGroup(group)}
                     >
-                      <IoKey
+                      <BiShieldQuarter
                         style={{
                           fontSize: "30",
-                          marginLeft: "10%",
+                          marginLeft: "13%",
                           marginTop: "10%",
                         }}
                       />
@@ -91,10 +91,10 @@ export const GroupList = () => {
                     }}
                   >
                     <img
-                      src={`/api/images/${groupImage}`}
+                      src={`/api/images/${group.groupimage}`}
                       style={{
-                        width: 225,
-                        height: 175,
+                        width: 250,
+                        height: 150,
                         borderRadius: 25,
                       }}
                       alt="Group"
@@ -110,7 +110,7 @@ export const GroupList = () => {
                       className="GroupActionBtn"
                       onClick={() => handleEditGroup(group)}
                     >
-                      <IoKey
+                      <BiShieldQuarter
                         style={{
                           fontSize: "30",
                           marginLeft: "10%",
@@ -126,10 +126,10 @@ export const GroupList = () => {
                     }}
                   >
                     <img
-                      src={`/api/images/${groupImage}`}
+                      src={`/api/images/${group.groupimage}`}
                       style={{
-                        width: 225,
-                        height: 175,
+                        width: 250,
+                        height: 150,
                         borderRadius: 25,
                       }}
                       alt="Event Group"

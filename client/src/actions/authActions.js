@@ -17,7 +17,7 @@ import {
   GET_PUBLIC_USER,
   PUBLIC_USER_LOADING,
 } from "../actions/types";
-import { history } from "../helpers/history";
+import { history } from "../components/Navigation/history";
 //Check token and load user
 export const loadUser = () => async (dispatch, getState) => {
   //User loading

@@ -5,7 +5,7 @@ import { setModalPage } from "../../../../actions/modalActions";
 import { updateModalData } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component ModeSelect
  * @Description Modal Component. Prompts users to select the type of group they wish to create
  *
@@ -23,9 +23,7 @@ export const ModeSelect = () => {
     };
     dispatch(updateModalData(ModalData));
 
-    dispatch(setModalPage("EventInfo"));
-
-    // dispatch(setModalPage("GroupRegister"));
+    dispatch(setModalPage("GroupImage"));
   };
 
   return (
@@ -47,7 +45,7 @@ export const ModeSelect = () => {
           <div className="ModeInfo">
             <div className="ModeInfoHeader">
               <div className="ModeTitle">Secret Santa </div>
-              <div className="ModeSize"> Group Size: Any</div>
+              <div className="ModeSize"> Group Size: 2+</div>
             </div>
             <div>
               The standard secret santa group. Requires at least 2 people and
@@ -65,7 +63,7 @@ export const ModeSelect = () => {
           />{" "}
           <div className="ModeInfo">
             <div className="ModeInfoHeader">
-              <div className="ModeTitle">Birthday/Wedding/Other </div>
+              <div className="ModeTitle">Birthday/Wedding/Event </div>
               <div className="ModeSize"> Group Size: 1</div>
             </div>
             <div>

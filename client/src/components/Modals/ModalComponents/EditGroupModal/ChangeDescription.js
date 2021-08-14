@@ -6,7 +6,7 @@ import { EditGroupDetails } from "../../../../actions/groupActions";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
 /**
  *
- * @PageLocation HomePage
+ * @PageLocation Home Page
  * @Component ChangeDescription
  * @Description  Enables user to edit and change a description for a specified group/event.
  *

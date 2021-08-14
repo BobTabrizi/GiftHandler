@@ -4,11 +4,10 @@ import "../../../../styles/GroupStyles/GroupModals.css";
 import {
   setModalPage,
   updateModalData,
-  deactivateModal,
 } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component EventInfo
  * @Description Modal Component during group creation.
  *              Prompts user for optional additional information to be displayed on event page.
@@ -16,13 +15,14 @@ import {
  */
 export const EventInfo = () => {
   const id = useSelector((state) => state.auth.user.id);
-  const GroupType = useSelector((state) => state.modal.modalData.GroupType);
+  const ModalDetails = useSelector((state) => state.modal.modalData);
   const [eventInfo, setEventInfo] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     let ModalData = {
-      GroupType: GroupType,
+      GroupType: ModalDetails.GroupType,
+      GroupImage: ModalDetails.GroupImage,
       Description: eventInfo,
     };
     dispatch(updateModalData(ModalData));

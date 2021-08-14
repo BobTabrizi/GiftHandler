@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/GroupStyles/GroupModals.css";
+import "../../../styles/GroupStyles/GroupModals.css";
 import { useDispatch, useSelector } from "react-redux";
-import { ModeSelect } from "./ModalComponents/AddGroupModal/ModeSelect";
-import { EventInfo } from "./ModalComponents/AddGroupModal/EventInfo";
-import { GroupRegister } from "./ModalComponents/AddGroupModal/GroupRegister";
-import { AddSuccess } from "./ModalComponents/AddGroupModal/AddSuccess";
-import { JoinRegister } from "./ModalComponents/JoinGroupModal/JoinRegister";
-import { deactivateModal, setModalPage } from "../../actions/modalActions";
+import { ModeSelect } from "../ModalComponents/AddGroupModal/ModeSelect";
+import { EventInfo } from "../ModalComponents/AddGroupModal/EventInfo";
+import { GroupRegister } from "../ModalComponents/AddGroupModal/GroupRegister";
+import { GroupImage } from "../ModalComponents/AddGroupModal/GroupImage";
+import { AddSuccess } from "../ModalComponents/AddGroupModal/AddSuccess";
+import { JoinRegister } from "../ModalComponents/JoinGroupModal/JoinRegister";
+import { deactivateModal, setModalPage } from "../../../actions/modalActions";
 import { IoArrowBack } from "react-icons/io5";
 /**
- * @PageLocation ManageGroup
- * @Component GroupModal
+ * @PageLocation Home Page
+ * @Component AddJoin Group Modal
  * @Description Allows users to create or join a group.
  *
  *              On creation, user's are prompted to pick a type of group then enter a name/passcode.
@@ -28,9 +29,18 @@ export const AddJoinGroupModal = () => {
     dispatch(deactivateModal());
   };
 
-  /*     Move back     */
-  const changeModal = () => {
-    dispatch(setModalPage("ModeSelect"));
+  const TraverseModal = () => {
+    switch (ActiveModal) {
+      case "GroupImage":
+        dispatch(setModalPage("ModeSelect"));
+        break;
+      case "GroupRegister":
+        dispatch(setModalPage("EventInfo"));
+        break;
+      case "EventInfo":
+        dispatch(setModalPage("GroupImage"));
+        break;
+    }
   };
 
   useEffect(() => {
@@ -47,13 +57,16 @@ export const AddJoinGroupModal = () => {
       case "AddSuccess":
         setModalComponent(<AddSuccess />);
         break;
-
       case "JoinRegister":
         setModalComponent(<JoinRegister />);
         setModalTitle("Join a Group");
         break;
       case "EventInfo":
         setModalComponent(<EventInfo />);
+        break;
+      case "GroupImage":
+        setModalComponent(<GroupImage />);
+        break;
     }
   }, [ActiveModal]);
 
@@ -64,7 +77,7 @@ export const AddJoinGroupModal = () => {
           <div className="GrpModalHeader">
             <div>
               <IoArrowBack
-                onClick={() => changeModal("ModeSelect")}
+                onClick={() => TraverseModal()}
                 style={{
                   cursor: "pointer",
                   visibility:

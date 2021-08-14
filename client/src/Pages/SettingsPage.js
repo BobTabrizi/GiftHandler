@@ -10,7 +10,7 @@ import axios from "axios";
  *
  * @Page Settings Page
  * @Description Account Management for the user.
- *              Profile Image / Email / Password
+ *
  * @route /settings
  *
  */
@@ -56,8 +56,8 @@ export const SettingsPage = () => {
             <div>
               <img
                 src={`/api/images/${user.profileimage}`}
-                width={150}
-                height={150}
+                width={125}
+                height={125}
                 style={{ borderRadius: "50%" }}
               ></img>
               <div className="HomePageProfileImg">
@@ -69,7 +69,7 @@ export const SettingsPage = () => {
                   accept="image/*"
                 ></input>
                 <label htmlFor="imgUpload" className="ChangeProfileImgBtn">
-                  +
+                  <div className="ChangeProfileBtnTxt">+</div>
                 </label>
               </div>
             </div>

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/GroupStyles/GroupModals.css";
+import "../../../styles/GroupStyles/GroupModals.css";
 import { useDispatch, useSelector } from "react-redux";
-import { unSelectEditGroup } from "../../actions/groupActions";
-import { Menu } from "./ModalComponents/EditGroupModal/Menu";
-import { Passcode } from "./ModalComponents/EditGroupModal/Passcode";
-import { Members } from "./ModalComponents/EditGroupModal/Members";
-import { ConfirmDelete } from "./ModalComponents/EditGroupModal/ConfirmDelete";
-import { ChangeDescription } from "./ModalComponents/EditGroupModal/ChangeDescription";
-import { deactivateModal, setModalPage } from "../../actions/modalActions";
+import { unSelectEditGroup } from "../../../actions/groupActions";
+import { Menu } from "../ModalComponents/EditGroupModal/Menu";
+import { Passcode } from "../ModalComponents/EditGroupModal/Passcode";
+import { Members } from "../ModalComponents/EditGroupModal/Members";
+import { ConfirmDelete } from "../ModalComponents/EditGroupModal/ConfirmDelete";
+import { ChangeDescription } from "../ModalComponents/EditGroupModal/ChangeDescription";
+import { deactivateModal, setModalPage } from "../../../actions/modalActions";
 import { IoArrowBack } from "react-icons/io5";
 /**
  *
- * @PageLocation ManageGroup
+ * @PageLocation Home Page
  * @Component EditGroupModal
  * @Description Modal that allows a user to edit and delete an owned group
  *

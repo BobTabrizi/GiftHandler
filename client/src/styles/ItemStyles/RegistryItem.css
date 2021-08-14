@@ -1,29 +1,37 @@
 .ItemListContainer {
-  display: flex;
   flex-direction: row;
-  flex-flow: row;
+  display: flex;
   flex-wrap: wrap;
+  font-family: Avenir;
+  justify-content: center;
 }
 
 .ItemContainer {
   border: 1px solid black;
-  margin: 1%;
-  width: 14%;
-  height: 340px;
+  height: 175px;
   border-radius: 15px;
   background-color: rgb(255, 255, 255, 1);
-  box-sizing: border-box;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.3s ease-in-out;
+  margin: 5%;
 }
 
 .ItemContainer:hover {
   box-shadow: 0 5px 15px rgba(19, 83, 156, 0.8);
 }
 
+.ListItemLabel {
+  font-size: 25px;
+  text-align: center;
+}
+
+.ItemSuperContainer {
+}
+
 .ListItemName {
   font-size: 24px;
   white-space: nowrap;
+  font-family: Avenir;
 }
 .ItemDivider {
   margin: 0;
@@ -34,7 +42,8 @@
 
 .ItemImage {
   object-fit: contain;
-  height: 175px;
+  height: 180px;
+  width: 290px;
   border: 1px solid gray;
 }
 .ListItemPrice,
@@ -55,7 +64,6 @@
 }
 
 .ItemDetailContainer {
-  display: flex;
   flex-direction: column;
   text-align: center;
 }
@@ -65,8 +73,8 @@
   flex-direction: column;
   margin: 1%;
   border: 2px solid black;
-  width: 14%;
-  height: 340px;
+  width: 279px;
+  height: 180px;
   padding: 1%;
   border-radius: 15px;
   background-color: white;
@@ -74,6 +82,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-top: 0.88rem;
+  color: gray;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.3s ease-in-out;
 }
@@ -87,8 +97,8 @@
 }
 
 .ItemContainer {
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 .PurchasedItem {
@@ -133,46 +143,4 @@
   background-color: red;
   width: 30%;
   cursor: pointer;
-}
-
-@media only screen and (max-width: 1200px) {
-  .ItemContainer,
-  .AddItemCard {
-    width: 23%;
-    height: 340px;
-  }
-}
-
-@media only screen and (max-width: 950px) {
-  .ItemContainer,
-  .AddItemCard {
-    width: 31%;
-    height: 340px;
-  }
-}
-@media only screen and (max-width: 850px) {
-  .ItemContainer,
-  .AddItemCard {
-    width: 47%;
-    height: 340px;
-  }
-}
-
-@media only screen and (max-width: 715px) {
-  .ItemContainer,
-  .AddItemCard {
-    width: 55%;
-    margin-left: 20%;
-    margin-bottom: 10%;
-    height: 340px;
-  }
-}
-@media only screen and (max-width: 600px) {
-  .ItemContainer,
-  .AddItemCard {
-    width: 55%;
-    margin-left: 20%;
-    margin-bottom: 10%;
-    height: 340px;
-  }
 }

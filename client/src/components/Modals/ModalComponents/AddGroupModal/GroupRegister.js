@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { addGroup } from "../../../../actions/groupActions";
-import {
-  setModalPage,
-  deactivateModal,
-} from "../../../../actions/modalActions";
+import { setModalPage } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component GroupRegister
  * @Description Modal Component. Credential form for group creation.
  *
@@ -28,7 +25,8 @@ export const GroupRegister = () => {
       passcode: passcode,
       userid: id,
       groupType: GroupData.GroupType,
-      description: GroupData.Description,
+      Description: GroupData.Description,
+      groupImage: GroupData.GroupImage,
     };
     let resp = await dispatch(addGroup(GroupDetails));
     if (resp === "Success") {

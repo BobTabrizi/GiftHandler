@@ -13,6 +13,7 @@ export const FILTER_ITEM = "FILTER_ITEM";
 export const SET_FILTER_ITEM = "SET_FILTER_ITEM";
 export const CLEAR_FILTER_ITEMS = "CLEAR_FILTER_ITEMS";
 export const CLEAR_ITEMS = "CLEAR_ITEMS";
+export const SELECT_VIEW_ITEM = "SELECT_VIEW_ITEM";
 
 /*            Groups                      */
 export const GET_USERS_GROUPS = "GET_GROUPS";

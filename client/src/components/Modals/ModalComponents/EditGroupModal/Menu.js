@@ -8,7 +8,7 @@ import {
 import { unSelectEditGroup } from "../../../../actions/groupActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component Menu
  * @Description Landing modal page for editing groups.
  *              Presents options of changing passcode, managing members, and deleting the group.
@@ -24,10 +24,6 @@ export const Menu = () => {
     dispatch(setModalPage(modalType));
   };
 
-  const handleModalClose = async () => {
-    dispatch(unSelectEditGroup());
-    dispatch(deactivateModal());
-  };
   return (
     <>
       <div className="MenuContainer">
@@ -61,12 +57,6 @@ export const Menu = () => {
           >
             Delete Group
           </h2>
-        </div>
-
-        <div className="MenuFooter">
-          <button className="ExitMenuBtn" onClick={() => handleModalClose()}>
-            Exit
-          </button>
         </div>
       </div>
     </>

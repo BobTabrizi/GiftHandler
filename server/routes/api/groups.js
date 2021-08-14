@@ -15,7 +15,7 @@ router.use(passport.initialize());
  * @description    Create a group
  **/
 router.post("/create", async (req, res) => {
-  let { groupName, passcode, userid, groupType, Description } =
+  let { groupName, passcode, userid, groupType, Description, groupImage } =
     req.body.GroupDetails;
   //First check to see if the group already exists
   const response = await pool
@@ -37,8 +37,8 @@ router.post("/create", async (req, res) => {
   //If the group doesnt exist already, make a new group
   const groupid = await pool
     .query(
-      `INSERT INTO GROUPAUTH(groupname,passcode,ownerid, grouptype) VALUES($1,$2,$3,$4) RETURNING groupid`,
-      [groupName, passcode, userid, groupType]
+      `INSERT INTO GROUPAUTH(groupname,passcode,ownerid, grouptype,groupimage) VALUES($1,$2,$3,$4,$5) RETURNING groupid`,
+      [groupName, passcode, userid, groupType, groupImage]
     )
     .then((res) => {
       return res.rows[0].groupid;
@@ -72,6 +72,7 @@ router.post("/create", async (req, res) => {
         results.rows[0].groupname = groupName;
         results.rows[0].passcode = passcode;
         results.rows[0].grouptype = groupType;
+        results.rows[0].groupimage = groupImage;
 
         //Since a group has been created, delete cache entry
         redisClient.del(userid);
@@ -137,7 +138,7 @@ router.post("/addMember", async (req, res) => {
   //Check if the passcode matches
   if (passcode === response.rows[0].passcode) {
     let groupid = response.rows[0].groupid;
-    pool
+    let GroupInfo = await pool
       .query(
         `INSERT INTO GROUPS(groupid, userid,role) VALUES($1,$2,$3) RETURNING *`,
         [groupid, userid, "Member"]
@@ -145,8 +146,22 @@ router.post("/addMember", async (req, res) => {
       .then((results) => {
         results.rows[0].groupname = groupname;
         results.rows[0].grouptype = grouptype;
-        res.status(201).json(results.rows[0]);
-        return;
+        return results.rows[0];
+      })
+      .catch((error) => res.status(400).json(error));
+
+    //Use the group data and package the group description and image to send back
+    pool
+      .query(`SELECT * from groupauth where groupid = $1`, [groupid])
+      .then((results) => {
+        GroupInfo.name = results.rows[0].name;
+        GroupInfo.email = results.rows[0].email;
+        GroupInfo.password = results.rows[0].password;
+        GroupInfo.groupimage = results.rows[0].groupimage;
+
+        //Remove old cache object
+        redisClient.del(userid);
+        res.status(201).json(GroupInfo);
       })
       .catch((error) => res.status(400).json(error));
   } else {
@@ -202,7 +217,7 @@ router.get("/user/:id", async (req, res) => {
   //First get the groups the user does not own
   let memberGroups = await pool
     .query(
-      `SELECT groups.groupid,groupauth.groupname, groups.partnerid,groups.role, groupauth.passcode,groupauth.grouptype,partners.name AS partner 
+      `SELECT groups.groupid,groupauth.groupname, groups.partnerid,groups.role, groupauth.passcode,groupauth.grouptype,groupauth.groupimage,partners.name AS partner 
       FROM GROUPS INNER JOIN GROUPAUTH ON groupauth.groupid = groups.groupid LEFT OUTER JOIN users partners ON 
       groups.partnerid = partners.id WHERE role = 'Member' AND groups.userid = $1 ORDER BY groups.groupid DESC`,
       [userid]
@@ -218,7 +233,7 @@ router.get("/user/:id", async (req, res) => {
   //Then get the user's owned groups with passcodes and descriptions of their groups/events
   pool
     .query(
-      `SELECT groups.groupid,groupauth.groupname,groups.partnerid,groups.role,groupauth.passcode,groupauth.grouptype,partners.name AS partner, eventinfo.description 
+      `SELECT groups.groupid,groupauth.groupname,groups.partnerid,groups.role,groupauth.passcode,groupauth.grouptype, groupauth.groupimage, partners.name AS partner, eventinfo.description 
       FROM groups INNER JOIN groupauth ON groupauth.groupid = groups.groupid LEFT OUTER JOIN users partners ON groups.partnerid = partners.id LEFT OUTER JOIN eventinfo 
       ON eventinfo.groupid = groups.groupid WHERE role = 'Admin' AND groups.userid = $1 ORDER BY groups.groupid DESC`,
       [userid]
@@ -380,9 +395,17 @@ router.post("/edit", async (req, res) => {
         `UPDATE eventinfo SET description = $1 WHERE groupid = $2 RETURNING *`,
         [editParams.DescObject.Description, editParams.DescObject.GroupID]
       )
-      .then((res) => {
+      .catch((error) => {
+        res.status(400).json(error);
+      });
+
+    pool
+      .query(`SELECT ownerid FROM groupauth WHERE groupid = $1`, [
+        editParams.DescObject.GroupID,
+      ])
+      .then((response) => {
         //Since the group has been changed, delete cache entry for the owner
-        redisClient.del(res.rows[0].ownerid);
+        redisClient.del(response.rows[0].ownerid);
         res.status(201).json("Description Sucessfully Changed");
       })
       .catch((error) => {

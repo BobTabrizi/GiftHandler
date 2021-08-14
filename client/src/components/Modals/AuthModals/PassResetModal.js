@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/AuthFormStyles/AuthModals.css";
-import { clearErrors } from "../../actions/errorActions";
+import "../../../styles/AuthFormStyles/AuthModals.css";
+import { clearErrors } from "../../../actions/errorActions";
 import { useDispatch, useSelector } from "react-redux";
-import { deactivateModal } from "../../actions/modalActions";
-import { passResetRequest } from "../../actions/authActions";
+import { deactivateModal } from "../../../actions/modalActions";
+import { passResetRequest } from "../../../actions/authActions";
 /**
  * @PageLocation Login
  * @Component PassResetModal

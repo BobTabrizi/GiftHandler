@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import "../styles/PageStyles/SpecialGroupPage.css";
+import "../styles/PageStyles/EventPage.css";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { RegistryList } from "../components/Items/RegistryList";
 import { getItems } from "../actions/itemActions";
 import { getPublicUser } from "../actions/authActions";
 import { getGroup } from "../actions/groupActions";
-import { FilterOtherUsers } from "../components/Filters/FilterOtherUsers";
 import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
-import { AddItemModal } from "../components/Modals/AddItemModal";
-import { EditItemModal } from "../components/Modals/EditItemModal";
+import { AddItemModal } from "../components/Modals/ItemModals/AddItemModal";
+import { EditItemModal } from "../components/Modals/ItemModals/EditItemModal";
+import { ViewItemModal } from "../components/Modals/ItemModals/ViewItemModal";
 import { UserChecker } from "../components/Auth/UserChecker";
+import { GroupInfoWrapper } from "../components/Groups/GroupInfoWrapper";
+import { EventPageHeader } from "../components/Groups/EventPageHeader";
 /**
  *
  * @Page Special Group Page
@@ -25,9 +27,8 @@ export const SpecialGroupPage = (props) => {
     (state) => state.item.selectedItem.displayEditModal
   );
   const AuthInfo = useSelector((state) => state.auth);
-  const PageInfo = useSelector((state) => state.group.pageGroup);
   const [image, setImage] = useState("DefaultProfileImage");
-  const [canEdit, setCanEdit] = useState(false);
+  const [canEditPage, setCanEditPage] = useState(false);
   const dispatch = useDispatch();
   const UID = props.match.params.UID;
   const GID = props.match.params.GID;
@@ -45,7 +46,7 @@ export const SpecialGroupPage = (props) => {
 
       //If they are authenticated and own the page, give edit permissions
       if (User && User.id == UID) {
-        setCanEdit(true);
+        setCanEditPage(true);
       }
     }
     getData();
@@ -56,31 +57,15 @@ export const SpecialGroupPage = (props) => {
       <div className="EventPageContainer">
         {ActiveModal === "Confirm" && <ConfirmationModal />}
         {ActiveModal === "AddItem" && <AddItemModal />}
+        {ActiveModal === "ViewItem" && <ViewItemModal />}
         {showEditModal && ActiveModal !== "Confirm" && <EditItemModal />}
         {AuthInfo.token && <NavBar title="Event Page" />}
         <div className="EventPageBody">
-          <FilterOtherUsers />
           <div className="RegistryWrapper">
-            <div className="EventHeader">
-              <div className="EventUserInfo">
-                <div className="EventUserName">{userName}</div>
-                <div className="EventUserImage">
-                  <img
-                    height="100%"
-                    width="100%"
-                    src={`/api/images/${image}`}
-                    style={{ borderRadius: "50%" }}
-                  ></img>
-                </div>
-              </div>
-
-              {PageInfo.name && (
-                <div className="EventName">{PageInfo.name}</div>
-              )}
-              {PageInfo.Bio && <>{PageInfo.Bio.description}</>}
-            </div>
+            <EventPageHeader image={image} userName={userName} />
+            <GroupInfoWrapper canEditPage={canEditPage} />
             <div className="EventRegistryList">
-              <RegistryList CanEdit={canEdit} />
+              <RegistryList CanEdit={canEditPage} />
             </div>
           </div>
         </div>

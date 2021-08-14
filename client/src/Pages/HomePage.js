@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/PageStyles/ProfilePage.css";
+import "../styles/PageStyles/HomePage.css";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
 import { loadUser, updateUser } from "../actions/authActions";
@@ -7,16 +7,17 @@ import { addImage } from "../actions/imageActions";
 import { GroupList } from "../components/Groups/GroupList";
 import { getGroups } from "../actions/groupActions";
 import { CreateJoinGroup } from "../components/Groups/CreateJoinGroup";
-import { EditGroupModal } from "../components/Modals/EditGroupModal";
-import { AddJoinGroupModal } from "../components/Modals/AddJoinGroupModal";
+import { EditGroupModal } from "../components/Modals/GroupModals/EditGroupModal";
+import { AddJoinGroupModal } from "../components/Modals/GroupModals/AddJoinGroupModal";
 import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
 import { clearPageGroup } from "../actions/groupActions";
+
 /**
  *
- * @Page Profile Page
- * @Description Account Management for the user.
- *              Profile Image / Email / Password (TODO)
- * @route /profile
+ * @Page Home Page
+ * @Description Landing page for the user. Displays all of a user's groups.
+ *
+ * @route /
  *
  */
 export const HomePage = () => {
@@ -76,8 +77,8 @@ export const HomePage = () => {
             <div>
               <img
                 src={`/api/images/${user.profileimage}`}
-                width={150}
-                height={150}
+                width={125}
+                height={125}
                 style={{ borderRadius: "50%" }}
               ></img>
               <div className="HomePageProfileImg">
@@ -89,11 +90,11 @@ export const HomePage = () => {
                   accept="image/*"
                 ></input>
                 <label htmlFor="imgUpload" className="ChangeProfileImgBtn">
-                  +
+                  <div className="ChangeProfileBtnTxt">+</div>
                 </label>
               </div>
             </div>
-            <div className="UserInfo">{user.name}</div>
+            <div className="HomePageUserInfo">{user.name}</div>
           </div>
         )}
 
@@ -103,9 +104,10 @@ export const HomePage = () => {
           className="registryPlaceholder"
           style={{ display: groups && groups.length === 0 ? "block" : "none" }}
         >
-          <div>Join or Create a Group to Begin!</div>
+          <div style={{ marginTop: "10%" }}>
+            Join or Create a Group to Begin!
+          </div>
         </div>
-
         <GroupList />
       </div>
     </>

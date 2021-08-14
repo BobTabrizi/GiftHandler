@@ -1,9 +1,11 @@
 .FilterColumnBackground {
-  height: 85vh;
-  background-color: rgb(191, 191, 255);
+  height: 100%;
+  background-color: rgb(214, 214, 214);
   padding: 15px;
   position: sticky;
   top: 0;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
 }
 
 .FilterColContainer {
@@ -77,4 +79,15 @@
   text-align: center;
   font-weight: bold;
   font-size: 21px;
+}
+
+.ToggleFilter {
+  position: absolute;
+  font-size: 28px;
+  background-color: rgb(191, 191, 255);
+  border: 1px solid white;
+  left: 100%;
+  padding: 1%;
+  border-radius: 3px;
+  cursor: pointer;
 }

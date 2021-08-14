@@ -1,6 +1,5 @@
 .ProfileContainer {
   color: "black";
-  background-image: url("../../images/HPBG.jpg");
   background-size: cover;
   width: 100%;
   height: 100%;
@@ -12,12 +11,14 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  font-family: Avenir;
 }
 
-.UserInfo {
+.HomePageUserInfo {
   font-size: 29px;
   margin-top: -3%;
   font-weight: 600;
+  padding: 2%;
 }
 
 .ProfileImgBtn {
@@ -34,16 +35,23 @@
 .ChangeProfileImgBtn {
   background-color: white;
   border: 0.1px solid gray;
-  height: 40px;
-  width: 40px;
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
-  font-size: 27px;
+  font-size: 35px;
   position: relative;
-  left: 7rem;
-  top: -9.5rem;
+  left: 6rem;
+  top: -7.5rem;
   color: gray;
-  font-weight: 500;
+  font-weight: 200;
   cursor: pointer;
+  text-align: center;
+  display: block;
+}
+
+.ChangeProfileBtnTxt {
+  margin-top: -20%;
+  font-size: 26px;
 }
 
 .registryPlaceholder {
@@ -52,4 +60,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: Avenir;
+}
+
+@media only screen and (max-width: 875px) {
+  .GroupContainer {
+    width: 30%;
+    box-sizing: border-box;
+  }
+}
+
+@media only screen and (max-width: 730px) {
+  .GroupContainer {
+    width: 50%;
+    box-sizing: border-box;
+  }
 }

@@ -7,7 +7,7 @@ import { setModalPage } from "../../../../actions/modalActions";
 import { deactivateModal } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component ConfirmDelete
  * @Description Confirmation Modal for group deletion.
  *
@@ -24,12 +24,6 @@ export const ConfirmDelete = () => {
     dispatch(setModalPage("GroupMenu"));
   };
 
-  /*     Close out the modal entirely   */
-  const closeModal = () => {
-    dispatch(unSelectEditGroup());
-    dispatch(deactivateModal());
-  };
-
   /*If user accepts, delete the group */
   const handleDelete = () => {
     dispatch(deleteGroup(GroupID));
@@ -40,8 +34,10 @@ export const ConfirmDelete = () => {
   return (
     <>
       <div className="ConfirmDeleteContainer">
-        <div className="body">Are you sure you want to delete this group?</div>
-        <div className="footer">
+        <div className="ConfirmDeleteHeader">
+          Are you sure you want to delete this group?
+        </div>
+        <div className="ConfirmDeleteBtns">
           <button
             onClick={() => {
               handleDecline();
@@ -52,6 +48,7 @@ export const ConfirmDelete = () => {
               padding: "1%",
               color: "white",
               fontSize: 30,
+              width: 150,
               cursor: "pointer",
             }}
           >
@@ -65,6 +62,7 @@ export const ConfirmDelete = () => {
               padding: "1%",
               color: "white",
               fontSize: 30,
+              width: 150,
               cursor: "pointer",
               marginLeft: "10%",
             }}

@@ -1,6 +1,4 @@
 .EventPageContainer {
-  background-image: url("../../images/HPBG.jpg");
-  background-size: cover;
   width: 100%;
   height: 100%;
   position: relative;
@@ -39,4 +37,32 @@
   font-size: 30px;
   font-weight: bold;
   padding: 1%;
+}
+
+.EventGroupInformation {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.EventGroupInformationBtn {
+  margin-right: 1rem;
+  font-size: 17px;
+  cursor: pointer;
+  padding: 1%;
+  z-index: 6;
+  width: 300px;
+  position: fixed;
+}
+
+.EventGroupInfoBody {
+  position: fixed;
+  right: 2.5rem;
+  top: 19rem;
+  z-index: 3;
+}
+
+@media only screen and (max-width: 1000px) {
+  .EventGroupInformation {
+    display: none;
+  }
 }

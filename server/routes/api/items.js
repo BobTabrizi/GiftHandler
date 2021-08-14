@@ -70,7 +70,7 @@ router.post("/add", async (req, res) => {
   //Then add item details to item detail table with the generated item id
   pool
     .query(
-      `INSERT INTO ITEMDETAILS (itemid,price,quantity,link,purchased,image,name) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+      `INSERT INTO ITEMDETAILS (itemid,price,quantity,link,purchased,image,name,description) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
       [
         itemID,
         Item.price,
@@ -79,6 +79,7 @@ router.post("/add", async (req, res) => {
         Item.purchased,
         Item.imageKey,
         Item.itemName,
+        Item.description,
       ]
     )
     .then((result) => {
@@ -98,18 +99,18 @@ router.post("/add", async (req, res) => {
  * @description  Edit a registry item
  **/
 router.post("/edit", async (req, res) => {
-  let { itemid, price, quantity, link, imageKey, name } = req.body.item;
-
+  let { itemid, price, quantity, link, imageKey, name, description } =
+    req.body.item;
   pool
     .query(
-      `UPDATE itemdetails SET price = '${price}', quantity = '${quantity}', link = '${link}', image = '${imageKey}', name = '${name}' WHERE itemid = $1
+      `UPDATE itemdetails SET price = $2, quantity = $3, link = $4, image = $5, name = $6, description = $7 WHERE itemid = $1
       RETURNING *`,
-      [itemid]
+      [itemid, price, quantity, link, imageKey, name, description]
     )
     .then((result) => {
       res.status(201).json(result.rows[0]);
     })
-    .catch((error) => res.status(400).json(error));
+    .catch((error) => console.log(error));
 });
 
 /**

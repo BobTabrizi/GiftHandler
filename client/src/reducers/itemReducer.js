@@ -11,6 +11,7 @@ import {
   SET_FILTER_ITEM,
   CLEAR_FILTER_ITEMS,
   CLEAR_ITEMS,
+  SELECT_VIEW_ITEM,
 } from "../actions/types";
 
 const initialState = {
@@ -116,6 +117,11 @@ export default function itemReducer(state = initialState, action) {
         ...state,
         selectedItem: action.payload,
         memberItems: arr,
+      };
+    case SELECT_VIEW_ITEM:
+      return {
+        ...state,
+        selectedItem: action.payload,
       };
     case SELECT_EDIT_ITEM:
     case UNSELECT_EDIT_ITEM:

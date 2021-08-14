@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { getGroupMembers } from "../../../../actions/groupActions";
-import { setModalPage } from "../../../../actions/modalActions";
 import { removeGroupMember } from "../../../../actions/groupActions";
 import { IoBan } from "react-icons/io5";
 import { IoStar } from "react-icons/io5";
 import { assignPartners } from "../../../../actions/groupActions";
 /**
  *
- * @PageLocation ManageGroups
+ * @PageLocation Home Page
  * @Component Members
  * @Description Displays a list of members in a selected group, and allows group admins to kick members.
  *
