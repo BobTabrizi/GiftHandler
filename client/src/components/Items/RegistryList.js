@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import "../../styles/ItemStyles/RegistryItem.css";
 import { ItemDetails } from "./ItemDetails";
 import { AddItemCard } from "./AddItemCard";
@@ -18,81 +18,38 @@ export const RegistryList = (props) => {
 
   //Seperate Item functionalities based on page.
 
-  if (props.CanEdit) {
-    return (
-      <>
-        <div className="ItemListContainer">
-          {!filteredItems && (
-            <>
-              <AddItemCard />
+  return (
+    <>
+      <div className="ItemListContainer">
+        {!filteredItems && (
+          <>
+            {props.CanEdit && <AddItemCard />}
 
-              {items &&
-                items.map((item, index) => (
-                  <div className="ItemSuperContainer">
-                    <div className="ItemContainer" key={index}>
-                      <ItemDetails item={item} CanEdit={props.CanEdit} />
-                    </div>
-                    <div className="ListItemName" style={{ color: "black" }}>
-                      {item.name.substring(0, 20)}
-                    </div>
+            {items &&
+              items.map((item, index) => (
+                <div className="ItemSuperContainer">
+                  <div className="ItemContainer" key={index}>
+                    <ItemDetails item={item} CanEdit={props.CanEdit} />
                   </div>
-                ))}
-            </>
-          )}
-          {filteredItems &&
-            filteredItems.map((item, index) => (
-              <div className="ItemSuperContainer">
-                <div className="ItemContainer" key={index}>
-                  <ItemDetails item={item} CanEdit={props.CanEdit} />
+                  <div className="ListItemName" style={{ color: "black" }}>
+                    {item.name.substring(0, 20)}
+                  </div>
                 </div>
-                <div className="ListItemName" style={{ color: "black" }}>
-                  {item.name.substring(0, 20)}
-                </div>
+              ))}
+          </>
+        )}
+        {filteredItems &&
+          filteredItems.map((item, index) => (
+            <div className="ItemSuperContainer">
+              <div className="ItemContainer" key={index}>
+                <ItemDetails item={item} CanEdit={props.CanEdit} />
               </div>
-            ))}
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <div className="ItemListContainer">
-          {!filteredItems && (
-            <>
-              {items &&
-                items.map((item, index) => (
-                  <>
-                    <div className="ItemSuperContainer">
-                      <div className="ItemContainer" key={index}>
-                        <ItemDetails item={item} CanEdit={props.CanEdit} />
-                        <div className="ListItemName">
-                          {item.name.substring(0, 20)}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ))}
-            </>
-          )}
-          {filteredItems && (
-            <>
-              {filteredItems &&
-                filteredItems.map((item, index) => (
-                  <>
-                    <div className="ItemSuperContainer">
-                      <div className="ItemContainer" key={index}>
-                        <ItemDetails item={item} CanEdit={props.CanEdit} />
-                      </div>
-                      <div className="ListItemName" style={{ color: "black" }}>
-                        {item.name.substring(0, 20)}
-                      </div>
-                    </div>
-                  </>
-                ))}
-            </>
-          )}
-        </div>
-      </>
-    );
-  }
+              <div className="ListItemName" style={{ color: "black" }}>
+                {item.name.substring(0, 20)}
+              </div>
+            </div>
+          ))}
+      </div>
+    </>
+  );
 };

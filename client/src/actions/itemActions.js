@@ -50,9 +50,11 @@ export const addItem = (Item) => (dispatch) => {
     );
 };
 
-export const deleteItem = (id, Key) => (dispatch) => {
+export const deleteItem = (id, Key, UserID, GroupID) => (dispatch) => {
   axios
-    .delete(`/api/items/delete?itemid=${id}&itemKey=${Key}`)
+    .delete(
+      `/api/items/delete?itemid=${id}&itemKey=${Key}&UserID=${UserID}&GroupID=${GroupID}`
+    )
     .then((res) => {})
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

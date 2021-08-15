@@ -16,15 +16,17 @@ const s3 = new S3({
 
 //Upload File to S3
 function uploadFile(file) {
-  const filestream = fs.createReadStream(file.path);
+  if (file !== undefined) {
+    const filestream = fs.createReadStream(file.path);
 
-  const uploadParams = {
-    Bucket: BucketName,
-    Body: filestream,
-    Key: file.filename,
-  };
+    const uploadParams = {
+      Bucket: BucketName,
+      Body: filestream,
+      Key: file.filename,
+    };
 
-  return s3.upload(uploadParams).promise();
+    return s3.upload(uploadParams).promise();
+  }
 }
 
 function deleteFile(key) {

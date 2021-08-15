@@ -70,7 +70,7 @@ export const UserGroupPage = (props) => {
             <GroupPageHeader GID={GID} />
             <GroupInfoWrapper canEditPage={canEditPage} />
             <div className="registryContainer">
-              <RegistryList PageType={"Dashboard"} CanEdit={canEditPage} />
+              <RegistryList CanEdit={canEditPage} />
             </div>
           </div>
         </div>

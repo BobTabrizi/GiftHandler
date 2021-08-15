@@ -137,7 +137,7 @@ router.post("/purchase", async (req, res) => {
  **/
 router.delete("/delete", async (req, res) => {
   try {
-    let { itemid, itemKey } = req.query;
+    let { itemid, itemKey, UserID, GroupID } = req.query;
     pool
       .query(`DELETE FROM items WHERE itemid = $1`, [itemid])
       .catch((error) => {
@@ -147,6 +147,8 @@ router.delete("/delete", async (req, res) => {
     //Delete the saved image in S3 if it is not the default
     if (itemKey !== "DefaultItem") {
       await deleteFile(itemKey);
+      //If an item is modified, delete the old cache entry
+      redisClient.del(`${UserID}/${GroupID}/Items`);
     }
   } catch (e) {
     res.status(400).json({ msg: e.message, success: false });

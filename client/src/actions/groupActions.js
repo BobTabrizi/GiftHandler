@@ -117,7 +117,7 @@ export const addGroupMember =
 
 export const removeGroupMember = (GroupID, UserID) => (dispatch) => {
   axios
-    .delete("/api/groups/removeMember", {
+    .delete(`/api/groups/removeMember?groupID=${GroupID}&userID=${UserID}`, {
       groupID: GroupID,
       userID: UserID,
     })
@@ -157,10 +157,7 @@ export const deleteGroup = (id) => (dispatch) => {
 
 export const leaveGroup = (groupID, userID) => (dispatch) => {
   axios
-    .post("/api/groups/removeUser", {
-      groupID: groupID,
-      userID: userID,
-    })
+    .delete(`/api/groups/removeMember?groupID=${groupID}&userID=${userID}`)
     .then(
       dispatch({
         type: LEAVE_GROUP,

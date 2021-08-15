@@ -28,7 +28,6 @@ export const FilterOtherUsers = () => {
   const [searchFilterItem, setSearchFilterItem] = useState([]);
   const [avgPrice, SetAvgPrice] = useState(0);
   const [userName, setUserName] = useState("");
-  const [image, setImage] = useState("DefaultProfileImage");
 
   const dispatch = useDispatch();
 
@@ -68,7 +67,6 @@ export const FilterOtherUsers = () => {
 
     if (UserData !== null) {
       setUserName(UserData[0].name);
-      setImage(UserData[0].profileimage);
     }
   }, [Items, UserData]);
 

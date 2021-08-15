@@ -119,6 +119,14 @@
   direction: ltr;
 }
 
+.MultiMemberCount {
+  font-size: 15px;
+  left: 47.1%;
+  z-index: 6;
+  position: absolute;
+  direction: ltr;
+}
+
 .MemberCount {
   font-size: 15px;
   left: 47%;

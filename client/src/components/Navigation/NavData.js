@@ -12,11 +12,6 @@ export const NavData = [
     cName: "nav-text",
   },
   {
-    title: "Settings",
-    path: "/settings",
-    cName: "nav-text",
-  },
-  {
     title: "Help",
     path: "/welcome",
     cName: "nav-text",

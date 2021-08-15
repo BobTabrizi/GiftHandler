@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../styles/ItemStyles/ItemModals.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getItemImage, unSelectEditItem } from "../../../actions/itemActions";
+import { unSelectEditItem } from "../../../actions/itemActions";
 import { deactivateModal } from "../../../actions/modalActions";
 import { UserChecker } from "../../Auth/UserChecker";
 import { setActiveModal, updateModalData } from "../../../actions/modalActions";
@@ -15,15 +15,6 @@ import { setActiveModal, updateModalData } from "../../../actions/modalActions";
 export const ViewItemModal = () => {
   const AuthInfo = useSelector((state) => state.auth);
   const Item = useSelector((state) => state.item.selectedItem.itemDetails);
-  /*
-  const ItemState = useSelector((state) =>
-    state.item.memberItems.filter(
-      (StateItem) => StateItem.itemid === props.item.itemid
-    )
-  );
-  */
-  const GroupID = useSelector((state) => state.group.pageGroup.groupid);
-  const DispModal = useSelector((state) => state.modal.activeModal.modalType);
   const [UID, setUID] = useState(null);
   const dispatch = useDispatch();
 

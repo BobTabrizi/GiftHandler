@@ -34,7 +34,14 @@ export const ConfirmationModal = () => {
     }
 
     if (ModalData.ActionID === 1) {
-      dispatch(deleteItem(ModalData.ItemID, ModalData.ItemImage));
+      dispatch(
+        deleteItem(
+          ModalData.ItemID,
+          ModalData.ItemImage,
+          ModalData.userID,
+          ModalData.groupID
+        )
+      );
       dispatch(unSelectEditItem());
     }
 

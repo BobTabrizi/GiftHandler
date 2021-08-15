@@ -1,11 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
-import {
-  deactivateModal,
-  setModalPage,
-} from "../../../../actions/modalActions";
-import { unSelectEditGroup } from "../../../../actions/groupActions";
+import { setModalPage } from "../../../../actions/modalActions";
 /**
  *
  * @PageLocation Home Page
