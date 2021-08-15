@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../styles/ItemStyles/RegistryItem.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveModal } from "../../actions/modalActions";
 import { selectEditItem } from "../../actions/itemActions";
 import { selectViewItem } from "../../actions/itemActions";
 /**
- * @PageLocation UserGroupPage
+ * @PageLocation Group/Event Pages
  * @Component UserItemDetails
  * @Description Displays Registry Items and their properties.
  *              Functionality changes based on type of page

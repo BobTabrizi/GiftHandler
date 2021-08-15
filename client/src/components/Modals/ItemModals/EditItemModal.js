@@ -21,7 +21,7 @@ export const EditItemModal = () => {
   );
   const [itemprice, setItemPrice] = useState(item.price);
   const [itemname, setItemName] = useState(item.name);
-  const [itemDescription, setItemDescription] = useState("");
+  const [itemDescription, setItemDescription] = useState(item.description);
   const [itemQuantity, setItemQuantity] = useState(item.quantity);
   const [itemLink, setItemLink] = useState(item.link);
   const [file, setFile] = useState(null);
@@ -240,7 +240,7 @@ export const EditItemModal = () => {
                   rows="10"
                   cols="50"
                   placeholder="Item Description"
-                  value={item.description}
+                  value={itemDescription}
                   onChange={(e) => setItemDescription(e.target.value)}
                 ></textarea>
               </div>

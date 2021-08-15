@@ -15,7 +15,6 @@ import {
  *
  */
 export const GroupImage = () => {
-  const id = useSelector((state) => state.auth.user.id);
   const GroupType = useSelector((state) => state.modal.modalData.GroupType);
   const [previewImage, setPreviewImage] = useState(
     `/api/images/DefaultGroupImage`

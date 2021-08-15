@@ -174,8 +174,7 @@ router.post("/addMember", async (req, res) => {
  * @description  Removes a member from a specified group
  **/
 router.delete("/removeMember", async (req, res) => {
-  let { groupID, userID } = req.body;
-
+  let { groupID, userID } = req.query;
   //First delete the user from the group.
   pool
     .query(`DELETE from GROUPS WHERE groupid=$1 AND userid = $2`, [
@@ -194,6 +193,10 @@ router.delete("/removeMember", async (req, res) => {
       groupID,
       userID,
     ])
+    .then(
+      //Remove old cache object
+      redisClient.del(userID)
+    )
     .catch((error) => res.status(400).json(error));
 });
 

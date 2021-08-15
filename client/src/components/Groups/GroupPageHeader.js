@@ -19,7 +19,7 @@ export const GroupPageHeader = (props) => {
 
         <div className="Avatars">
           {PageInfo.members &&
-            PageInfo.members.length < 3 &&
+            PageInfo.members.length <= 3 &&
             PageInfo.members.map((member, index) => (
               <>
                 <span className="Avatar" key={index}>
@@ -85,7 +85,7 @@ export const GroupPageHeader = (props) => {
           )}
 
           {PageInfo.members && PageInfo.members.length > 1 && (
-            <div className="SingleMemberCount">
+            <div className="MultiMemberCount">
               {PageInfo.members.length} members
             </div>
           )}

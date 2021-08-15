@@ -76,19 +76,17 @@ async function getAmazonItem(page) {
   //Scrape the price of the item
   ItemDetails.ItemPrice = await page.evaluate(() => {
     try {
-      return document
-        .getElementById("price_inside_buybox")
-        .innerHTML.replace(/\n/g, "");
+      return document.getElementById("price_inside_buybox").innerHTML;
     } catch (error) {
       console.log(error);
     }
+
     try {
       return document.getElementById("price").innerHTML.replace(/\n/g, "");
     } catch (error) {
       console.log(error);
     }
   });
-
   //Then scrape the name of the item
   ItemDetails.ItemName = await page.evaluate(() => {
     try {

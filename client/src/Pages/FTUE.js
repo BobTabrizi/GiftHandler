@@ -16,13 +16,11 @@ export const FTUE = () => {
       <div className="FTUEContainer">
         <NavBar title="Welcome to Gift Handler" />
         <div className="FTUEBody">
-          <h1> Here is a quick rundown on how to get started</h1>
+          <h1>Here is a quick rundown on how to get started</h1>
 
           <div className="FTUEModalContainer">
             <Tutorial />
           </div>
-          <button>LEFT</button>
-          <button>RIGHT</button>
         </div>
       </div>
     </>

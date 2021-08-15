@@ -16,7 +16,6 @@ import { UserChecker } from "../../Auth/UserChecker";
 export const AddItemModal = () => {
   const AuthInfo = useSelector((state) => state.auth);
   const GroupID = useSelector((state) => state.group.pageGroup.groupid);
-  const DispModal = useSelector((state) => state.modal.activeModal.modalType);
   const [itemprice, setItemPrice] = useState(0.0);
   const [itemDescription, setItemDescription] = useState("");
   const [itemname, setItemName] = useState("New Item");
@@ -52,13 +51,13 @@ export const AddItemModal = () => {
       //If the request was successful
       if (ItemResponse.status === 201) {
         //First set the price and name
-        if (ItemResponse.data.ItemPrice !== "undefined") {
+        if (ItemResponse.data.ItemPrice) {
           setItemPrice(ItemResponse.data.ItemPrice.substring(1));
         }
         setItemName(ItemResponse.data.ItemName);
 
         //Then convert the image url and set the preview using a heroku CORS proxy to fetch image client side
-        fetch(
+        await fetch(
           `${process.env.REACT_APP_HEROKU_CORS_PROXY}${ItemResponse.data.ItemImage}`
         )
           .then((res) => res.blob())
@@ -175,7 +174,7 @@ export const AddItemModal = () => {
                   </div>
                 </label>
                 <div
-                  className="loader"
+                  className="Addloader"
                   style={{ opacity: isLoading ? 1 : 0 }}
                 />
               </div>

@@ -199,7 +199,8 @@
   left: 80%;
 }
 
-.loader {
+.loader,
+.Addloader {
   border: 12px solid #f3f3f3;
   border-top: 12px solid #383838;
   border-radius: 50%;
@@ -209,6 +210,10 @@
   position: absolute;
   right: 66.5%;
   top: 20%;
+}
+
+.Addloader {
+  right: 64%;
 }
 
 #NewItemImage {
@@ -264,19 +269,20 @@
   max-width: 325px;
   margin: auto;
   overflow: hidden;
+  margin-top: 10%;
 }
 
 .ViewItemPrice {
   font-size: 22px;
   text-align: start;
-  margin-left: 10px;
+  margin-left: -15px;
   width: 25%;
   padding: 0.2rem;
   position: absolute;
 }
 
 .ViewItemQuant {
-  margin-right: 10px;
+  margin-right: 5px;
   font-size: 22px;
   padding: 0.2rem;
   position: absolute;
@@ -291,10 +297,12 @@
   padding: 1%;
   font-size: 21px;
   border: 1px solid black;
+  border-radius: 5px;
 }
 
 .ViewItemLinkBtn {
   padding: 1.5%;
+  margin-top: 1%;
   margin-bottom: 5%;
   background-color: green;
   border-radius: 15px;
@@ -318,7 +326,7 @@
   color: white;
   font-size: 28px;
   top: 10%;
-  left: 75%;
+  left: 70%;
   right: 0;
   cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../styles/PageStyles/ManageGroup.css";
 import { Link } from "react-router-dom";
@@ -24,17 +24,10 @@ const ModeList = {
 export const GroupList = () => {
   const groups = useSelector((state) => state.group.groups);
   const userID = useSelector((state) => state.auth.user.id);
-
-  const [groupImage, setGroupImage] = useState("DefaultGroupImage");
   const dispatch = useDispatch();
 
   const handleEditGroup = (group) => {
     dispatch(selectEditGroup(group));
-  };
-
-  const HandleGrpAction = (GroupType) => {
-    if (GroupType === "AdminNW") {
-    }
   };
 
   const handleLeaveGroup = (groupID) => {

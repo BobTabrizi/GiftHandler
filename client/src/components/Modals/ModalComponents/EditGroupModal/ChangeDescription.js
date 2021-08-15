@@ -14,7 +14,6 @@ import { unSelectEditGroup } from "../../../../actions/groupActions";
  *
  */
 export const ChangeDescription = () => {
-  const id = useSelector((state) => state.auth.user.id);
   const GroupDetails = useSelector(
     (state) => state.group.selectedGroup.groupDetails
   );
