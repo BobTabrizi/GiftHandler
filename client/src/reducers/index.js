@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component index.js
+ * @Description Combines reducers in folder and exports
+ *
+ */
+
 import { combineReducers } from "redux";
 import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";

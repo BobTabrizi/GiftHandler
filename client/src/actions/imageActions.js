@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component imageActions.js
+ * @Description Action functions for image manipulation.
+ *
+ */
+
 import axios from "axios";
 import { ADD_IMAGE, DELETE_IMAGE } from "./types";
 import { returnErrors } from "./errorActions";

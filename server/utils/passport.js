@@ -1,3 +1,10 @@
+/**
+ *
+ * @File passport.js
+ * @Description Authentication middleware, using JSON Web Tokens
+ *
+ */
+
 require("dotenv").config();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -5,7 +12,6 @@ const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
 const pool = require("./db");
 const bcrypt = require("bcrypt");
-
 const secret = process.env.SECRET;
 
 function initialize(passport) {
@@ -62,21 +68,6 @@ function initialize(passport) {
       }
     )
   );
-
-  /*
-  //Store user ID in session cookie
-  passport.serializeUser((user, done) => done(null, user.id));
-
-  //Use ID to obtain details from DB and store object into session.
-  passport.deserializeUser((id, done) => {
-    pool.query(`SELECT * FROM users WHERE id = $1`, [id], (err, results) => {
-      if (err) {
-        throw err;
-      }
-      return done(null, results.rows[0]);
-    });
-  });
-  */
 }
 
 module.exports = initialize;

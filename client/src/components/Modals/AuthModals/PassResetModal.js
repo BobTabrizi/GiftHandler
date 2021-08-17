@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
-import "../../../styles/AuthFormStyles/AuthModals.css";
-import { clearErrors } from "../../../actions/errorActions";
-import { useDispatch, useSelector } from "react-redux";
-import { deactivateModal } from "../../../actions/modalActions";
-import { passResetRequest } from "../../../actions/authActions";
 /**
  * @PageLocation Login
  * @Component PassResetModal
  * @Description Prompts user for an email to send a password reset email.
  *
  */
+
+import React, { useEffect, useState } from "react";
+import "../../../styles/AuthFormStyles/AuthModals.css";
+import { clearErrors } from "../../../actions/errorActions";
+import { useDispatch, useSelector } from "react-redux";
+import { deactivateModal } from "../../../actions/modalActions";
+import { passResetRequest } from "../../../actions/authActions";
+
 export const PassResetModal = () => {
   const [email, setEmail] = useState("");
   const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);

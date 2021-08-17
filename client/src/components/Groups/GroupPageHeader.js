@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import "../../styles/PageStyles/GroupPage.css";
 /**
  *
  * @PageLocation GroupPage
  * @Component GroupPageHeader
  * @Description Component display for group title, and memberlist
  *
- *
  */
+
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import "../../styles/PageStyles/GroupPage.css";
+
 export const GroupPageHeader = (props) => {
   const [showMembers, setShowMembers] = useState(false);
   const PageInfo = useSelector((state) => state.group.pageGroup);
@@ -101,8 +102,9 @@ export const GroupPageHeader = (props) => {
                   onClick={() => {
                     window.location.href = `/groups/${props.GID}/users/${member.id}`;
                   }}
+                  key={index}
                 >
-                  <div className="UserMemberContainer" key={index}>
+                  <div className="UserMemberContainer">
                     <div style={{ flex: 1 }}>
                       <img
                         className="AvatarImage"

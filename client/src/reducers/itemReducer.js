@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component itemReducer.js
+ * @Description Reducer function for item manipulation.
+ *
+ */
+
 import {
   GET_ITEMS,
   ADD_ITEM,

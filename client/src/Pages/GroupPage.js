@@ -1,3 +1,11 @@
+/**
+ *
+ * @Page GroupPage
+ * @Description Item page for a user in a specified group
+ * @route /groups/:GID/users/:UID
+ *
+ */
+
 import React, { useEffect, useState } from "react";
 import "../styles/PageStyles/GroupPage.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,13 +19,7 @@ import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
 import { UserChecker } from "../components/Auth/UserChecker";
 import { GroupPageHeader } from "../components/Groups/GroupPageHeader";
 import { GroupInfoWrapper } from "../components/Groups/GroupInfoWrapper";
-/**
- *
- * @Page User Group Page
- * @Description Item page for a user in a specified group,
- * @route /groups/:GID/users/:UID
- *
- */
+
 export const UserGroupPage = (props) => {
   const [canEditPage, setCanEditPage] = useState(false);
   const UID = props.match.params.id;

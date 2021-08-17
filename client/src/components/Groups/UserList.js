@@ -1,8 +1,3 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import "../../styles/PageStyles/GroupPage.css";
-import { Link } from "react-router-dom";
-
 /**
  *
  * @PageLocation GroupPage
@@ -11,6 +6,12 @@ import { Link } from "react-router-dom";
  *              Links to member pages with their respective registry items.
  *
  */
+
+import React from "react";
+import { useSelector } from "react-redux";
+import "../../styles/PageStyles/GroupPage.css";
+import { Link } from "react-router-dom";
+
 export const UserList = () => {
   const members = useSelector((state) => state.group.pageGroup.members);
   const groupid = useSelector((state) => state.group.pageGroup.id);

@@ -1,8 +1,3 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "../styles/PageStyles/PasswordReset.css";
-import { useDispatch } from "react-redux";
-import { passResetProcess } from "../actions/authActions";
 /**
  *
  * @Page PasswordReset
@@ -10,6 +5,13 @@ import { passResetProcess } from "../actions/authActions";
  * @route /resetPassword/:PageID
  *
  */
+
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/PageStyles/PasswordReset.css";
+import { useDispatch } from "react-redux";
+import { passResetProcess } from "../actions/authActions";
+
 export const PasswordReset = (props) => {
   const PID = props.match.params.id;
   const dispatch = useDispatch();

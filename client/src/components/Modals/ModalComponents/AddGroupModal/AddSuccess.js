@@ -1,16 +1,18 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import "../../../../styles/GroupStyles/GroupModals.css";
-import { Link } from "react-router-dom";
-import { deactivateModal } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation Home Page
+ * @PageLocation HomePage (AddGroupModal)
  * @Component AddSuccess
  * @Description Group creation success feedback modal. Links user to item addition page for the created group.
  *
  *
  */
+
+import React from "react";
+import { useDispatch } from "react-redux";
+import "../../../../styles/GroupStyles/GroupModals.css";
+import { Link } from "react-router-dom";
+import { deactivateModal } from "../../../../actions/modalActions";
+
 export const AddSuccess = () => {
   const dispatch = useDispatch();
   return (

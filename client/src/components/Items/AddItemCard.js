@@ -1,17 +1,18 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import "../../styles/ItemStyles/RegistryItem.css";
-import { setActiveModal } from "../../actions/modalActions";
-import { IoAdd } from "react-icons/io5";
-import { FaPlus } from "react-icons/fa";
 /**
  *
  * @PageLocation User Group/Event Pages
  * @Component PlaceHolderAddItem
  * @Description  Opens a modal to add an item to a registry list.
  *
- *
  */
+
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "../../styles/ItemStyles/RegistryItem.css";
+import { setActiveModal } from "../../actions/modalActions";
+import { IoAdd } from "react-icons/io5";
+import { FaPlus } from "react-icons/fa";
+
 export const AddItemCard = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.item.memberItems);

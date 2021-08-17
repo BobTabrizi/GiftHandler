@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation ManageGroup
+ * @Component CreateJoinGroup
+ * @Description Button Components for Group Creation/Deletion
+ *
+ */
+
 import React from "react";
 import "../../styles/PageStyles/ManageGroup.css";
 import { useDispatch } from "react-redux";
@@ -5,12 +13,7 @@ import { setActiveModal } from "../../actions/modalActions";
 import { setModalPage } from "../../actions/modalActions";
 import { FaPen } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
-/**
- * @PageLocation ManageGroup
- * @Component CreateJoinGroup
- * @Description Wrapper Component for Group Creation/Deletion
- *
- */
+
 export const CreateJoinGroup = () => {
   const dispatch = useDispatch();
   const handleModal = (ModalType) => {

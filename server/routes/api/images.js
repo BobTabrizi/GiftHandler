@@ -1,3 +1,9 @@
+/**
+ * @Route /api/images
+ * @Description Server Route managing image storing, deletion, and retrieval from S3
+ *
+ */
+
 const express = require("express");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });

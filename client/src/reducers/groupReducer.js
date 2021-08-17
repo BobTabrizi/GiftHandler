@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component groupReducer.js
+ * @Description Reducer function for group manipulation.
+ *
+ */
+
 import {
   GET_USERS_GROUPS,
   ADD_GROUP,
@@ -13,7 +20,6 @@ import {
   GET_GROUP_MEMBERS,
   GROUP_MEMBERS_LOADING,
   SET_ACTIVE_GROUP,
-  ASSIGN_PARTNERS,
   CLEAR_CURRENT_GROUP,
   CLEAR_PAGE_GROUP,
   EDIT_GROUP_DETAILS,

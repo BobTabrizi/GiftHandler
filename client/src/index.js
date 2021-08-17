@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component Index.js
+ * @Description Mount the application into the DOM, wrapping it with the Redux Store
+ *
+ */
+
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles/PageStyles/index.css";

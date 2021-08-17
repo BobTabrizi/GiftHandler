@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation Group/Event Pages (Authenticated User owned pages)
+ * @Component EditItemModal
+ * @Description Modal that allows a user to edit attributes of an item
+ *
+ */
+
 import React, { useState, useEffect } from "react";
 import "../../../styles/ItemStyles/ItemModals.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,15 +14,11 @@ import { addImage, deleteImage } from "../../../actions/imageActions";
 import CurrencyInput from "../../Items/CurrencyInput";
 import { unSelectEditItem } from "../../../actions/itemActions";
 import { setActiveModal, updateModalData } from "../../../actions/modalActions";
+import { UserChecker } from "../../Auth/UserChecker";
 
-/**
- *
- * @PageLocation Group/Event Pages
- * @Component EditItemModal
- * @Description Modal that allows a user to edit attributes of an item
- *
- */
 export const EditItemModal = () => {
+  const User = useSelector((state) => state.auth.token);
+  const Group = useSelector((state) => state.group.pageGroup);
   const item = useSelector((state) => state.item.selectedItem.itemDetails);
   const DispModal = useSelector(
     (state) => state.item.selectedItem.displayEditModal
@@ -27,6 +31,7 @@ export const EditItemModal = () => {
   const [file, setFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(`/api/images/${item.image}`);
   const [isLoading, setIsLoading] = useState(false);
+  const [UID, setUID] = useState(null);
   const dispatch = useDispatch();
 
   /*  Upon File Input, set file state and display a preview image  */
@@ -47,6 +52,9 @@ export const EditItemModal = () => {
     }
     if (e.includes("etsy.com/")) {
       Vendor = "Etsy";
+    }
+    if (e.includes("ebay.com/")) {
+      Vendor = "Ebay";
     }
 
     let ItemDetails = {
@@ -83,6 +91,8 @@ export const EditItemModal = () => {
 
   /*  Add Event listener to close modal on background click      */
   useEffect(() => {
+    let UID = UserChecker(User).id;
+    setUID(UID);
     const handleClick = (e) => {
       if (e.target && e.target.className === "ItemModalBackground") {
         dispatch(unSelectEditItem());
@@ -118,6 +128,8 @@ export const EditItemModal = () => {
       ActionID: 1,
       ItemID: item.itemid,
       ItemImage: item.image,
+      GroupID: Group.groupid,
+      UserID: UID,
     };
     dispatch(updateModalData(ModalData));
     dispatch(setActiveModal("Confirm"));
@@ -140,6 +152,8 @@ export const EditItemModal = () => {
       imageKey: imageKey,
       name: itemname,
       description: itemDescription,
+      GroupID: Group.groupid,
+      UserID: UID,
     };
     dispatch(editItem(itemObject));
     //Exit Modal

@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component App.js
+ * @Description Directs routing between the application pages, loading a page based on path
+ *
+ */
+
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { Login } from "./Pages/Login";
@@ -17,7 +24,6 @@ function App() {
       <Router history={history}>
         <Switch>
           <Route path="/login" component={Login} />
-
           <Route
             path="/groups/:GID/event/users/:UID"
             component={SpecialGroupPage}

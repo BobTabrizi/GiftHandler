@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addGroupMember } from "../../../../actions/groupActions";
-import { deactivateModal } from "../../../../actions/modalActions";
-import "../../../../styles/GroupStyles/GroupModals.css";
-
 /**
  *
  * @PageLocation Home Page
  * @Component JoinRegister
  * @Description Modal Component for the Edit Group Modal
  *
- *
  */
+
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addGroupMember } from "../../../../actions/groupActions";
+import { deactivateModal } from "../../../../actions/modalActions";
+import "../../../../styles/GroupStyles/GroupModals.css";
+
 export const JoinRegister = () => {
   const id = useSelector((state) => state.auth.user.id);
   const [passcode, setPasscode] = useState(0);

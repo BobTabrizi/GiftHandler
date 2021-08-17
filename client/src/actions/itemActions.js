@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component itemActions.js
+ * @Description Action functions for item manipulation.
+ *
+ */
+
 import axios from "axios";
 import {
   GET_ITEMS,
@@ -55,12 +62,9 @@ export const deleteItem = (id, Key, UserID, GroupID) => (dispatch) => {
     .delete(
       `/api/items/delete?itemid=${id}&itemKey=${Key}&UserID=${UserID}&GroupID=${GroupID}`
     )
-    .then((res) => {})
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
-
-  //Place here at the moment, for some reason axios then block is being skipped
   dispatch({
     type: DELETE_ITEM,
     payload: id,

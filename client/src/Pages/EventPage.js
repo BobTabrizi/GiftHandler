@@ -1,3 +1,11 @@
+/**
+ *
+ * @Page EventPage
+ * @Description Item page for a special group (Wedding/Birthday/etc)
+ * @route /groups/:GID/event/users/:UID
+ *
+ */
+
 import React, { useEffect, useState } from "react";
 import "../styles/PageStyles/EventPage.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,13 +21,7 @@ import { ViewItemModal } from "../components/Modals/ItemModals/ViewItemModal";
 import { UserChecker } from "../components/Auth/UserChecker";
 import { GroupInfoWrapper } from "../components/Groups/GroupInfoWrapper";
 import { EventPageHeader } from "../components/Groups/EventPageHeader";
-/**
- *
- * @Page Special Group Page
- * @Description Item page for a special group (Wedding/Birthday/etc)
- * @route /groups/:GID/event/users/:UID
- *
- */
+
 export const SpecialGroupPage = (props) => {
   const [userName, setUserName] = useState("");
   const ActiveModal = useSelector((state) => state.modal.activeModal.modalType);

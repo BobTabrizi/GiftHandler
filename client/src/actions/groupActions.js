@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component groupActions.js
+ * @Description Action functions for group manipulation.
+ *
+ */
+
 import axios from "axios";
 import {
   GET_USERS_GROUPS,

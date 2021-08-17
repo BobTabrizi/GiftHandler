@@ -1,17 +1,18 @@
+/**
+ *
+ * @PageLocation HomePage (EditGroupModal)
+ * @Component Passcode
+ * @Description Reset group passcode modal.
+ *
+ */
+
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
 import { deactivateModal } from "../../../../actions/modalActions";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { EditGroupDetails } from "../../../../actions/groupActions";
-/**
- *
- * @PageLocation Home Page
- * @Component Passcode
- * @Description Reset group passcode modal.
- *
- *
- */
+
 export const Passcode = () => {
   const [passcode, setPasscode] = useState("");
   const [displaySuccess, setDisplaySuccess] = useState(false);

@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component errorActions.js
+ * @Description Action functions for for error state messages.
+ *
+ */
+
 import { GET_ERRORS, CLEAR_ERRORS } from "./types";
 
 export const returnErrors = (message, status, id = null) => {

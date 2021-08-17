@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation HomePage (EditGroupModal)
+ * @Component Members
+ * @Description Displays a list of members in a selected group. Allows admin to kick members and assign partners.
+ *
+ */
+
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
@@ -6,14 +14,7 @@ import { removeGroupMember } from "../../../../actions/groupActions";
 import { IoBan } from "react-icons/io5";
 import { IoStar } from "react-icons/io5";
 import { assignPartners } from "../../../../actions/groupActions";
-/**
- *
- * @PageLocation Home Page
- * @Component Members
- * @Description Displays a list of members in a selected group, and allows group admins to kick members.
- *
- *
- */
+
 export const Members = () => {
   const [confirmModal, setConfirmModal] = useState(false);
   const [selectedUserID, setSelectedUserID] = useState(null);

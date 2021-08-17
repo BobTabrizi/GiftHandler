@@ -1,4 +1,10 @@
-/*---------------------------Part components-------------------------------*/
+/**
+ *
+ * @PageLocation FTUE
+ * @Component TutorialParts
+ * @Description JSX Components for the FTUE Page Modal
+ *
+ */
 
 //Create Components for each page of the tutorial.
 let PartOne = (

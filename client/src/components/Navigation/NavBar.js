@@ -1,3 +1,12 @@
+/**
+ *
+ * @PageLocation All Pages aside from login/register
+ * @Component NavBar
+ * @Description Navigation Bar at the top of each page
+ *
+ *
+ */
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/NavigationStyles/NavBar.css";
@@ -6,14 +15,6 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../actions/authActions";
 import { IoIosMenu } from "react-icons/io";
 
-/**
- *
- * @PageLocation All Pages aside from login/register
- * @Component NavBar
- * @Description Navigation Bar at the top of each page with sidebar.
- *              Title indicates the current page.
- *
- */
 export default function NavBar() {
   const [menu, setMenu] = useState(false);
   const dispatch = useDispatch();

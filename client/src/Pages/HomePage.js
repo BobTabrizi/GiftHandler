@@ -1,4 +1,12 @@
-import React, { useEffect, useState } from "react";
+/**
+ *
+ * @Page HomePage
+ * @Description Landing page for the user. Displays all of a user's groups, allows user to join/create/modify groups.
+ * @route /
+ *
+ */
+
+import React, { useEffect } from "react";
 import "../styles/PageStyles/HomePage.css";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../components/Navigation/NavBar";
@@ -12,14 +20,6 @@ import { AddJoinGroupModal } from "../components/Modals/GroupModals/AddJoinGroup
 import { ConfirmationModal } from "../components/Modals/ConfirmationModal";
 import { clearPageGroup } from "../actions/groupActions";
 
-/**
- *
- * @Page Home Page
- * @Description Landing page for the user. Displays all of a user's groups.
- *
- * @route /
- *
- */
 export const HomePage = () => {
   const user = useSelector((state) => state.auth.user);
   const groups = useSelector((state) => state.group.groups);

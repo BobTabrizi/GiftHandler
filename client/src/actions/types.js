@@ -1,3 +1,11 @@
+/**
+ *
+ * @Component types.js
+ * @Description Action types to be used when calling a reducer.
+ *              These allow the reducer to see what needs to be changed in the Redux Store
+ *
+ */
+
 /*            Items                        */
 export const GET_ITEMS = "GET_ITEMS";
 export const ADD_ITEM = "ADD_ITEM";

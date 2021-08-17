@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation Owned User Group/Event Page
+ * @Component FilterColumn
+ * @Description Displays information about current group and registry list. Allows for filtering of items.
+ *
+ */
+
 import React, { useState, useEffect } from "react";
 import "../../styles/FilterStyles/FilterColumn.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,13 +14,6 @@ import CurrencyInput from "../Items/CurrencyInput";
 import { clearFilterItems, filterItems } from "../../actions/itemActions";
 import { setFilterItem } from "../../actions/itemActions";
 import { Link } from "react-router-dom";
-/**
- *
- * @PageLocation Owned User Group/Event Page
- * @Component FilterColumn
- * @Description Displays information about current group and registry list. Allows for filtering of items.
- *
- */
 
 const ModeList = {
   0: "Secret Santa",

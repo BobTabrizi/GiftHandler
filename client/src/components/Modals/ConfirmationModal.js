@@ -1,3 +1,13 @@
+/**
+ *
+ * @PageLocation Various Pages
+ * @Component ConfirmationModal
+ * @Description Handles confirmation of various actions based on ActionID
+ *
+ * ActionID Reference: 0 -> Leave Group   1 -> Delete Item   2 -> Purchase Item
+ *
+ */
+
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { leaveGroup } from "../../actions/groupActions";
@@ -9,15 +19,7 @@ import {
 } from "../../actions/itemActions";
 import "../../styles/NavigationStyles/ConfirmModal.css";
 import { ModalTypes } from "./ModalComponents/ConfirmationModal/ModalTypes";
-/**
- *
- * @PageLocation Various Pages
- * @Component ConfirmationModal
- * @Description Handles confirmation of various actions based on ActionID
- *
- * ActionID Reference: 0 -> Leave Group   1 -> Delete Item   2 -> Purchase Item
- *
- */
+
 export const ConfirmationModal = () => {
   const ModalData = useSelector((state) => state.modal.modalData);
   const dispatch = useDispatch();
@@ -38,8 +40,8 @@ export const ConfirmationModal = () => {
         deleteItem(
           ModalData.ItemID,
           ModalData.ItemImage,
-          ModalData.userID,
-          ModalData.groupID
+          ModalData.UserID,
+          ModalData.GroupID
         )
       );
       dispatch(unSelectEditItem());

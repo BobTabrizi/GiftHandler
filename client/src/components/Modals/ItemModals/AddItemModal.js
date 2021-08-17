@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation Group/Event Pages (Authenticated user owned pages)
+ * @Component EditItemModal
+ * @Description Modal that allows a user to edit attributes of an item.
+ *
+ */
+
 import React, { useState, useEffect } from "react";
 import "../../../styles/ItemStyles/ItemModals.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,13 +14,7 @@ import { addImage } from "../../../actions/imageActions";
 import CurrencyInput from "../../Items/CurrencyInput";
 import { deactivateModal } from "../../../actions/modalActions";
 import { UserChecker } from "../../Auth/UserChecker";
-/**
- *
- * @PageLocation Group/Event Pages
- * @Component EditItemModal
- * @Description Modal that allows a user to edit attributes of an item. TODO ADD EXIT BUTTON
- *
- */
+
 export const AddItemModal = () => {
   const AuthInfo = useSelector((state) => state.auth);
   const GroupID = useSelector((state) => state.group.pageGroup.groupid);
@@ -27,6 +29,7 @@ export const AddItemModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
+  /*  Record Link, search for vendor   */
   const HandleLink = async (e) => {
     setItemLink(e);
     let Vendor;
@@ -39,7 +42,12 @@ export const AddItemModal = () => {
     if (e.includes("etsy.com/")) {
       Vendor = "Etsy";
     }
-
+    if (e.includes("ebay.com/")) {
+      Vendor = "Ebay";
+    }
+    if (e.includes("walmart.com/")) {
+      Vendor = "Walmart";
+    }
     let ItemDetails = {
       Vendor: Vendor,
       Link: e,

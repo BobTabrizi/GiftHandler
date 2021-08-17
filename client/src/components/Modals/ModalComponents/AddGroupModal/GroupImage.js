@@ -1,3 +1,12 @@
+/**
+ *
+ * @PageLocation HomePage (AddGroupModal)
+ * @Component GroupImage
+ * @Description Modal Component during group creation.
+ *              Prompts user for an image to be displayed on group/event page.
+ *
+ */
+
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addImage } from "../../../../actions/imageActions";
@@ -6,14 +15,7 @@ import {
   setModalPage,
   updateModalData,
 } from "../../../../actions/modalActions";
-/**
- *
- * @PageLocation Home Page
- * @Component GroupImage
- * @Description Modal Component during group creation.
- *              Prompts user for an image to be displayed on group/event page.
- *
- */
+
 export const GroupImage = () => {
   const GroupType = useSelector((state) => state.modal.modalData.GroupType);
   const [previewImage, setPreviewImage] = useState(

@@ -1,4 +1,14 @@
+/**
+ *
+ * @File ItemDataFunctions.js
+ * @Description Webscraping and API calls to retrieve item data for user inputted item links.
+ *              Functions are separated by vendor
+ *
+ */
+
 const axios = require("axios");
+const { getWalmartProductById } = require("./Walmart");
+
 async function getTargetItem(page) {
   let ItemDetails = {
     ItemPrice: 0,
@@ -42,6 +52,7 @@ async function getEtsyItem(page) {
     "X-API-Key": `${process.env.ETSY_KEYSTRING}`,
   };
 
+  //Call the API
   //Get the data and image for the item
   let EtsyResponse = await axios
     .get(`https://openapi.etsy.com/v3/application/listings/${ListingID}`)
@@ -73,10 +84,11 @@ async function getAmazonItem(page) {
     ItemName: "",
     ItemImage: "",
   };
+
   //Scrape the price of the item
   ItemDetails.ItemPrice = await page.evaluate(() => {
     try {
-      return document.getElementById("price_inside_buybox").innerHTML;
+      return document.querySelector(".a-color-price").innerText;
     } catch (error) {
       console.log(error);
     }
@@ -115,4 +127,62 @@ async function getAmazonItem(page) {
   return ItemDetails;
 }
 
-module.exports = { getTargetItem, getEtsyItem, getAmazonItem };
+async function getEbayItem(page) {
+  let ItemDetails = {
+    ItemPrice: 0,
+    ItemName: "",
+    ItemImage: "",
+  };
+  ItemDetails.ItemPrice = await page.evaluate(() => {
+    try {
+      return document.getElementById("prcIsum").innerHTML;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  ItemDetails.ItemName = await page.evaluate(() => {
+    try {
+      return document.getElementById("itemTitle").innerText.substring(16);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  ItemDetails.ItemImage = await page.evaluate(() => {
+    try {
+      return document.getElementById("icImg").getAttribute("src");
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  return ItemDetails;
+}
+
+async function getWalmartItem(Link) {
+  let ItemDetails = {
+    ItemPrice: 0,
+    ItemName: "",
+    ItemImage: "",
+  };
+
+  //Parse the Product ID from the item URL.
+  let idx = Link.lastIndexOf("/");
+  let productID = Link.slice(idx + 1);
+
+  //Call the API
+  let response = await getWalmartProductById(productID);
+
+  ItemDetails.ItemPrice = "$" + response.salePrice;
+  ItemDetails.ItemName = response.name;
+  ItemDetails.ItemImage =
+    response.imageEntities[response.imageEntities.length - 1].largeImage;
+  return ItemDetails;
+}
+
+module.exports = {
+  getTargetItem,
+  getEtsyItem,
+  getAmazonItem,
+  getEbayItem,
+  getWalmartItem,
+};

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "../../../styles/PageStyles/FTUE.css";
-import { PartArray } from "../ModalComponents/FTUEModal/TutorialParts";
 /**
  * @PageLocation FTUE
  * @Component Tutorial
- * @Description Modal instructions for step one of the tutorial process
+ * @Description Modal instructions for the tutorial/FTUE process
  *
  */
+
+import React, { useState } from "react";
+import "../../../styles/PageStyles/FTUE.css";
+import { PartArray } from "../ModalComponents/FTUEModal/TutorialParts";
+
 export const Tutorial = () => {
   const [part, setPart] = useState(PartArray[0]);
   const [partIndex, setPartIndex] = useState(0);

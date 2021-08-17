@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation HomePage (EditGroupModal)
+ * @Component ConfirmDelete
+ * @Description Confirmation Modal for group deletion.
+ *
+ */
+
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
@@ -5,14 +13,7 @@ import { deleteGroup } from "../../../../actions/groupActions";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
 import { setModalPage } from "../../../../actions/modalActions";
 import { deactivateModal } from "../../../../actions/modalActions";
-/**
- *
- * @PageLocation Home Page
- * @Component ConfirmDelete
- * @Description Confirmation Modal for group deletion.
- *
- *
- */
+
 export const ConfirmDelete = () => {
   const GroupID = useSelector(
     (state) => state.group.selectedGroup.groupDetails.groupid

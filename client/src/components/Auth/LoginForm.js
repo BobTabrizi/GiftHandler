@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation Login
+ * @Component LoginForm
+ * @Description Login form that prompts user to login or register
+ *
+ */
+
 import React, { useState, useEffect } from "react";
 import "../../styles/PageStyles/Login.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,13 +15,6 @@ import { RegisterModal } from "../Modals/AuthModals/RegisterModal";
 import { setActiveModal } from "../../actions/modalActions";
 import { PassResetModal } from "../Modals/AuthModals/PassResetModal";
 
-/**
- *
- * @PageLocation Login
- * @Component LoginForm
- * @Description Login form that prompts user to login or register
- *
- */
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

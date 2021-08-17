@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
-import "../../../styles/AuthFormStyles/AuthModals.css";
-import { clearErrors } from "../../../actions/errorActions";
-import { register } from "../../../actions/authActions";
-import { useDispatch, useSelector } from "react-redux";
-import { deactivateModal } from "../../../actions/modalActions";
 /**
  * @PageLocation Login
  * @Component RegisterModal
  * @Description Prompts users to register for an account
  *
  */
+
+import React, { useEffect, useState } from "react";
+import "../../../styles/AuthFormStyles/AuthModals.css";
+import { clearErrors } from "../../../actions/errorActions";
+import { register } from "../../../actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { deactivateModal } from "../../../actions/modalActions";
+
 export const RegisterModal = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

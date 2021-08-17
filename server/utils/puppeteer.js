@@ -1,3 +1,10 @@
+/**
+ *
+ * @File puppeteer.js
+ * @Description Opens and exports a headless chromium browser page for webscraping in utils/functions/ItemDataFunctions.js
+ *
+ */
+
 const puppeteer = require("puppeteer");
 
 async function openPage(Link) {

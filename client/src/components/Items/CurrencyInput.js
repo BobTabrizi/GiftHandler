@@ -1,7 +1,3 @@
-import React from "react";
-import MaskedInput from "react-text-mask";
-import createNumberMask from "text-mask-addons/dist/createNumberMask";
-
 /**
  *
  * @PageLocation User Group/Event Pages
@@ -9,6 +5,10 @@ import createNumberMask from "text-mask-addons/dist/createNumberMask";
  * @Description Formats and handles price inputting when editing/adding items
  *
  */
+
+import React from "react";
+import MaskedInput from "react-text-mask";
+import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
 const defaultMaskOptions = {
   prefix: "$",

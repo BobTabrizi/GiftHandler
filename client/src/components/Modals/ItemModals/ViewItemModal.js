@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation User Group/Event pages (Visiting pages the authenticated user does not own)
+ * @Component ViewItemModal
+ * @Description Item modal for users to view and purchase items.
+ *
+ */
+
 import React, { useState, useEffect } from "react";
 import "../../../styles/ItemStyles/ItemModals.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,13 +13,7 @@ import { unSelectEditItem } from "../../../actions/itemActions";
 import { deactivateModal } from "../../../actions/modalActions";
 import { UserChecker } from "../../Auth/UserChecker";
 import { setActiveModal, updateModalData } from "../../../actions/modalActions";
-/**
- *
- * @PageLocation User Group/Event pages
- * @Component ViewItemModal
- * @Description Item modal for users to view and purchase items.
- *
- */
+
 export const ViewItemModal = () => {
   const AuthInfo = useSelector((state) => state.auth);
   const Item = useSelector((state) => state.item.selectedItem.itemDetails);

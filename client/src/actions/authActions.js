@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component authActions.js
+ * @Description Action functions for authentication/validation
+ *
+ */
+
 import axios from "axios";
 import { returnErrors } from "./errorActions";
 import {
@@ -10,21 +17,16 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  PW_RESET_REQ,
-  PW_RESET_REQ_FAIL,
   PW_RESET,
-  PW_RESET_FAIL,
   GET_PUBLIC_USER,
   PUBLIC_USER_LOADING,
 } from "../actions/types";
 import { history } from "../components/Navigation/history";
-//Check token and load user
+
 export const loadUser = () => async (dispatch, getState) => {
-  //User loading
   dispatch({ type: USER_LOADING });
 
   //Get token from storage
-
   let token = "";
   if (getState().auth.token) {
     token = getState().auth.token;
@@ -47,11 +49,9 @@ export const loadUser = () => async (dispatch, getState) => {
     });
 
   //Return ID Directly for Group Querying
-  //console.log(response);
   return response;
 };
 
-//Register user
 export const register =
   ({ name, email, password }) =>
   (dispatch) => {
@@ -93,6 +93,8 @@ export const login =
           type: LOGIN_SUCCESS,
           payload: res.data,
         });
+
+        /*  Direct to Home Page  */
         history.push("/");
       })
       .catch((err) => {

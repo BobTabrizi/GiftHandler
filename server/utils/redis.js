@@ -1,3 +1,10 @@
+/**
+ *
+ * @File redis.js
+ * @Description Creates a Redis client and exports it for use in server routes
+ *
+ */
+
 const redis = require("redis");
 const bluebird = require("bluebird");
 const REDIS_PORT = 6379;

@@ -1,4 +1,5 @@
 /**
+ *
  * @Component UserChecker
  * @Description Recieves a JWT and decodes it for user validation
  *

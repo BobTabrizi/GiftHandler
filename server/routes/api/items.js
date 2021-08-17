@@ -1,3 +1,9 @@
+/**
+ * @Route /api/items
+ * @Description Server Route managing item manipulation
+ *
+ */
+
 const express = require("express");
 const pool = require("../../utils/db");
 const redisClient = require("../../utils/redis");
@@ -5,11 +11,14 @@ const router = express.Router();
 const { checkItems } = require("../../utils/functions/RedisFunctions");
 const { openPage } = require("../../utils/puppeteer");
 const { deleteFile } = require("../../utils/s3");
+
 const {
   getTargetItem,
   getEtsyItem,
   getAmazonItem,
-} = require("../../utils/functions/ScrapeFunctions");
+  getEbayItem,
+  getWalmartItem,
+} = require("../../utils/functions/ItemDataFunctions");
 
 /**
  * @route   GET api/items/user
@@ -26,7 +35,6 @@ router.get("/user", async (req, res) => {
   );
   //If data is found, pull the data from the cache and skip the DB call
   if (ItemCacheResult !== null) {
-    console.log("Items in cache");
     return res.status(200).json(JSON.parse(ItemCacheResult));
   }
 
@@ -85,7 +93,7 @@ router.post("/add", async (req, res) => {
     .then((result) => {
       if (result.rows[0].itemid === itemID) {
         //If an item is modified, delete the old cache entry
-        redisClient.del(`${Item.userID}/${Item.groupID}/Items`);
+        redisClient.del(`${Item.userID}/${Item.GroupID}/Items`);
         res.status(201).json(result.rows[0]);
       } else {
         res.status(400).json({ message: "Error Adding Item" });
@@ -99,8 +107,17 @@ router.post("/add", async (req, res) => {
  * @description  Edit a registry item
  **/
 router.post("/edit", async (req, res) => {
-  let { itemid, price, quantity, link, imageKey, name, description } =
-    req.body.item;
+  let {
+    itemid,
+    price,
+    quantity,
+    link,
+    imageKey,
+    name,
+    description,
+    GroupID,
+    UserID,
+  } = req.body.item;
   pool
     .query(
       `UPDATE itemdetails SET price = $2, quantity = $3, link = $4, image = $5, name = $6, description = $7 WHERE itemid = $1
@@ -108,6 +125,8 @@ router.post("/edit", async (req, res) => {
       [itemid, price, quantity, link, imageKey, name, description]
     )
     .then((result) => {
+      //If an item is modified, delete the old cache entry
+      redisClient.del(`${UserID}/${GroupID}/Items`);
       res.status(201).json(result.rows[0]);
     })
     .catch((error) => console.log(error));
@@ -164,25 +183,33 @@ router.get("/getData", async (req, res) => {
 
   //Check for a vendor, and find data based on the vendor. Some vendors have open API's, some don't.
   //For those that don't we will use the puppeteer library to webscrape everything we need.
-
-  const { page, browser } = await openPage(Link);
-
   let ItemDetails;
+  const { page, browser } = await openPage(Link);
   switch (Vendor) {
     case "Target":
       ItemDetails = await getTargetItem(page);
+      browser.close();
       break;
 
     case "Etsy":
       ItemDetails = await getEtsyItem(page);
+      browser.close();
       break;
 
     case "Amazon":
       ItemDetails = await getAmazonItem(page);
+      browser.close();
+      break;
+
+    case "Ebay":
+      ItemDetails = await getEbayItem(page);
+      browser.close();
+      break;
+    case "Walmart":
+      ItemDetails = await getWalmartItem(Link);
       break;
   }
 
-  browser.close();
   res.status(201).json(ItemDetails);
 });
 

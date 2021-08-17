@@ -1,3 +1,12 @@
+/**
+ * @PageLocation HomePage
+ * @Component AddJoinGroupModal
+ * @Description Allows users to create or join a group.
+ *              On creation, user's are prompted to pick a type of group then enter a name/passcode.
+ *              On join, user's simply need to enter a valid groupname and corresponding passcode.
+ *
+ */
+
 import React, { useEffect, useState } from "react";
 import "../../../styles/GroupStyles/GroupModals.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +18,7 @@ import { AddSuccess } from "../ModalComponents/AddGroupModal/AddSuccess";
 import { JoinRegister } from "../ModalComponents/JoinGroupModal/JoinRegister";
 import { deactivateModal, setModalPage } from "../../../actions/modalActions";
 import { IoArrowBack } from "react-icons/io5";
-/**
- * @PageLocation Home Page
- * @Component AddJoin Group Modal
- * @Description Allows users to create or join a group.
- *
- *              On creation, user's are prompted to pick a type of group then enter a name/passcode.
- *              On join, user's simply need to enter a valid groupname and corresponding passcode.
- *
- */
+
 export const AddJoinGroupModal = () => {
   const ActiveModal = useSelector(
     (state) => state.modal.activeModal.activePage

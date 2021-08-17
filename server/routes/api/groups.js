@@ -1,14 +1,14 @@
+/**
+ * @Route /api/groups
+ * @Description Server Route managing group manipulation.
+ *
+ */
+
 const express = require("express");
-const passport = require("passport");
 const pool = require("../../utils/db");
 const redisClient = require("../../utils/redis");
 const { checkGroups } = require("../../utils/functions/RedisFunctions");
-const initializePassport = require("../../utils/passport");
-initializePassport(passport);
-
 const router = express.Router();
-
-router.use(passport.initialize());
 
 /**
  * @route   POST api/groups/create
@@ -213,7 +213,6 @@ router.get("/user/:id", async (req, res) => {
   });
   //If data is found, pull the data from the cache and skip the DB call
   if (GroupCacheResult !== null) {
-    console.log("In cache");
     return res.status(200).json(JSON.parse(GroupCacheResult));
   }
 
@@ -273,7 +272,7 @@ router.get("/members/:groupid", async (req, res) => {
 });
 
 /**
- * @route   GET api/groups/delete/:groupid
+ * @route   DELETE api/groups/delete/:groupid
  * @description  Delete a group by group id
  **/
 router.delete("/delete/:groupid", async (req, res) => {

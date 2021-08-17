@@ -1,14 +1,15 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import "../../styles/PageStyles/EventPage.css";
 /**
  *
  * @PageLocation EventPage
  * @Component EventPageHeader
- * @Description Component display for event title, and memberlist
- *
+ * @Description Component display for event title and event owner
  *
  */
+
+import React from "react";
+import { useSelector } from "react-redux";
+import "../../styles/PageStyles/EventPage.css";
+
 export const EventPageHeader = (props) => {
   const PageInfo = useSelector((state) => state.group.pageGroup);
   return (

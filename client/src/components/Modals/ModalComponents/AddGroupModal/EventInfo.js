@@ -1,3 +1,12 @@
+/**
+ *
+ * @PageLocation HomePage (EventInfo)
+ * @Component EventInfo
+ * @Description Modal Component during group creation.
+ *              Prompts user for optional additional information to be displayed on event page.
+ *
+ */
+
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
@@ -5,16 +14,8 @@ import {
   setModalPage,
   updateModalData,
 } from "../../../../actions/modalActions";
-/**
- *
- * @PageLocation Home Page
- * @Component EventInfo
- * @Description Modal Component during group creation.
- *              Prompts user for optional additional information to be displayed on event page.
- *
- */
+
 export const EventInfo = () => {
-  const id = useSelector((state) => state.auth.user.id);
   const ModalDetails = useSelector((state) => state.modal.modalData);
   const [eventInfo, setEventInfo] = useState("");
   const dispatch = useDispatch();

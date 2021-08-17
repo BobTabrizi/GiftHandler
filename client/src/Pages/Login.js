@@ -1,7 +1,3 @@
-import React from "react";
-import "../styles/PageStyles/Login.css";
-import { LoginForm } from "../components/Auth/LoginForm";
-
 /**
  *
  * @Page Login Page
@@ -9,6 +5,11 @@ import { LoginForm } from "../components/Auth/LoginForm";
  * @route /login
  *
  */
+
+import React from "react";
+import "../styles/PageStyles/Login.css";
+import { LoginForm } from "../components/Auth/LoginForm";
+
 export const Login = () => {
   return (
     <>

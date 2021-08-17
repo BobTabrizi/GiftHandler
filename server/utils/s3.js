@@ -1,3 +1,10 @@
+/**
+ *
+ * @File s3.js
+ * @Description Contains methods to upload, retrieve, and modify images from an AWS S3 Bucket.
+ *
+ */
+
 require("dotenv").config();
 
 const fs = require("fs");

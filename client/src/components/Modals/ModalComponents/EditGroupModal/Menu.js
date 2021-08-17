@@ -1,16 +1,17 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import "../../../../styles/GroupStyles/GroupModals.css";
-import { setModalPage } from "../../../../actions/modalActions";
 /**
  *
- * @PageLocation Home Page
+ * @PageLocation HomePage (EditGroupModal)
  * @Component Menu
  * @Description Landing modal page for editing groups.
  *              Presents options of changing passcode, managing members, and deleting the group.
  *
- *
  */
+
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import "../../../../styles/GroupStyles/GroupModals.css";
+import { setModalPage } from "../../../../actions/modalActions";
+
 export const Menu = () => {
   const dispatch = useDispatch();
   const GroupDetails = useSelector(

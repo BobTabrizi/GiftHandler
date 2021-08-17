@@ -1,16 +1,17 @@
+/**
+ *
+ * @PageLocation HomePage (AddGroupModal)
+ * @Component GroupRegister
+ * @Description Modal Component. Credential form for group creation.
+ *
+ */
+
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { addGroup } from "../../../../actions/groupActions";
 import { setModalPage } from "../../../../actions/modalActions";
-/**
- *
- * @PageLocation Home Page
- * @Component GroupRegister
- * @Description Modal Component. Credential form for group creation.
- *
- *
- */
+
 export const GroupRegister = () => {
   const id = useSelector((state) => state.auth.user.id);
   const GroupData = useSelector((state) => state.modal.modalData);

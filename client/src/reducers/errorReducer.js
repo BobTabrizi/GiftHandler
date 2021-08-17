@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component errorReducer.js
+ * @Description Reducer function for error state messages.
+ *
+ */
+
 import { GET_ERRORS, CLEAR_ERRORS } from "../actions/types";
 
 const initialState = {

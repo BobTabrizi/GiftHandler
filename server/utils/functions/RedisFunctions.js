@@ -1,3 +1,10 @@
+/**
+ *
+ * @File RedisFunctions.js
+ * @Description Redis Helper Functions
+ *
+ */
+
 const redisClient = require("../redis");
 function checkGroups(userid) {
   let group_promise = redisClient.getAsync(userid).then(function (response) {

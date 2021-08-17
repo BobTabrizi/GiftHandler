@@ -1,3 +1,11 @@
+/**
+ *
+ * @PageLocation HomePage
+ * @Component EditGroupModal
+ * @Description Modal that allows a user to edit and delete an owned group
+ *
+ */
+
 import React, { useState, useEffect } from "react";
 import "../../../styles/GroupStyles/GroupModals.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,13 +17,7 @@ import { ConfirmDelete } from "../ModalComponents/EditGroupModal/ConfirmDelete";
 import { ChangeDescription } from "../ModalComponents/EditGroupModal/ChangeDescription";
 import { deactivateModal, setModalPage } from "../../../actions/modalActions";
 import { IoArrowBack } from "react-icons/io5";
-/**
- *
- * @PageLocation Home Page
- * @Component EditGroupModal
- * @Description Modal that allows a user to edit and delete an owned group
- *
- */
+
 export const EditGroupModal = () => {
   const ActiveModal = useSelector(
     (state) => state.modal.activeModal.activePage

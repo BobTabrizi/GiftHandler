@@ -1,16 +1,17 @@
+/**
+ *
+ * @PageLocation GroupPage
+ * @Component GroupInfoWrapper
+ * @Description Component display for group description and filterbar
+ *
+ */
+
 import React, { useState } from "react";
 import "../../styles/PageStyles/GroupPage.css";
 import { FilterOtherUsers } from "../../components/Filters/FilterOtherUsers";
 import { FilterColumn } from "../../components/Filters/FilterColumn";
 import { IoInformationCircleOutline } from "react-icons/io5";
-/**
- *
- * @PageLocation GroupPage
- * @Component GroupInfoWrapper
- * @Description Component display for group title, and memberlist
- *
- *
- */
+
 export const GroupInfoWrapper = (props) => {
   const [groupInfo, setGroupInfo] = useState(false);
   return (

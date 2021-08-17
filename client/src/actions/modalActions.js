@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component modalActions.js
+ * @Description Action functions for modal manipulation.
+ *
+ */
+
 import {
   SET_ACTIVE_MODAL,
   UPDATE_MODAL_DATA,

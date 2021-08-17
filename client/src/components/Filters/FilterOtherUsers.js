@@ -1,10 +1,3 @@
-import React, { useState, useEffect } from "react";
-import "../../styles/FilterStyles/FilterColumn.css";
-import { useDispatch, useSelector } from "react-redux";
-import Select from "react-dropdown-select";
-import CurrencyInput from "../Items/CurrencyInput";
-import { clearFilterItems, filterItems } from "../../actions/itemActions";
-import { setFilterItem } from "../../actions/itemActions";
 /**
  *
  * @PageLocation Unowned User Group Pages
@@ -12,6 +5,14 @@ import { setFilterItem } from "../../actions/itemActions";
  * @Description Allows filtering of other users items
  *
  */
+
+import React, { useState, useEffect } from "react";
+import "../../styles/FilterStyles/FilterColumn.css";
+import { useDispatch, useSelector } from "react-redux";
+import Select from "react-dropdown-select";
+import CurrencyInput from "../Items/CurrencyInput";
+import { clearFilterItems, filterItems } from "../../actions/itemActions";
+import { setFilterItem } from "../../actions/itemActions";
 
 const ModeList = {
   0: "Secret Santa",

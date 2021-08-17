@@ -1,16 +1,17 @@
+/**
+ *
+ * @PageLocation HomePage (AddGroupModal)
+ * @Component ModeSelect
+ * @Description Modal Component. Prompts users to select the type of group they wish to create
+ *
+ */
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { setModalPage } from "../../../../actions/modalActions";
 import { updateModalData } from "../../../../actions/modalActions";
-/**
- *
- * @PageLocation Home Page
- * @Component ModeSelect
- * @Description Modal Component. Prompts users to select the type of group they wish to create
- *
- *
- */
+
 export const ModeSelect = () => {
   //Save group modes in DB as single integers,
   //Current: 0 -> Secret Santa ; 1 -> Wedding ; 2 -> Other

@@ -1,10 +1,5 @@
-import React from "react";
-import "../../styles/ItemStyles/RegistryItem.css";
-import { useSelector, useDispatch } from "react-redux";
-import { setActiveModal } from "../../actions/modalActions";
-import { selectEditItem } from "../../actions/itemActions";
-import { selectViewItem } from "../../actions/itemActions";
 /**
+ *
  * @PageLocation Group/Event Pages
  * @Component UserItemDetails
  * @Description Displays Registry Items and their properties.
@@ -12,6 +7,14 @@ import { selectViewItem } from "../../actions/itemActions";
  *              as well as if the user owns the items.
  *
  */
+
+import React from "react";
+import "../../styles/ItemStyles/RegistryItem.css";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveModal } from "../../actions/modalActions";
+import { selectEditItem } from "../../actions/itemActions";
+import { selectViewItem } from "../../actions/itemActions";
+
 export const ItemDetails = (props) => {
   const ItemState = useSelector((state) =>
     state.item.memberItems.filter(

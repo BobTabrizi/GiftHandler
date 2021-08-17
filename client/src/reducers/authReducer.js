@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component authReducer.js
+ * @Description Reducer function for authentication & validation
+ *
+ */
+
 import {
   USER_LOADED,
   USER_LOADING,
@@ -10,7 +17,6 @@ import {
   REGISTER_FAIL,
   GET_PUBLIC_USER,
   PUBLIC_USER_LOADING,
-  PUBLIC_USER_LOADED,
 } from "../actions/types";
 
 const initialState = {

@@ -1,3 +1,10 @@
+/**
+ *
+ * @Component modalReducer.js
+ * @Description Reducer function for modal data and states
+ *
+ */
+
 import {
   SET_ACTIVE_MODAL,
   SET_MODAL_PAGE,

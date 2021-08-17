@@ -1,3 +1,13 @@
+/**
+ *
+ * @PageLocation HomePage
+ * @Component GroupList
+ * @Description Array of groups that link to respective group pages
+ *              Takes in a parameter string of "Admin" or "Member"
+ *              filtering group data for owned/unowned groups
+ *
+ */
+
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../styles/PageStyles/ManageGroup.css";
@@ -6,20 +16,6 @@ import { BiShieldQuarter } from "react-icons/bi";
 import { IoPerson } from "react-icons/io5";
 import { selectEditGroup } from "../../actions/groupActions";
 import { setActiveModal, updateModalData } from "../../actions/modalActions";
-/**
- * @PageLocation Home Page
- * @Component GroupList
- * @Description Array of groups that link to respective group pages
- *              Takes in a parameter string of "Admin" or "Member"
- *              filtering group data for owned/unowned groups
- *
- */
-
-const ModeList = {
-  0: "Secret Santa",
-  1: "Wedding",
-  2: "Other",
-};
 
 export const GroupList = () => {
   const groups = useSelector((state) => state.group.groups);

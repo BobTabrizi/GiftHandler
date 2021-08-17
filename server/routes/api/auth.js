@@ -1,3 +1,9 @@
+/**
+ * @Route /api/auth
+ * @Description Server Route managing user authentication and account data
+ *
+ */
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
@@ -222,7 +228,7 @@ router.post("/passReset", async (req, res) => {
       hashedPassword,
       response.email,
     ])
-    .then((results) => {
+    .then(() => {
       return true;
     })
     .catch((error) => {
@@ -238,7 +244,7 @@ router.post("/passReset", async (req, res) => {
         code,
         TimeDiff,
       ])
-      .then((results) => {
+      .then(() => {
         return true;
       })
       .catch((error) => {

@@ -1,18 +1,18 @@
+/**
+ *
+ * @PageLocation HomePage (EditGroupModal)
+ * @Component ChangeDescription
+ * @Description  Enables user to edit and change a description for a specified group/event.
+ *
+ */
+
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../../styles/GroupStyles/GroupModals.css";
 import { deactivateModal } from "../../../../actions/modalActions";
 import { EditGroupDetails } from "../../../../actions/groupActions";
 import { unSelectEditGroup } from "../../../../actions/groupActions";
-/**
- *
- * @PageLocation Home Page
- * @Component ChangeDescription
- * @Description  Enables user to edit and change a description for a specified group/event.
- *
- *
- *
- */
+
 export const ChangeDescription = () => {
   const GroupDetails = useSelector(
     (state) => state.group.selectedGroup.groupDetails

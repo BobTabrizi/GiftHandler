@@ -252,10 +252,10 @@
   background-color: rgba(255, 255, 255, 1);
   position: fixed;
   width: 550px;
-  height: 500px;
+  height: 600px;
   margin-left: auto;
   margin-right: auto;
-  top: 15%;
+  top: 10%;
   left: 0%;
   right: 0;
   text-align: center;
@@ -298,6 +298,8 @@
   font-size: 21px;
   border: 1px solid black;
   border-radius: 5px;
+  overflow-y: scroll;
+  height: 75px;
 }
 
 .ViewItemLinkBtn {
@@ -325,7 +327,7 @@
   position: absolute;
   color: white;
   font-size: 28px;
-  top: 10%;
+  top: 5%;
   left: 70%;
   right: 0;
   cursor: pointer;
