@@ -58,11 +58,6 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
   let { name, email, password } = req.body;
   let profileImage = "DefaultProfileImage";
-  console.log({
-    name,
-    email,
-    password,
-  });
 
   if (!name || !email || !password) {
     res.status(400).json("Enter Information for all fields");

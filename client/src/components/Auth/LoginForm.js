@@ -18,6 +18,8 @@ import { PassResetModal } from "../Modals/AuthModals/PassResetModal";
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [attempts, setAttempts] = useState(0);
+  const [resetAttempts, setResetAttempts] = useState(0);
   const dispatch = useDispatch();
 
   let errors = useSelector((state) => state.error.message);
@@ -29,7 +31,17 @@ export const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = { email, password };
+    setAttempts(attempts + 1);
     dispatch(login(user));
+  };
+
+  const handlePassReset = () => {
+    if (resetAttempts < 5) {
+      dispatch(setActiveModal("PassReset"));
+      setResetAttempts(resetAttempts + 1);
+    } else {
+      errors = "Too many reset requests, please try again later.";
+    }
   };
 
   useEffect(() => {
@@ -70,7 +82,11 @@ export const LoginForm = () => {
                 <input
                   type="submit"
                   value="LOGIN"
-                  style={{ width: 250, marginTop: "1rem" }}
+                  style={{
+                    width: 250,
+                    marginTop: "1rem",
+                    disabled: attempts > 5 ? true : false,
+                  }}
                 />
               </div>
             </div>
@@ -84,7 +100,7 @@ export const LoginForm = () => {
               </div>
               <div
                 className="passResetReqBtn"
-                onClick={() => dispatch(setActiveModal("PassReset"))}
+                onClick={() => handlePassReset()}
               >
                 Forgot your password?
               </div>
